@@ -1,0 +1,133 @@
+{
+  "classes": {
+    "Equipment": {
+      "label": "设备",
+      "description": "制造企业中的所有生产设备",
+      "required_properties": ["equipment_id", "equipment_name", "equipment_type", "location", "status"],
+      "optional_properties": ["manufacturer", "model", "purchase_date", "installation_date", "capacity", "maintenance_cycle"],
+      "subclasses": ["CNCMachine", "Lathe", "MillingMachine", "Robot", "Conveyor"]
+    },
+    "CNCMachine": {
+      "label": "数控机床",
+      "description": "计算机数控加工设备",
+      "parent": "Equipment",
+      "required_properties": ["spindle_speed", "tool_count", "axis_count"],
+      "optional_properties": ["control_system", "coolant_type", "pallet_changer"]
+    },
+    "Lathe": {
+      "label": "车床",
+      "description": "旋转加工设备",
+      "parent": "Equipment",
+      "required_properties": ["max_diameter", "max_length"],
+      "optional_properties": ["chuck_type", "tailstock"]
+    },
+    "MillingMachine": {
+      "label": "铣床",
+      "description": "铣削加工设备",
+      "parent": "Equipment",
+      "required_properties": ["spindle_taper", "table_size"],
+      "optional_properties": ["coolant_system", "automatic_tool_changer"]
+    },
+    "Robot": {
+      "label": "工业机器人",
+      "description": "可编程自动化机械臂",
+      "parent": "Equipment",
+      "required_properties": ["axis_count", "payload", "reach"],
+      "optional_properties": ["repeatability", "controller_type"]
+    },
+    "Conveyor": {
+      "label": "传送带",
+      "description": "物料输送设备",
+      "parent": "Equipment",
+      "required_properties": ["length", "speed", "capacity"],
+      "optional_properties": ["belt_type", "motor_power"]
+    },
+    "ProductionLine": {
+      "label": "产线",
+      "description": "由多个设备组成的生产单元",
+      "required_properties": ["line_id", "line_name", "status"],
+      "optional_properties": ["capacity", "product_type", "shift_count"]
+    },
+    "Workshop": {
+      "label": "车间",
+      "description": "生产区域",
+      "required_properties": ["workshop_id", "workshop_name", "location"],
+      "optional_properties": ["area", "employee_count"]
+    },
+    "MaintenanceTask": {
+      "label": "维护任务",
+      "description": "设备维护保养任务",
+      "required_properties": ["task_id", "task_name", "equipment_id", "frequency"],
+      "optional_properties": ["description", "duration", "skill_required"]
+    }
+  },
+  "relations": {
+    "belongsTo": {
+      "label": "属于",
+      "domain": "Equipment",
+      "range": ["ProductionLine", "Workshop"],
+      "description": "设备归属于产线或车间"
+    },
+    "hasPart": {
+      "label": "包含",
+      "domain": "ProductionLine",
+      "range": "Equipment",
+      "description": "产线包含设备"
+    },
+    "locatedIn": {
+      "label": "位于",
+      "domain": ["Equipment", "ProductionLine"],
+      "range": "Workshop",
+      "description": "设备或产线位于车间"
+    },
+    "requiresMaintenance": {
+      "label": "需要维护",
+      "domain": "Equipment",
+      "range": "MaintenanceTask",
+      "description": "设备需要执行维护任务"
+    }
+  },
+  "rules": [
+    {
+      "name": "inheritance",
+      "description": "子类继承父类的所有属性",
+      "condition": "?x rdfs:subClassOf ?y",
+      "consequence": "?x rdfs:subClassOf Equipment"
+    },
+    {
+      "name": "transitive_belongsTo",
+      "description": "如果设备属于产线，产线属于车间，则设备属于车间",
+      "condition": "?x belongsTo ?y && ?y locatedIn ?z",
+      "consequence": "?x locatedIn ?z"
+    },
+    {
+      "name": "maintenance_required",
+      "description": "设备必须关联至少一个维护任务",
+      "condition": "?x rdf:type Equipment",
+      "consequence": "?x requiresMaintenance ?t"
+    },
+    {
+      "name": "cnc_has_tool",
+      "description": "数控机床必须有刀具数量属性",
+      "condition": "?x rdf:type CNCMachine",
+      "consequence": "?x hasProperty tool_count"
+    }
+  ],
+  "constraints": {
+    "equipment_id_format": {
+      "description": "设备编码必须以设备类型缩写开头",
+      "pattern": "^(CNC|LTH|MLG|ROB|CNV)-\\d{3}$",
+      "message": "设备编码格式错误，应为CNC/LTH/MLG/ROB/CNV-XXX格式"
+    },
+    "status_values": {
+      "description": "设备状态只能是normal/warning/error/maintenance",
+      "allowed_values": ["normal", "warning", "error", "maintenance"],
+      "message": "设备状态值无效"
+    },
+    "capacity_positive": {
+      "description": "产能值必须为正数",
+      "condition": "capacity > 0",
+      "message": "产能值必须大于0"
+    }
+  }
+}

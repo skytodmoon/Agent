@@ -1,0 +1,34 @@
+[
+  {
+    "equipment_id": "CNC-002",
+    "timestamp": "2026-07-06 08:00:00",
+    "temperature": 45,
+    "vibration": 2.1,
+    "current": 15.5,
+    "status": "running"
+  },
+  {
+    "equipment_id": "CNC-002",
+    "timestamp": "2026-07-06 09:00:00",
+    "temperature": 47,
+    "vibration": 2.3,
+    "current": 16.2,
+    "status": "running"
+  },
+  {
+    "equipment_id": "CNC-002",
+    "timestamp": "2026-07-06 10:00:00",
+    "temperature": 52,
+    "vibration": 3.5,
+    "current": 18.8,
+    "status": "warning"
+  },
+  {
+    "equipment_id": "CNC-003",
+    "timestamp": "2026-07-06 08:00:00",
+    "temperature": 42,
+    "vibration": 1.8,
+    "current": 14.2,
+    "status": "running"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "DF-UTVAS5UU",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "A车间-1号工位",
+    "severity": "高",
+    "operator": "质检人员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-MGXDKROH",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "A车间-1号工位",
+    "severity": "高",
+    "operator": "质检人员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-XNLHG2EC",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "A车间-1号工位",
+    "severity": "高",
+    "operator": "质检人员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-TZEONRJ5",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "B车间-1号工位",
+    "severity": "高",
+    "operator": "质检人员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-2NDAEP68",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "B车间-1号工位",
+    "severity": "高",
+    "operator": "质检人员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-NTUJ3FGZ",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "B车间-1号工位",
+    "severity": "高",
+    "operator": "质检人员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-EPHBZBFH",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "B车间-1号工位",
+    "severity": "高",
+    "operator": "质检人员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-BX6JGWFU",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "B车间-1号工位",
+    "severity": "高",
+    "operator": "默认操作员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-WRYADFWJ",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "B车间-1号工位",
+    "severity": "高",
+    "operator": "未提供",
+    "status": "pending"
+  },
+  {
+    "id": "DF-KLQRMQ5Q",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "B车间-1号工位",
+    "severity": "高",
+    "operator": "默认操作员",
+    "status": "pending"
+  },
+  {
+    "id": "DF-3IUG4AJR",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "A车间-1号工位",
+    "severity": "高",
+    "operator": "未提供",
+    "status": "pending"
+  },
+  {
+    "id": "DF-N2PLAUKF",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "A车间-1号工位",
+    "severity": "高",
+    "operator": "默认操作员",
+    "status": "pending"
+  }
+]

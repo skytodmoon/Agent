@@ -1,0 +1,56 @@
+[
+  {
+    "id": "EX-SJOGMWTR",
+    "type": "设备故障",
+    "description": "CNC-001设备主轴异响",
+    "equipment_id": "CNC-001",
+    "affected_orders": "PO-001",
+    "severity": "高",
+    "status": "pending"
+  },
+  {
+    "id": "EX-TWNXSKZG",
+    "type": "设备故障",
+    "description": "CNC-001设备主轴异响",
+    "equipment_id": "CNC-001",
+    "affected_orders": "PO-001",
+    "severity": "高",
+    "status": "pending"
+  },
+  {
+    "id": "EX-QSZVZW5Y",
+    "type": "设备故障",
+    "description": "CNC-001设备主轴异响",
+    "equipment_id": "CNC-001",
+    "affected_orders": "PO-001",
+    "severity": "高",
+    "status": "pending"
+  },
+  {
+    "id": "EX-GVV2RNWH",
+    "type": "设备故障",
+    "description": "CNC-001设备主轴异响",
+    "equipment_id": "CNC-001",
+    "affected_orders": "PO-001",
+    "severity": "高",
+    "status": "pending"
+  },
+  {
+    "id": "EX-GU7MRNXJ",
+    "type": "设备故障",
+    "description": "CNC-001设备主轴异响",
+    "equipment_id": "CNC-001",
+    "affected_orders": "PO-001",
+    "severity": "高",
+    "status": "pending"
+  },
+  {
+    "id": "EX-EMY3DBDH",
+    "type": "设备故障",
+    "description": "CNC-001设备主轴异响",
+    "equipment_id": "CNC-001",
+    "affected_orders": "PO-001",
+    "severity": "高",
+    "status": "pending"
+  }
+]

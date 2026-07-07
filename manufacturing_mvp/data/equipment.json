@@ -1,0 +1,7 @@
+[
+  {"id": "CNC-001", "name": "FANUC M-20iA", "type": "数控车床", "location": "A车间-1号工位", "status": "running"},
+  {"id": "CNC-002", "name": "MAZAK INTEGREX", "type": "数控车床", "location": "A车间-2号工位", "status": "running"},
+  {"id": "INJ-001", "name": "ENGEL DUO 500", "type": "注塑机", "location": "B车间-1号工位", "status": "running"},
+  {"id": "INJ-002", "name": "HAITIAN MA3200", "type": "注塑机", "location": "B车间-2号工位", "status": "warning"},
+  {"id": "WELD-001", "name": "PANASONIC TA-1400", "type": "焊接机器人", "location": "C车间-1号工位", "status": "running"}
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "PO-001",
+    "line_id": "LINE-A",
+    "product_id": "PRD-001",
+    "quantity": 500,
+    "completed": 200,
+    "status": "in_progress",
+    "priority": "high",
+    "due_date": "2026-07-10"
+  },
+  {
+    "id": "PO-002",
+    "line_id": "LINE-A",
+    "product_id": "PRD-002",
+    "quantity": 300,
+    "completed": 100,
+    "status": "in_progress",
+    "priority": "medium",
+    "due_date": "2026-07-12"
+  },
+  {
+    "id": "PO-003",
+    "line_id": "LINE-B",
+    "product_id": "PRD-001",
+    "quantity": 200,
+    "completed": 50,
+    "status": "in_progress",
+    "priority": "low",
+    "due_date": "2026-07-15"
+  },
+  {
+    "id": "PO-004",
+    "line_id": "LINE-B",
+    "product_id": "PRD-003",
+    "quantity": 150,
+    "completed": 0,
+    "status": "pending",
+    "priority": "high",
+    "due_date": "2026-07-08"
+  }
+]

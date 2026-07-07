@@ -1,0 +1,12 @@
+[
+  {"hazard_type": "电气隐患", "description": "电线裸露、配电箱未上锁、接地不良等", "level": "high", "priority": "紧急", "deadline": "1天", "responsible_department": "电工班"},
+  {"hazard_type": "消防隐患", "description": "消防通道堵塞、灭火器过期、消防栓损坏等", "level": "high", "priority": "紧急", "deadline": "1天", "responsible_department": "安全科"},
+  {"hazard_type": "机械伤害", "description": "设备防护罩缺失、安全联锁失效、刀具外露等", "level": "high", "priority": "紧急", "deadline": "1天", "responsible_department": "设备科"},
+  {"hazard_type": "高处坠落", "description": "护栏缺失、脚手架不牢固、安全带未配备等", "level": "high", "priority": "紧急", "deadline": "2天", "responsible_department": "基建科"},
+  {"hazard_type": "化学危害", "description": "化学品未分类存放、MSDS缺失、通风不良等", "level": "medium", "priority": "一般", "deadline": "3天", "responsible_department": "环保科"},
+  {"hazard_type": "噪音污染", "description": "设备噪音超标、未佩戴耳塞、隔音设施不足等", "level": "medium", "priority": "一般", "deadline": "5天", "responsible_department": "设备科"},
+  {"hazard_type": "粉尘危害", "description": "粉尘浓度超标、未佩戴口罩、除尘设备故障等", "level": "medium", "priority": "一般", "deadline": "3天", "responsible_department": "环保科"},
+  {"hazard_type": "地面湿滑", "description": "地面有水渍油污、未设置警示标识、防滑措施不足等", "level": "low", "priority": "低", "deadline": "1天", "responsible_department": "保洁组"},
+  {"hazard_type": "照明不足", "description": "灯光昏暗、应急照明失效、灯具损坏等", "level": "low", "priority": "低", "deadline": "3天", "responsible_department": "电工班"},
+  {"hazard_type": "标识缺失", "description": "安全标识缺失、设备标识不清、区域划分不明等", "level": "low", "priority": "低", "deadline": "5天", "responsible_department": "安全科"}
+]

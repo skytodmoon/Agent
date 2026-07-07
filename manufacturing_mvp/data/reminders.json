@@ -1,0 +1,110 @@
+[
+  {
+    "supplier_id": "SUP-001",
+    "supplier_name": "华鑫金属材料有限公司",
+    "material_code": "MAT-001",
+    "material_name": "金属板材",
+    "quantity": 150,
+    "due_date": "2023-11-15",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "精密铸件",
+    "quantity": 50,
+    "due_date": "2023-11-16",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-004",
+    "supplier_name": "恒通五金配件厂",
+    "material_code": "MAT-005",
+    "material_name": "五金配件",
+    "quantity": 200,
+    "due_date": "2023-11-17",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-004",
+    "supplier_name": "恒通五金配件厂",
+    "material_code": "MAT-006",
+    "material_name": "标准件",
+    "quantity": 900,
+    "due_date": "2023-11-18",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-001",
+    "supplier_name": "华鑫金属材料有限公司",
+    "material_code": "MAT-001",
+    "material_name": "合金钢材",
+    "quantity": 250,
+    "due_date": "2023-10-20",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-004",
+    "supplier_name": "恒通五金配件厂",
+    "material_code": "MAT-005",
+    "material_name": "密封圈",
+    "quantity": 400,
+    "due_date": "2023-10-22",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "物料 MAT-004",
+    "quantity": 50,
+    "due_date": "2023-11-15",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-001",
+    "supplier_name": "华鑫金属材料有限公司",
+    "material_code": "MAT-001",
+    "material_name": "高强度钢板",
+    "quantity": 250,
+    "due_date": "2023-10-15",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "精密铸件",
+    "quantity": 100,
+    "due_date": "2023-10-15",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "铝合金压铸件",
+    "quantity": 50,
+    "due_date": "2023-11-20",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-001",
+    "supplier_name": "华鑫金属材料有限公司",
+    "material_code": "MAT-001",
+    "material_name": "金属板材",
+    "quantity": 250,
+    "due_date": "2023-10-20",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "精密铸件",
+    "quantity": 100,
+    "due_date": "2023-10-22",
+    "status": "sent"
+  }
+]

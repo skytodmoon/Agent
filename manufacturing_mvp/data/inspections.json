@@ -1,0 +1,65 @@
+[
+  {
+    "id": "IN-TIL98KHC",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-X4XO8BC3",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-AWBOHXQX",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-BZ9BTQDU",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "配电箱未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-UZUTWJEY",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-LQH2EPYY",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "配电箱未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-43JE47NZ",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  }
+]

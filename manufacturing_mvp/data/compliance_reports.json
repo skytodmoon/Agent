@@ -1,0 +1,12 @@
+[
+  {
+    "period": "2023-11",
+    "location": "安全工程部",
+    "total_hazards": 1,
+    "completed_hazards": 0,
+    "pending_hazards": 1,
+    "overdue_hazards": 0,
+    "completion_rate": 0.0,
+    "status": "generated"
+  }
+]

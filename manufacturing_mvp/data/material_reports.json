@@ -1,0 +1,83 @@
+[
+  {
+    "product_id": "PROD-001",
+    "production_qty": 1000,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "MAT-001",
+    "production_qty": 250,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "MAT-004",
+    "production_qty": 50,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "MAT-005",
+    "production_qty": 0,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "MAT-006",
+    "production_qty": 0,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "MAT-004",
+    "production_qty": 50,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "PROD-001",
+    "production_qty": 1000,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "MAT-004",
+    "production_qty": 50,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "PROD-001",
+    "production_qty": 100,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  }
+]

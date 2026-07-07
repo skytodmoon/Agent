@@ -1,0 +1,91 @@
+[
+  {
+    "plan_id": "SP-APXVUNBQ",
+    "exception_id": "EX-SJOGMWTR",
+    "line_id": "LINE-A",
+    "strategy": "优先保障紧急订单",
+    "description": "将受影响工单中的紧急订单优先安排到备用设备或加班处理",
+    "impact": "部分非紧急订单交期可能延迟",
+    "approved": true,
+    "comment": "优先保障紧急订单，符合当前生产优先级策略。",
+    "status": "approved"
+  },
+  {
+    "plan_id": "SP-BDTT3PQF",
+    "exception_id": "EX-SJOGMWTR",
+    "line_id": "LINE-A",
+    "strategy": "均衡分配产能",
+    "description": "将产能平均分配给所有受影响工单，保证整体进度",
+    "impact": "所有工单进度略有延迟"
+  },
+  {
+    "plan_id": "SP-5ZDVRNAT",
+    "exception_id": "EX-TWNXSKZG",
+    "line_id": "L101",
+    "strategy": "优先保障紧急订单",
+    "description": "将受影响工单中的紧急订单优先安排到备用设备或加班处理",
+    "impact": "部分非紧急订单交期可能延迟"
+  },
+  {
+    "plan_id": "SP-AKSH6SOS",
+    "exception_id": "EX-TWNXSKZG",
+    "line_id": "L101",
+    "strategy": "均衡分配产能",
+    "description": "将产能平均分配给所有受影响工单，保证整体进度",
+    "impact": "所有工单进度略有延迟"
+  },
+  {
+    "plan_id": "SP-NYFASQAA",
+    "exception_id": "EX-GVV2RNWH",
+    "line_id": "LINE-A",
+    "strategy": "优先保障紧急订单",
+    "description": "将受影响工单中的紧急订单优先安排到备用设备或加班处理",
+    "impact": "部分非紧急订单交期可能延迟",
+    "approved": true,
+    "comment": "优先保障紧急订单，符合当前生产优先级策略。",
+    "status": "approved"
+  },
+  {
+    "plan_id": "SP-XRBHNYTK",
+    "exception_id": "EX-GVV2RNWH",
+    "line_id": "LINE-A",
+    "strategy": "均衡分配产能",
+    "description": "将产能平均分配给所有受影响工单，保证整体进度",
+    "impact": "所有工单进度略有延迟"
+  },
+  {
+    "plan_id": "SP-TX2YG76C",
+    "exception_id": "EX-GU7MRNXJ",
+    "line_id": "LINE-A",
+    "strategy": "优先保障紧急订单",
+    "description": "将受影响工单中的紧急订单优先安排到备用设备或加班处理",
+    "impact": "部分非紧急订单交期可能延迟"
+  },
+  {
+    "plan_id": "SP-EOE3FFMH",
+    "exception_id": "EX-GU7MRNXJ",
+    "line_id": "LINE-A",
+    "strategy": "均衡分配产能",
+    "description": "将产能平均分配给所有受影响工单，保证整体进度",
+    "impact": "所有工单进度略有延迟"
+  },
+  {
+    "plan_id": "SP-BS6ZVUEN",
+    "exception_id": "EX-EMY3DBDH",
+    "line_id": "LINE-A",
+    "strategy": "优先保障紧急订单",
+    "description": "将受影响工单中的紧急订单优先安排到备用设备或加班处理",
+    "impact": "部分非紧急订单交期可能延迟",
+    "approved": true,
+    "comment": "优先保障紧急订单，符合当前业务重点",
+    "status": "approved"
+  },
+  {
+    "plan_id": "SP-KDEQ6N65",
+    "exception_id": "EX-EMY3DBDH",
+    "line_id": "LINE-A",
+    "strategy": "均衡分配产能",
+    "description": "将产能平均分配给所有受影响工单，保证整体进度",
+    "impact": "所有工单进度略有延迟"
+  }
+]

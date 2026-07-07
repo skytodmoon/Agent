@@ -1,0 +1,30 @@
+[
+  {
+    "plan_id": "SP-APXVUNBQ",
+    "line_id": "L-A1B2C3",
+    "order_changes": "紧急订单提前投产，非紧急订单交期延迟",
+    "status": "synced",
+    "timestamp": "2026-07-06"
+  },
+  {
+    "plan_id": "PLAN-002",
+    "line_id": "LINE-003",
+    "order_changes": "将工单WO-20231001和WO-20231002转移至备用产线LINE-003执行，产线准备时间增加2小时。",
+    "status": "synced",
+    "timestamp": "2026-07-06"
+  },
+  {
+    "plan_id": "SP-NYFASQAA",
+    "line_id": "LINE-001",
+    "order_changes": "紧急订单提前生产，非紧急订单交期延迟",
+    "status": "synced",
+    "timestamp": "2026-07-06"
+  },
+  {
+    "plan_id": "SP-BS6ZVUEN",
+    "line_id": "L-DEFAULT",
+    "order_changes": "",
+    "status": "synced",
+    "timestamp": "2026-07-06"
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {"id": "ENG-001", "name": "张伟", "specialty": "数控车床", "availability": "available", "skills": ["主轴维修", "液压系统", "程序调试"]},
+  {"id": "ENG-002", "name": "李明", "specialty": "注塑机", "availability": "available", "skills": ["注塑工艺", "模具维护", "液压系统"]},
+  {"id": "ENG-003", "name": "王强", "specialty": "焊接机器人", "availability": "busy", "skills": ["焊接工艺", "机器人编程"]},
+  {"id": "ENG-004", "name": "刘洋", "specialty": "数控车床", "availability": "available", "skills": ["刀具管理", "冷却系统", "主轴维修"]},
+  {"id": "ENG-005", "name": "陈静", "specialty": "注塑机", "availability": "available", "skills": ["注塑工艺", "质量控制", "设备保养"]}
+]

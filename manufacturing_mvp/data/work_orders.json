@@ -1,0 +1,109 @@
+[
+  {
+    "id": "WO-HQRJ3BWU",
+    "fault_report_id": "FR-20231026-001",
+    "title": "CNC-001 数控车床主轴异响故障维修",
+    "description": "FANUC M-20iA 数控车床在运行过程中出现主轴异响现象，初步排查为主轴轴承润滑不足或皮带张力问题，需进一步检查并维修。",
+    "equipment_id": "CNC-001",
+    "priority": "P1",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "故障报告已创建，等待工程师处理"
+  },
+  {
+    "id": "WO-AQXWYWZH",
+    "fault_report_id": "FR-20231015-001",
+    "title": "数控车床主轴异响维修",
+    "description": "设备编号CNC-001的FANUC M-20iA数控车床出现主轴异响现象，位置在A车间-1号工位，严重程度高，需紧急处理。",
+    "equipment_id": "CNC-001",
+    "priority": "P2",
+    "status": "pending",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟"
+  },
+  {
+    "id": "WO-S8XDERBW",
+    "fault_report_id": "FR-20241120-001",
+    "title": "CNC-001 数控车床主轴异响故障维修",
+    "description": "FANUC M-20iA 数控车床出现主轴异响，初步排查润滑、皮带张力和杂物清理无效，需专业维修。",
+    "equipment_id": "CNC-001",
+    "priority": "高",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建并指派给张伟工程师，等待处理。"
+  },
+  {
+    "id": "WO-BGH7HWFN",
+    "fault_report_id": "FR-20231015-001",
+    "title": "数控车床主轴异响故障维修",
+    "description": "数控车床出现主轴异响现象，初步排查未解决问题，需进行深度检修。",
+    "equipment_id": "CNC-001",
+    "priority": "high",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建并指派给工程师张伟，等待处理。"
+  },
+  {
+    "id": "WO-JAVNRKHD",
+    "fault_report_id": "FR-K2YBVJDZ",
+    "title": "数控车床主轴异响故障",
+    "description": "主轴异响，需检查轴承润滑、皮带张力，清理杂物，必要时更换轴承。",
+    "equipment_id": "CNC-001",
+    "priority": "high",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建，等待工程师处理"
+  },
+  {
+    "id": "WO-5RZBE5UZ",
+    "fault_report_id": "FR-TCG4Q3C9",
+    "title": "数控车床主轴异响故障维修",
+    "description": "主轴异响，需检查轴承润滑、皮带张力，清理内部杂物，如问题持续需更换轴承。",
+    "equipment_id": "CNC-001",
+    "priority": "高",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建，等待工程师处理"
+  },
+  {
+    "id": "WO-3SHECJ7Y",
+    "fault_report_id": "FR-6RY3SRJA",
+    "title": "数控车床主轴异响故障维修",
+    "description": "设备编号CNC-001的FANUC M-20iA数控车床出现主轴异响问题，诊断结果为高严重程度，需紧急处理。",
+    "equipment_id": "CNC-001",
+    "priority": "high",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建并指派给工程师张伟，等待处理。"
+  },
+  {
+    "id": "WO-6BWWBTJ6",
+    "fault_report_id": "FR-AGEKSQRA",
+    "title": "数控车床主轴异响故障维修",
+    "description": "根据诊断结果，数控车床CNC-001出现主轴异响问题，建议检查主轴轴承润滑情况、皮带张力，并清理主轴内部杂物。如问题持续，需更换主轴轴承。",
+    "equipment_id": "CNC-001",
+    "priority": "高",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建并指派给工程师张伟处理"
+  },
+  {
+    "id": "WO-IYGMN5AI",
+    "fault_report_id": "FR-E6MHZUGI",
+    "title": "数控车床主轴异响故障",
+    "description": "设备主轴异响，需进一步检查和维修。",
+    "equipment_id": "CNC-001",
+    "priority": "中",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建，等待工程师处理"
+  }
+]

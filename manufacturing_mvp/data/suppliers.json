@@ -1,0 +1,7 @@
+[
+  {"id": "SUP-001", "name": "华鑫金属材料有限公司", "contact": "王经理", "phone": "13800138001", "materials": ["MAT-001", "MAT-003"]},
+  {"id": "SUP-002", "name": "盛达塑胶原料厂", "contact": "李总", "phone": "13800138002", "materials": ["MAT-002"]},
+  {"id": "SUP-003", "name": "精密铸造科技有限公司", "contact": "张工", "phone": "13800138003", "materials": ["MAT-004"]},
+  {"id": "SUP-004", "name": "恒通五金配件厂", "contact": "陈经理", "phone": "13800138004", "materials": ["MAT-005", "MAT-006"]},
+  {"id": "SUP-005", "name": "润达化工有限公司", "contact": "刘总", "phone": "13800138005", "materials": ["MAT-007", "MAT-008"]}
+]

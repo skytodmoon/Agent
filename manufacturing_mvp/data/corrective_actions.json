@@ -1,0 +1,38 @@
+[
+  {
+    "id": "CA-69EVP86L",
+    "inspection_id": "IN-BZ9BTQDU",
+    "hazard_type": "未分级隐患",
+    "location": "",
+    "description": "隐患记录已保存，由于未找到匹配的隐患分级标准，已自动联系安全工程师进行后续处理。",
+    "level": "一般",
+    "deadline": "2023-11-30",
+    "responsible_department": "安全工程部",
+    "assignee": "安全工程师",
+    "status": "pending"
+  },
+  {
+    "id": "CA-KHQZX2FO",
+    "inspection_id": "IN-LQH2EPYY",
+    "hazard_type": "电气隐患",
+    "location": "",
+    "description": "电气隐患整改",
+    "level": "高",
+    "deadline": "1天",
+    "responsible_department": "电工班",
+    "assignee": "",
+    "status": "pending"
+  },
+  {
+    "id": "CA-B8DMXGBW",
+    "inspection_id": "IN-43JE47NZ",
+    "hazard_type": "电气隐患",
+    "location": "",
+    "description": "电气设备存在高风险隐患，需立即处理",
+    "level": "高",
+    "deadline": "1天",
+    "responsible_department": "电工班",
+    "assignee": "",
+    "status": "pending"
+  }
+]

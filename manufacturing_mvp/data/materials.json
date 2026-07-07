@@ -1,0 +1,12 @@
+[
+  {"id": "MAT-001", "name": "铝合金板 6061", "unit": "kg", "category": "原材料"},
+  {"id": "MAT-002", "name": "ABS塑料颗粒", "unit": "kg", "category": "原材料"},
+  {"id": "MAT-003", "name": "不锈钢圆棒 304", "unit": "kg", "category": "原材料"},
+  {"id": "MAT-004", "name": "铜合金铸件", "unit": "件", "category": "半成品"},
+  {"id": "MAT-005", "name": "密封圈", "unit": "个", "category": "配件"},
+  {"id": "MAT-006", "name": "螺丝 M4x10", "unit": "个", "category": "配件"},
+  {"id": "MAT-007", "name": "液压油 ISO 46", "unit": "L", "category": "辅料"},
+  {"id": "MAT-008", "name": "切削液", "unit": "L", "category": "辅料"},
+  {"id": "MAT-009", "name": "焊丝 ER308", "unit": "kg", "category": "原材料"},
+  {"id": "MAT-010", "name": "注塑模具", "unit": "套", "category": "设备"}
+]

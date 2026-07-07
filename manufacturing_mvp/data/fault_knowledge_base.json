@@ -1,0 +1,12 @@
+[
+  {"fault_type": "主轴异响", "equipment_type": "数控车床", "description": "设备运行时主轴发出异常噪音", "solution": "1. 检查主轴轴承润滑情况；2. 检查主轴皮带张力；3. 清理主轴内部杂物；4. 如问题持续，联系维修工程师更换轴承", "severity": "high"},
+  {"fault_type": "液压系统压力不足", "equipment_type": "注塑机", "description": "液压系统压力表显示压力低于正常范围", "solution": "1. 检查液压油液位；2. 检查液压泵是否正常工作；3. 检查液压管路是否有泄漏；4. 清洗液压过滤器", "severity": "high"},
+  {"fault_type": "刀具磨损过快", "equipment_type": "数控车床", "description": "加工刀具使用寿命明显缩短", "solution": "1. 检查切削参数是否合理；2. 检查工件材质；3. 检查刀具质量；4. 调整切削液流量", "severity": "medium"},
+  {"fault_type": "注塑件尺寸偏差", "equipment_type": "注塑机", "description": "注塑产品尺寸超出公差范围", "solution": "1. 检查模具温度；2. 调整注射压力；3. 检查保压时间；4. 检查原料干燥情况", "severity": "high"},
+  {"fault_type": "冷却系统故障", "equipment_type": "数控车床", "description": "设备冷却系统不工作或效率低下", "solution": "1. 检查冷却液液位；2. 检查冷却泵是否正常；3. 清理冷却管路堵塞；4. 检查冷却风扇", "severity": "medium"},
+  {"fault_type": "送料异常", "equipment_type": "注塑机", "description": "原料无法正常送入料筒", "solution": "1. 检查料斗是否有足够原料；2. 检查送料螺杆是否堵塞；3. 检查料筒温度是否正常；4. 清理送料系统", "severity": "medium"},
+  {"fault_type": "程序报错", "equipment_type": "数控车床", "description": "CNC程序执行时出现错误代码", "solution": "1. 检查程序语法；2. 检查刀具补偿设置；3. 检查工件坐标系；4. 联系编程工程师协助排查", "severity": "medium"},
+  {"fault_type": "安全门报警", "equipment_type": "注塑机", "description": "设备安全门无法正常关闭或频繁报警", "solution": "1. 检查安全门传感器；2. 检查安全门机械结构；3. 清理安全门轨道杂物；4. 检查安全继电器", "severity": "high"},
+  {"fault_type": "主轴过热", "equipment_type": "数控车床", "description": "主轴温度过高，设备自动停机保护", "solution": "1. 检查冷却系统；2. 检查主轴轴承；3. 降低切削参数；4. 更换冷却液", "severity": "high"},
+  {"fault_type": "顶出机构故障", "equipment_type": "注塑机", "description": "产品顶出不顺畅或无法顶出", "solution": "1. 检查顶出气缸气压；2. 检查顶出模具；3. 调整顶出速度；4. 润滑顶出机构", "severity": "medium"}
+]

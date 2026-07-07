@@ -1,0 +1,66 @@
+[
+  {
+    "line_id": "LINE-A",
+    "line_name": "A产线",
+    "status": "running",
+    "capacity": 8,
+    "product_type": "精密零件",
+    "shift_count": 3,
+    "workshop": "A车间"
+  },
+  {
+    "line_id": "LINE-B",
+    "line_name": "B产线",
+    "status": "running",
+    "capacity": 6,
+    "product_type": "焊接件",
+    "shift_count": 2,
+    "workshop": "B车间"
+  },
+  {
+    "line_id": "LINE-C",
+    "line_name": "C产线",
+    "status": "running",
+    "capacity": 5,
+    "product_type": "轴类零件",
+    "shift_count": 2,
+    "workshop": "C车间"
+  },
+  {
+    "line_id": "LINE-D",
+    "line_name": "D产线",
+    "status": "running",
+    "capacity": 4,
+    "product_type": "箱体零件",
+    "shift_count": 2,
+    "workshop": "D车间"
+  },
+  {
+    "workshop_id": "A车间",
+    "workshop_name": "A车间",
+    "location": "一号厂房",
+    "area": 5000,
+    "employee_count": 80
+  },
+  {
+    "workshop_id": "B车间",
+    "workshop_name": "B车间",
+    "location": "一号厂房",
+    "area": 4000,
+    "employee_count": 60
+  },
+  {
+    "workshop_id": "C车间",
+    "workshop_name": "C车间",
+    "location": "二号厂房",
+    "area": 3000,
+    "employee_count": 45
+  },
+  {
+    "workshop_id": "D车间",
+    "workshop_name": "D车间",
+    "location": "二号厂房",
+    "area": 3500,
+    "employee_count": 50
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "QE-CLZBMHH3",
+    "defect_id": "DEF2026070601",
+    "batch_no": "B2026070601",
+    "defect_type": "数据缺失",
+    "root_cause": "未找到与批次号 B2026070601 相关的工艺数据、设备运行数据和物料批次数据",
+    "recommendations": "1. 确认批次信息是否正确；2. 检查相关系统中是否已录入该批次数据；3. 联系系统管理员核查数据完整性问题；4. 补充数据后重试。",
+    "responsible_department": "数据管理部",
+    "status": "pending"
+  },
+  {
+    "id": "QE-LMD5YWQJ",
+    "defect_id": "D2026070601",
+    "batch_no": "B2026070601",
+    "defect_type": "外观划痕",
+    "root_cause": "模具表面损伤",
+    "recommendations": "抛光模具表面",
+    "responsible_department": "工艺部",
+    "status": "pending"
+  },
+  {
+    "id": "QE-4CVCQQMB",
+    "defect_id": "DEF2026070601",
+    "batch_no": "B2026070601",
+    "defect_type": "外观划痕",
+    "root_cause": "模具表面损伤",
+    "recommendations": "抛光模具表面",
+    "responsible_department": "工艺部",
+    "status": "pending"
+  },
+  {
+    "id": "QE-64DQ9BFJ",
+    "defect_id": "D2026070601",
+    "batch_no": "B2026070601",
+    "defect_type": "外观划痕",
+    "root_cause": "模具表面损伤",
+    "recommendations": "抛光模具表面",
+    "responsible_department": "工艺部",
+    "status": "pending"
+  },
+  {
+    "id": "QE-EAZDDGRQ",
+    "defect_id": "DEF20260702-008",
+    "batch_no": "L20260702-008",
+    "defect_type": "密封不良",
+    "root_cause": "密封垫圈（MAT-005）待检状态未处理",
+    "recommendations": "联系质量工程师确认密封垫圈状态并进行相应处理",
+    "responsible_department": "质量部",
+    "status": "pending"
+  }
+]

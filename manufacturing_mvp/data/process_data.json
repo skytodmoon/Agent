@@ -1,0 +1,29 @@
+[
+  {
+    "batch_no": "B2026070601",
+    "workstation": "B车间-1号工位",
+    "temperature": 220,
+    "pressure": 12,
+    "speed": 800,
+    "duration": 45,
+    "operator": "李工"
+  },
+  {
+    "batch_no": "B2026070601",
+    "workstation": "B车间-2号工位",
+    "temperature": 180,
+    "pressure": 8,
+    "speed": 1200,
+    "duration": 30,
+    "operator": "王工"
+  },
+  {
+    "batch_no": "B2026070602",
+    "workstation": "B车间-1号工位",
+    "temperature": 218,
+    "pressure": 11.8,
+    "speed": 780,
+    "duration": 46,
+    "operator": "李工"
+  }
+]

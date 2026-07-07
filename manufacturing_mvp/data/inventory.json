@@ -1,0 +1,12 @@
+[
+  {"material_id": "MAT-001", "warehouse": "A仓库", "quantity": 500, "safety_stock": 200},
+  {"material_id": "MAT-002", "warehouse": "B仓库", "quantity": 800, "safety_stock": 300},
+  {"material_id": "MAT-003", "warehouse": "A仓库", "quantity": 150, "safety_stock": 100},
+  {"material_id": "MAT-004", "warehouse": "C仓库", "quantity": 50, "safety_stock": 30},
+  {"material_id": "MAT-005", "warehouse": "D仓库", "quantity": 2000, "safety_stock": 500},
+  {"material_id": "MAT-006", "warehouse": "D仓库", "quantity": 15000, "safety_stock": 5000},
+  {"material_id": "MAT-007", "warehouse": "B仓库", "quantity": 300, "safety_stock": 100},
+  {"material_id": "MAT-008", "warehouse": "A仓库", "quantity": 200, "safety_stock": 50},
+  {"material_id": "MAT-009", "warehouse": "C仓库", "quantity": 80, "safety_stock": 50},
+  {"material_id": "MAT-010", "warehouse": "设备库", "quantity": 5, "safety_stock": 2}
+]

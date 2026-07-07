@@ -1,0 +1,178 @@
+[
+  {
+    "report_period": "monthly",
+    "scope": "all",
+    "generated_at": "2026-07-06",
+    "summary": {
+      "total_equipment": 15,
+      "mes_equipment_count": 8,
+      "erp_equipment_count": 8,
+      "valid_count": -26,
+      "invalid_count": 41,
+      "consistency_rate": -173.33
+    },
+    "findings": {
+      "inconsistencies_count": 49,
+      "inferred_relations_count": 0,
+      "mes_only_count": 3,
+      "erp_only_count": 2,
+      "status_mismatch_count": 0
+    },
+    "details": {
+      "inconsistencies": [
+        "实例 CNC-001 缺少必需属性: equipment_id",
+        "实例 CNC-002 缺少必需属性: equipment_id",
+        "实例 CNC-002 缺少必需属性: tool_count",
+        "实例 ROB-001 缺少必需属性: equipment_id",
+        "实例 LTH-001 缺少必需属性: equipment_id",
+        "实例 MLG-001 缺少必需属性: equipment_id",
+        "实例 CNV-001 缺少必需属性: equipment_id",
+        "实例 CNC-999 缺少必需属性: equipment_id",
+        "实例 CNC-999 缺少必需属性: axis_count",
+        "实例 CNC-999 缺少必需属性: tool_count",
+        "实例 CNC-999 的属性 status 值 'unknown' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 INV-001 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-001 缺少必需属性: location",
+        "实例 ERP_CNC-001 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-001 缺少必需属性: spindle_speed",
+        "实例 ERP_CNC-001 缺少必需属性: axis_count",
+        "实例 ERP_CNC-001 缺少必需属性: tool_count",
+        "实例 ERP_CNC-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_CNC-002 缺少必需属性: location",
+        "实例 ERP_CNC-002 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-002 缺少必需属性: spindle_speed",
+        "实例 ERP_CNC-002 缺少必需属性: axis_count",
+        "实例 ERP_CNC-002 缺少必需属性: tool_count",
+        "实例 ERP_CNC-002 的属性 status 值 '维修中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_ROB-001 缺少必需属性: location",
+        "实例 ERP_ROB-001 缺少必需属性: equipment_id",
+        "实例 ERP_ROB-001 缺少必需属性: axis_count",
+        "实例 ERP_ROB-001 缺少必需属性: reach",
+        "实例 ERP_ROB-001 缺少必需属性: payload",
+        "实例 ERP_ROB-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_LTH-001 缺少必需属性: max_diameter",
+        "实例 ERP_LTH-001 缺少必需属性: location",
+        "实例 ERP_LTH-001 缺少必需属性: equipment_id",
+        "实例 ERP_LTH-001 缺少必需属性: max_length",
+        "实例 ERP_LTH-001 的属性 status 值 '故障' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_MLG-001 缺少必需属性: spindle_taper",
+        "实例 ERP_MLG-001 缺少必需属性: location",
+        "实例 ERP_MLG-001 缺少必需属性: equipment_id",
+        "实例 ERP_MLG-001 缺少必需属性: table_size",
+        "实例 ERP_MLG-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_CNC-003 缺少必需属性: location",
+        "实例 ERP_CNC-003 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-003 缺少必需属性: spindle_speed",
+        "实例 ERP_CNC-003 缺少必需属性: axis_count",
+        "实例 ERP_CNC-003 缺少必需属性: tool_count",
+        "实例 ERP_CNC-003 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_UNKNOWN-001 缺少必需属性: location",
+        "实例 ERP_UNKNOWN-001 缺少必需属性: equipment_id",
+        "实例 ERP_UNKNOWN-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']"
+      ],
+      "mes_only_equipment": [
+        "CNC-999",
+        "CNV-001",
+        "INV-001"
+      ],
+      "erp_only_equipment": [
+        "CNC-003",
+        "UNKNOWN-001"
+      ],
+      "status_mismatches": []
+    },
+    "suggestions": [
+      "建议将MES中独有的 3 台设备同步到ERP系统",
+      "建议将ERP中独有的 2 台设备同步到MES系统",
+      "发现 49 个本体约束违反，建议修复数据"
+    ]
+  },
+  {
+    "report_period": "monthly",
+    "scope": "all",
+    "generated_at": "2026-07-06",
+    "summary": {
+      "total_equipment": 15,
+      "mes_equipment_count": 8,
+      "erp_equipment_count": 8,
+      "valid_count": -26,
+      "invalid_count": 41,
+      "consistency_rate": -173.33
+    },
+    "findings": {
+      "inconsistencies_count": 49,
+      "inferred_relations_count": 0,
+      "mes_only_count": 3,
+      "erp_only_count": 2,
+      "status_mismatch_count": 0
+    },
+    "details": {
+      "inconsistencies": [
+        "实例 CNC-001 缺少必需属性: equipment_id",
+        "实例 CNC-002 缺少必需属性: tool_count",
+        "实例 CNC-002 缺少必需属性: equipment_id",
+        "实例 ROB-001 缺少必需属性: equipment_id",
+        "实例 LTH-001 缺少必需属性: equipment_id",
+        "实例 MLG-001 缺少必需属性: equipment_id",
+        "实例 CNV-001 缺少必需属性: equipment_id",
+        "实例 CNC-999 缺少必需属性: tool_count",
+        "实例 CNC-999 缺少必需属性: equipment_id",
+        "实例 CNC-999 缺少必需属性: axis_count",
+        "实例 CNC-999 的属性 status 值 'unknown' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 INV-001 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-001 缺少必需属性: tool_count",
+        "实例 ERP_CNC-001 缺少必需属性: spindle_speed",
+        "实例 ERP_CNC-001 缺少必需属性: location",
+        "实例 ERP_CNC-001 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-001 缺少必需属性: axis_count",
+        "实例 ERP_CNC-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_CNC-002 缺少必需属性: tool_count",
+        "实例 ERP_CNC-002 缺少必需属性: spindle_speed",
+        "实例 ERP_CNC-002 缺少必需属性: location",
+        "实例 ERP_CNC-002 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-002 缺少必需属性: axis_count",
+        "实例 ERP_CNC-002 的属性 status 值 '维修中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_ROB-001 缺少必需属性: payload",
+        "实例 ERP_ROB-001 缺少必需属性: location",
+        "实例 ERP_ROB-001 缺少必需属性: reach",
+        "实例 ERP_ROB-001 缺少必需属性: equipment_id",
+        "实例 ERP_ROB-001 缺少必需属性: axis_count",
+        "实例 ERP_ROB-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_LTH-001 缺少必需属性: max_diameter",
+        "实例 ERP_LTH-001 缺少必需属性: max_length",
+        "实例 ERP_LTH-001 缺少必需属性: location",
+        "实例 ERP_LTH-001 缺少必需属性: equipment_id",
+        "实例 ERP_LTH-001 的属性 status 值 '故障' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_MLG-001 缺少必需属性: table_size",
+        "实例 ERP_MLG-001 缺少必需属性: location",
+        "实例 ERP_MLG-001 缺少必需属性: spindle_taper",
+        "实例 ERP_MLG-001 缺少必需属性: equipment_id",
+        "实例 ERP_MLG-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_CNC-003 缺少必需属性: tool_count",
+        "实例 ERP_CNC-003 缺少必需属性: spindle_speed",
+        "实例 ERP_CNC-003 缺少必需属性: location",
+        "实例 ERP_CNC-003 缺少必需属性: equipment_id",
+        "实例 ERP_CNC-003 缺少必需属性: axis_count",
+        "实例 ERP_CNC-003 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']",
+        "实例 ERP_UNKNOWN-001 缺少必需属性: location",
+        "实例 ERP_UNKNOWN-001 缺少必需属性: equipment_id",
+        "实例 ERP_UNKNOWN-001 的属性 status 值 '运行中' 不在允许列表中: ['normal', 'warning', 'error', 'maintenance']"
+      ],
+      "mes_only_equipment": [
+        "INV-001",
+        "CNV-001",
+        "CNC-999"
+      ],
+      "erp_only_equipment": [
+        "UNKNOWN-001",
+        "CNC-003"
+      ],
+      "status_mismatches": []
+    },
+    "suggestions": [
+      "建议将MES中独有的 3 台设备同步到ERP系统",
+      "建议将ERP中独有的 2 台设备同步到MES系统",
+      "发现 49 个本体约束违反，建议修复数据"
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "product_batch": "B2026070601",
+    "material_code": "MAT-001",
+    "material_name": "铝合金板",
+    "supplier_id": "SUP-001",
+    "supplier_name": "鑫源材料",
+    "lot_no": "L20260701-001",
+    "quantity": 500,
+    "quality_status": "合格",
+    "inspection_date": "2026-07-02"
+  },
+  {
+    "product_batch": "B2026070601",
+    "material_code": "MAT-004",
+    "material_name": "精密螺栓",
+    "supplier_id": "SUP-003",
+    "supplier_name": "恒通五金",
+    "lot_no": "L20260703-015",
+    "quantity": 2000,
+    "quality_status": "合格",
+    "inspection_date": "2026-07-04"
+  },
+  {
+    "product_batch": "B2026070601",
+    "material_code": "MAT-005",
+    "material_name": "密封垫圈",
+    "supplier_id": "SUP-002",
+    "supplier_name": "东方橡胶",
+    "lot_no": "L20260702-008",
+    "quantity": 3000,
+    "quality_status": "待检",
+    "inspection_date": "2026-07-05"
+  },
+  {
+    "product_batch": "B2026070602",
+    "material_code": "MAT-002",
+    "material_name": "不锈钢板",
+    "supplier_id": "SUP-001",
+    "supplier_name": "鑫源材料",
+    "lot_no": "L20260702-005",
+    "quantity": 300,
+    "quality_status": "合格",
+    "inspection_date": "2026-07-03"
+  }
+]
