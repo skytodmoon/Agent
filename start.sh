@@ -33,6 +33,16 @@ print_info() {
 
 check_python() {
     print_info "检查Python环境..."
+    
+    VENV_PYTHON="../venv/bin/python"
+    
+    if [ -f "$VENV_PYTHON" ]; then
+        PYTHON_VERSION=$($VENV_PYTHON --version | cut -d' ' -f2)
+        print_info "使用项目虚拟环境Python: $PYTHON_VERSION"
+        print_success "Python环境检查通过"
+        return 0
+    fi
+    
     if ! command -v python3 &> /dev/null; then
         print_error "Python3 未安装，请先安装 Python $PYTHON_REQUIRED+"
         echo "   macOS: brew install python@3.11"
