@@ -7,6 +7,7 @@ from .agents import (
     create_report_generation_agent
 )
 from configs.model_config import get_model
+import json
 
 async def run_material_kit_demo():
     model = get_model()
@@ -17,6 +18,8 @@ async def run_material_kit_demo():
     report_agent = create_report_generation_agent(model)
     
     user_input = "产品PRD-001计划生产100件"
+    product_id = "PRD-001"
+    production_qty = 100
     
     print("=" * 80)
     print("MVP3: 物料齐套核算与交期预警Agent")
@@ -43,7 +46,7 @@ async def run_material_kit_demo():
     print(f"[风险预警Agent] 结果: {risk_result.content}")
     print("-" * 80)
     
-    report_msg = Msg(name="user", content=[TextBlock(type="text", text=f"风险评估：{risk_result.content}")], role="user")
+    report_msg = Msg(name="user", content=[TextBlock(type="text", text=f"产品ID: {product_id}, 生产数量: {production_qty}, 风险评估：{risk_result.content}")], role="user")
     print("[报表生成Agent] 处理中...")
     report_result = await report_agent.reply(report_msg)
     print(f"[报表生成Agent] 结果: {report_result.content}")

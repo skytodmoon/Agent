@@ -175,22 +175,24 @@ class SendReminderTool(BaseTool):
 
 class GenerateMaterialReportTool(BaseTool):
     name: str = "generate_material_report"
-    description: str = "输出物料齐套率报表，标注风险等级与影响工单"
+    description: str = "输出物料齐套率报表，标注风险等级与影响工单。可以接收BOM数据、库存数据和采购订单数据来计算齐套率"
     input_schema = {
         "type": "object",
         "properties": {
             "product_id": {"type": "string", "description": "产品ID"},
             "production_qty": {"type": "number", "description": "生产数量"},
-            "bom_data": {"type": "string", "description": "BOM数据"},
-            "inventory_data": {"type": "string", "description": "库存数据"},
-            "po_data": {"type": "string", "description": "采购订单数据"}
+            "bom_data": {"type": "string", "description": "BOM数据（JSON格式）"},
+            "inventory_data": {"type": "string", "description": "库存数据（JSON格式）"},
+            "po_data": {"type": "string", "description": "采购订单数据（JSON格式）"},
+            "risk_items": {"type": "string", "description": "风险项数据（JSON格式）"}
         },
         "required": ["product_id", "production_qty"],
         "description": "生成物料齐套率报表"
     }
     
     async def _call(self, product_id: str, production_qty: float, 
-                   bom_data: str = "", inventory_data: str = "", po_data: str = "") -> ToolResponse:
+                   bom_data: str = "", inventory_data: str = "", po_data: str = "",
+                   risk_items: str = "") -> ToolResponse:
         report = {
             "product_id": product_id,
             "production_qty": production_qty,
@@ -198,8 +200,116 @@ class GenerateMaterialReportTool(BaseTool):
             "kitting_materials": 0,
             "kitting_rate": 0.0,
             "risk_items": [],
+            "material_details": [],
             "status": "generated"
         }
+        
+        try:
+            if bom_data:
+                bom = json.loads(bom_data)
+            else:
+                filepath = os.path.join(DATA_DIR, "bom.json")
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    bom = json.load(f)
+            
+            if product_id in bom:
+                materials = bom[product_id].get("materials", [])
+                report["total_materials"] = len(materials)
+                
+                inventory_map = {}
+                if inventory_data:
+                    try:
+                        inv_data = json.loads(inventory_data)
+                        if isinstance(inv_data, list):
+                            for item in inv_data:
+                                mat_id = item.get("material_id") or item.get("material_code")
+                                if mat_id:
+                                    inventory_map[mat_id] = item
+                        elif isinstance(inv_data, dict):
+                            for item in inv_data.values():
+                                if isinstance(item, list):
+                                    for i in item:
+                                        mat_id = i.get("material_id") or i.get("material_code")
+                                        if mat_id:
+                                            inventory_map[mat_id] = i
+                    except:
+                        pass
+                
+                if not inventory_map:
+                    filepath = os.path.join(DATA_DIR, "inventory.json")
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        inv_data = json.load(f)
+                        for item in inv_data:
+                            mat_id = item.get("material_id") or item.get("material_code")
+                            if mat_id:
+                                inventory_map[mat_id] = item
+                
+                po_map = {}
+                if po_data:
+                    try:
+                        po_list = json.loads(po_data)
+                        if isinstance(po_list, list):
+                            for item in po_list:
+                                mat_id = item.get("material_id") or item.get("material_code")
+                                if mat_id:
+                                    if mat_id not in po_map:
+                                        po_map[mat_id] = 0
+                                    po_map[mat_id] += item.get("quantity", 0)
+                    except:
+                        pass
+                
+                kitting_count = 0
+                for mat in materials:
+                    mat_id = mat.get("material_id") or mat.get("material_code")
+                    qty_per_unit = mat.get("quantity_per_unit", 1)
+                    total_needed = qty_per_unit * production_qty
+                    
+                    inv = inventory_map.get(mat_id, {})
+                    current_stock = inv.get("quantity", 0)
+                    safety_stock = inv.get("safety_stock", 0)
+                    on_order = po_map.get(mat_id, 0)
+                    
+                    available = current_stock - safety_stock + on_order
+                    shortage = max(0, total_needed - available)
+                    
+                    is_kitting = shortage == 0
+                    if is_kitting:
+                        kitting_count += 1
+                    
+                    risk_level = "低"
+                    if shortage > 0:
+                        if shortage >= total_needed * 0.5:
+                            risk_level = "高"
+                        elif shortage >= total_needed * 0.2:
+                            risk_level = "中"
+                        else:
+                            risk_level = "低"
+                    
+                    report["material_details"].append({
+                        "material_id": mat_id,
+                        "quantity_per_unit": qty_per_unit,
+                        "total_needed": total_needed,
+                        "current_stock": current_stock,
+                        "safety_stock": safety_stock,
+                        "on_order": on_order,
+                        "available": available,
+                        "shortage": shortage,
+                        "risk_level": risk_level,
+                        "is_kitting": is_kitting
+                    })
+                    
+                    if shortage > 0:
+                        report["risk_items"].append({
+                            "material_id": mat_id,
+                            "shortage": shortage,
+                            "risk_level": risk_level
+                        })
+                
+                report["kitting_materials"] = kitting_count
+                if report["total_materials"] > 0:
+                    report["kitting_rate"] = round(kitting_count / report["total_materials"] * 100, 2)
+        except Exception as e:
+            pass
         
         reports_file = os.path.join(DATA_DIR, "material_reports.json")
         if os.path.exists(reports_file):
@@ -217,4 +327,4 @@ class GenerateMaterialReportTool(BaseTool):
             "status": "success",
             "report": report,
             "message": "物料齐套率报表已生成"
-        }, ensure_ascii=False))])
+        }, ensure_ascii=False, indent=2))])
