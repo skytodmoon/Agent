@@ -79,5 +79,118 @@
     "kitting_rate": 0.0,
     "risk_items": [],
     "status": "generated"
+  },
+  {
+    "product_id": "PROD-001",
+    "production_qty": 1000,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "PROD-001",
+    "production_qty": 1000,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "material_details": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "PROD-001",
+    "production_qty": 100,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "material_details": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "PRD-001",
+    "production_qty": 100,
+    "total_materials": 4,
+    "kitting_materials": 3,
+    "kitting_rate": 75.0,
+    "risk_items": [
+      {
+        "material_id": "MAT-004",
+        "shortage": 80,
+        "risk_level": "高"
+      }
+    ],
+    "material_details": [
+      {
+        "material_id": "MAT-001",
+        "quantity_per_unit": 2.5,
+        "total_needed": 250.0,
+        "current_stock": 500,
+        "safety_stock": 200,
+        "on_order": 0,
+        "available": 300,
+        "shortage": 0,
+        "risk_level": "低",
+        "is_kitting": true
+      },
+      {
+        "material_id": "MAT-004",
+        "quantity_per_unit": 1,
+        "total_needed": 100,
+        "current_stock": 50,
+        "safety_stock": 30,
+        "on_order": 0,
+        "available": 20,
+        "shortage": 80,
+        "risk_level": "高",
+        "is_kitting": false
+      },
+      {
+        "material_id": "MAT-005",
+        "quantity_per_unit": 4,
+        "total_needed": 400,
+        "current_stock": 2000,
+        "safety_stock": 500,
+        "on_order": 0,
+        "available": 1500,
+        "shortage": 0,
+        "risk_level": "低",
+        "is_kitting": true
+      },
+      {
+        "material_id": "MAT-006",
+        "quantity_per_unit": 12,
+        "total_needed": 1200,
+        "current_stock": 15000,
+        "safety_stock": 5000,
+        "on_order": 0,
+        "available": 10000,
+        "shortage": 0,
+        "risk_level": "低",
+        "is_kitting": true
+      }
+    ],
+    "status": "generated"
+  },
+  {
+    "product_id": "MAT-004",
+    "production_qty": 50,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "status": "generated"
+  },
+  {
+    "product_id": "PROD-001",
+    "production_qty": 100,
+    "total_materials": 0,
+    "kitting_materials": 0,
+    "kitting_rate": 0.0,
+    "risk_items": [],
+    "material_details": [],
+    "status": "generated"
   }
 ]

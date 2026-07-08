@@ -106,5 +106,68 @@
     "quantity": 100,
     "due_date": "2023-10-22",
     "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "",
+    "material_code": "MAT-004",
+    "material_name": "",
+    "quantity": 50,
+    "due_date": "",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-001",
+    "supplier_name": "华鑫金属材料有限公司",
+    "material_code": "MAT-001",
+    "material_name": "钢材",
+    "quantity": 150,
+    "due_date": "2023-11-30",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "精密铸件",
+    "quantity": 80,
+    "due_date": "2023-11-30",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "精密轴承",
+    "quantity": 50,
+    "due_date": "2023-11-15",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "铝合金铸件",
+    "quantity": 80,
+    "due_date": "2023-11-15",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "",
+    "material_code": "MAT-004",
+    "material_name": "",
+    "quantity": 50,
+    "due_date": "",
+    "status": "sent"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "supplier_name": "精密铸造科技有限公司",
+    "material_code": "MAT-004",
+    "material_name": "精密铸件",
+    "quantity": 80,
+    "due_date": "2023-06-30",
+    "status": "sent"
   }
 ]

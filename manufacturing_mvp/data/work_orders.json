@@ -105,5 +105,89 @@
     "assignee_id": "ENG-001",
     "assignee_name": "张伟",
     "remark": "工单已创建，等待工程师处理"
+  },
+  {
+    "id": "WO-B7L5DUM3",
+    "fault_report_id": "FR-NA885O6M",
+    "title": "数控车床主轴异响故障维修",
+    "description": "FANUC M-20iA 数控车床主轴出现异响，已进行初步排查，包括检查润滑、皮带张力及清理杂物，但问题仍未解决，需进一步维修。",
+    "equipment_id": "CNC-001",
+    "priority": "中",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建并指派给工程师张伟，等待处理。"
+  },
+  {
+    "id": "WO-6A8QW9NX",
+    "fault_report_id": "FR-PHBMBCWA",
+    "title": "数控车床主轴异响故障处理",
+    "description": "设备主轴异响，需前往A车间-1号工位进行详细检查与维修。",
+    "equipment_id": "CNC-001",
+    "priority": "高",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建并指派给工程师张伟，等待处理。"
+  },
+  {
+    "id": "WO-HP9DEDAZ",
+    "fault_report_id": "FR-HSXC7FF3",
+    "title": "数控车床主轴异响故障维修",
+    "description": "FANUC M-20iA数控车床主轴异响，需进行详细检查和维修。",
+    "equipment_id": "CNC-001",
+    "priority": "中",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建，等待工程师处理"
+  },
+  {
+    "id": "WO-F6JKF7CT",
+    "fault_report_id": "FR-4AGUZSVW",
+    "title": "数控车床主轴异响故障",
+    "description": "主轴异响，高严重程度故障，需立即处理",
+    "equipment_id": "CNC-001",
+    "priority": "高",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建，等待工程师处理"
+  },
+  {
+    "id": "WO-ZCWGTZLJ",
+    "fault_report_id": "FR-5ELI8MYU",
+    "title": "数控车床主轴异响故障",
+    "description": "FANUC M-20iA数控车床主轴出现异响，需立即排查处理。",
+    "equipment_id": "CNC-001",
+    "priority": "高",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建，等待工程师处理"
+  },
+  {
+    "id": "WO-A8J5DCJJ",
+    "fault_report_id": "FR-BHVCFAGK",
+    "title": "数控车床主轴异响故障",
+    "description": "主轴异响，高严重程度故障，需尽快处理以避免进一步损坏。",
+    "equipment_id": "CNC-001",
+    "priority": "高",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建并指派给工程师张伟，请尽快处理。"
+  },
+  {
+    "id": "WO-M4T9VNEW",
+    "fault_report_id": "FR-JLRXCRWD",
+    "title": "数控车床主轴异响故障",
+    "description": "主轴异响，需要检查轴承润滑、皮带张力并清理内部杂物",
+    "equipment_id": "CNC-001",
+    "priority": "high",
+    "status": "待处理",
+    "assignee_id": "ENG-001",
+    "assignee_name": "张伟",
+    "remark": "工单已创建，等待工程师处理"
   }
 ]

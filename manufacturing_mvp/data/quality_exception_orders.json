@@ -48,5 +48,25 @@
     "recommendations": "联系质量工程师确认密封垫圈状态并进行相应处理",
     "responsible_department": "质量部",
     "status": "pending"
+  },
+  {
+    "id": "QE-J2XOHID7",
+    "defect_id": "DEF20230401001",
+    "batch_no": "BATCH20230401001",
+    "defect_type": "尺寸超差",
+    "root_cause": "1. 模具磨损 2. 加工参数偏差 3. 温度控制不当 4. 测量设备误差",
+    "recommendations": "1. 更换模具 2. 调整加工参数 3. 校准温度控制系统 4. 校验测量设备",
+    "responsible_department": "设备部",
+    "status": "pending"
+  },
+  {
+    "id": "QE-KVYQZPCY",
+    "defect_id": "DF-BSGOWNER",
+    "batch_no": "BATCH20230401",
+    "defect_type": "外观划痕",
+    "root_cause": "未找到匹配的根因分析方案",
+    "recommendations": "请联系质量工程师进行进一步处理",
+    "responsible_department": "工艺部",
+    "status": "pending"
   }
 ]

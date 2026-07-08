@@ -1,0 +1,3563 @@
+{
+  "status": "success",
+  "nodes": [
+    {
+      "id": "LINE-A",
+      "label": "LINE-A",
+      "type": "ProductionLine",
+      "color": "#1ABC9C",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "line_name": "A产线",
+        "status": "running",
+        "capacity": 8,
+        "product_type": "精密零件",
+        "shift_count": 3
+      }
+    },
+    {
+      "id": "LINE-B",
+      "label": "LINE-B",
+      "type": "ProductionLine",
+      "color": "#1ABC9C",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "line_name": "B产线",
+        "status": "running",
+        "capacity": 6,
+        "product_type": "焊接件",
+        "shift_count": 2
+      }
+    },
+    {
+      "id": "LINE-C",
+      "label": "LINE-C",
+      "type": "ProductionLine",
+      "color": "#1ABC9C",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "line_name": "C产线",
+        "status": "running",
+        "capacity": 5,
+        "product_type": "轴类零件",
+        "shift_count": 2
+      }
+    },
+    {
+      "id": "LINE-D",
+      "label": "LINE-D",
+      "type": "ProductionLine",
+      "color": "#1ABC9C",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "line_name": "D产线",
+        "status": "running",
+        "capacity": 4,
+        "product_type": "箱体零件",
+        "shift_count": 2
+      }
+    },
+    {
+      "id": "A车间",
+      "label": "A车间",
+      "type": "Workshop",
+      "color": "#34495E",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "workshop_name": "A车间",
+        "location": "一号厂房",
+        "area": 5000,
+        "employee_count": 80
+      }
+    },
+    {
+      "id": "B车间",
+      "label": "B车间",
+      "type": "Workshop",
+      "color": "#34495E",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "workshop_name": "B车间",
+        "location": "一号厂房",
+        "area": 4000,
+        "employee_count": 60
+      }
+    },
+    {
+      "id": "C车间",
+      "label": "C车间",
+      "type": "Workshop",
+      "color": "#34495E",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "workshop_name": "C车间",
+        "location": "二号厂房",
+        "area": 3000,
+        "employee_count": 45
+      }
+    },
+    {
+      "id": "D车间",
+      "label": "D车间",
+      "type": "Workshop",
+      "color": "#34495E",
+      "size": 20,
+      "is_erp": false,
+      "properties": {
+        "workshop_name": "D车间",
+        "location": "二号厂房",
+        "area": 3500,
+        "employee_count": 50
+      }
+    },
+    {
+      "id": "CNC-001",
+      "label": "FANUC M-20iA",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "FANUC M-20iA",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1号工位",
+        "status": "maintenance",
+        "manufacturer": "FANUC",
+        "model": "M-20iA",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "control_system": "FANUC 31i-B",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 'maintenance' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 'maintenance' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 'maintenance' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'maintenance' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": true
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "CNC-002",
+      "label": "SIEMENS 840D",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "SIEMENS 840D",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-2号工位",
+        "status": "warning",
+        "manufacturer": "SIEMENS",
+        "model": "840D",
+        "spindle_speed": 10000,
+        "axis_count": 5,
+        "control_system": "SIEMENS 840D",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 'warning' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'warning' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 'warning' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 'warning' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ROB-001",
+      "label": "ABB IRB 1200",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "ABB IRB 1200",
+        "equipment_type": "Robot",
+        "location": "B车间-3号工位",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB 1200",
+        "axis_count": 6,
+        "payload": 7,
+        "reach": 900,
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": true
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "LTH-001",
+      "label": "CAK6140",
+      "type": "Lathe",
+      "color": "#E74C3C",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "CAK6140",
+        "equipment_type": "Lathe",
+        "location": "C车间-1号工位",
+        "status": "error",
+        "manufacturer": "沈阳机床",
+        "model": "CAK6140",
+        "max_diameter": 400,
+        "max_length": 1000,
+        "chuck_type": "三爪卡盘",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动车削程序",
+            "available": false,
+            "reason": "当前状态 'error' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止车削程序",
+            "available": false,
+            "reason": "当前状态 'error' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": true
+          },
+          {
+            "name": "change_chuck",
+            "label": "更换卡盘",
+            "description": "更换工件卡盘",
+            "available": false,
+            "reason": "当前状态 'error' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "MLG-001",
+      "label": "XK7140",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "XK7140",
+        "equipment_type": "MillingMachine",
+        "location": "C车间-2号工位",
+        "status": "normal",
+        "manufacturer": "北京机床",
+        "model": "XK7140",
+        "spindle_taper": "BT40",
+        "table_size": "800x400",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CNV-001",
+      "label": "皮带输送线",
+      "type": "Conveyor",
+      "color": "#F39C12",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "皮带输送线",
+        "equipment_type": "Conveyor",
+        "location": "A车间-5号工位",
+        "status": "normal",
+        "manufacturer": "本地供应商",
+        "model": "PVC-500",
+        "length": 10,
+        "speed": 0.5,
+        "capacity": 500,
+        "actions": [
+          {
+            "name": "start_convey",
+            "label": "启动输送",
+            "description": "启动传送带",
+            "available": true
+          },
+          {
+            "name": "stop_convey",
+            "label": "停止输送",
+            "description": "停止传送带",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "adjust_speed",
+            "label": "调整速度",
+            "description": "调整传送带速度",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "CNC-999",
+      "label": "Unknown Machine",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "Unknown Machine",
+        "equipment_type": "CNCMachine",
+        "location": "D车间",
+        "status": "unknown",
+        "manufacturer": "Unknown",
+        "model": "Unknown",
+        "spindle_speed": -100,
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 'unknown' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 'unknown' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 'unknown' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'unknown' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 'unknown' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 'unknown' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "INV-001",
+      "label": "Inventory Scanner",
+      "type": "Equipment",
+      "color": "#95A5A6",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "Inventory Scanner",
+        "equipment_type": "Equipment",
+        "location": "D车间-仓库区",
+        "status": "normal",
+        "manufacturer": "Zebra",
+        "model": "DS9900",
+        "actions": [
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "check_status",
+            "label": "状态检查",
+            "description": "检查设备当前状态",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "CNC-101",
+      "label": "五轴数控加工中心",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "VMC-850",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "max_diameter": 300,
+        "max_length": 800,
+        "spindle_taper": "BT40",
+        "table_size": "800x500",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": true
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ROB-005",
+      "label": "焊接机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "焊接机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-2区",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB-6700",
+        "axis_count": 6,
+        "payload": 200,
+        "reach": 3.0,
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": true
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "MLG-201",
+      "label": "立式铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "立式铣床",
+        "equipment_type": "MillingMachine",
+        "location": "D车间-1区",
+        "status": "normal",
+        "manufacturer": "北京第一机床",
+        "model": "XA5032",
+        "spindle_speed": 3000,
+        "axis_count": 3,
+        "spindle_taper": "BT30",
+        "table_size": "320x1250",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CNC-201",
+      "label": "五轴数控加工中心",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "VMC-850",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "max_diameter": 300,
+        "max_length": 800,
+        "spindle_taper": "BT40",
+        "table_size": "800x500",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": true
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ROB-006",
+      "label": "焊接机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "焊接机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-2区",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB-6700",
+        "axis_count": 6,
+        "payload": 200,
+        "reach": 3.0,
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": true
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "MLG-301",
+      "label": "立式铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "立式铣床",
+        "equipment_type": "MillingMachine",
+        "location": "D车间-1区",
+        "status": "normal",
+        "manufacturer": "北京第一机床",
+        "model": "XA5032",
+        "spindle_speed": 3000,
+        "axis_count": 3,
+        "spindle_taper": "BT30",
+        "table_size": "320x1250",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CNC-801",
+      "label": "新五轴数控加工中心",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "新五轴数控加工中心",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "VMC-850",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "max_diameter": 300,
+        "max_length": 800,
+        "spindle_taper": "BT40",
+        "table_size": "800x500",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": true
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ROB-009",
+      "label": "新焊接机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "新焊接机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-2区",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB-6700",
+        "axis_count": 6,
+        "payload": 200,
+        "reach": 3.0,
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": true
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "MLG-801",
+      "label": "新立式铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "新立式铣床",
+        "equipment_type": "MillingMachine",
+        "location": "D车间-1区",
+        "status": "normal",
+        "manufacturer": "北京第一机床",
+        "model": "XA5032",
+        "spindle_speed": 3000,
+        "axis_count": 3,
+        "spindle_taper": "BT30",
+        "table_size": "320x1250",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ROB-101",
+      "label": "新装配机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "新装配机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-1区",
+        "status": "normal",
+        "manufacturer": "KUKA",
+        "model": "KR 10 R1100",
+        "axis_count": 6,
+        "payload": 10,
+        "reach": 1.1,
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": true
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "MLG-101",
+      "label": "新龙门铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": false,
+      "properties": {
+        "equipment_name": "新龙门铣床",
+        "equipment_type": "MillingMachine",
+        "location": "C车间-2区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "XK2420",
+        "spindle_speed": 2000,
+        "axis_count": 4,
+        "spindle_taper": "BT50",
+        "table_size": "2000x1000",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": true
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": true
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": true
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 'normal' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_CNC-001",
+      "label": "ERP:FANUC M-20iA 数控加工中心",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "FANUC M-20iA 数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "FANUC",
+        "model_no": "M-20iA",
+        "purchase_date": "2020-05-15",
+        "installation_date": "2020-06-01",
+        "asset_value": 580000,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_CNC-002",
+      "label": "ERP:SIEMENS 840D",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "SIEMENS 840D",
+        "equipment_type": "数控机床",
+        "status": "维修中",
+        "brand": "SIEMENS",
+        "model_no": "840D",
+        "purchase_date": "2019-11-20",
+        "installation_date": "2019-12-10",
+        "asset_value": 620000,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 '维修中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 '维修中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '维修中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '维修中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 '维修中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 '维修中' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_ROB-001",
+      "label": "ERP:ABB IRB 1200",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "ABB IRB 1200",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB 1200",
+        "purchase_date": "2021-03-10",
+        "installation_date": "2021-03-25",
+        "asset_value": 180000,
+        "maintenance_cycle": 60,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_LTH-001",
+      "label": "ERP:CAK6140",
+      "type": "Lathe",
+      "color": "#E74C3C",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "CAK6140",
+        "equipment_type": "车床",
+        "status": "故障",
+        "brand": "沈阳机床",
+        "model_no": "CAK6140",
+        "purchase_date": "2018-08-05",
+        "installation_date": "2018-08-20",
+        "asset_value": 120000,
+        "maintenance_cycle": 45,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动车削程序",
+            "available": false,
+            "reason": "当前状态 '故障' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止车削程序",
+            "available": false,
+            "reason": "当前状态 '故障' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '故障' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '故障' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_chuck",
+            "label": "更换卡盘",
+            "description": "更换工件卡盘",
+            "available": false,
+            "reason": "当前状态 '故障' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_MLG-001",
+      "label": "ERP:XK7140",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "XK7140",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京机床",
+        "model_no": "XK7140",
+        "purchase_date": "2019-02-15",
+        "installation_date": "2019-03-01",
+        "asset_value": 150000,
+        "maintenance_cycle": 45,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_CNC-003",
+      "label": "ERP:MAZAK INTEGREX",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "MAZAK INTEGREX",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "MAZAK",
+        "model_no": "INTEGREX",
+        "purchase_date": "2022-01-10",
+        "installation_date": "2022-02-01",
+        "asset_value": 890000,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_UNKNOWN-001",
+      "label": "ERP:Unknown Device",
+      "type": "Equipment",
+      "color": "#95A5A6",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "Unknown Device",
+        "equipment_type": "Equipment",
+        "status": "运行中",
+        "brand": "未知",
+        "model_no": "未知",
+        "purchase_date": "2023-01-01",
+        "installation_date": "2023-01-15",
+        "asset_value": 0,
+        "maintenance_cycle": 90,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "check_status",
+            "label": "状态检查",
+            "description": "检查设备当前状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_CNC-101",
+      "label": "ERP:五轴数控加工中心",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "VMC-850",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_ROB-005",
+      "label": "ERP:焊接机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "焊接机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB-6700",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_MLG-201",
+      "label": "ERP:立式铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "立式铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京第一机床",
+        "model_no": "XA5032",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_CNC-201",
+      "label": "ERP:五轴数控加工中心",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "VMC-850",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_ROB-006",
+      "label": "ERP:焊接机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "焊接机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB-6700",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_MLG-301",
+      "label": "ERP:立式铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "立式铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京第一机床",
+        "model_no": "XA5032",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_CNC-801",
+      "label": "ERP:新五轴数控加工中心",
+      "type": "CNCMachine",
+      "color": "#3498DB",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "新五轴数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "VMC-850",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止数控加工程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_tool",
+            "label": "更换刀具",
+            "description": "更换加工刀具",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate",
+            "label": "校准",
+            "description": "执行设备校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_ROB-009",
+      "label": "ERP:新焊接机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "新焊接机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB-6700",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_MLG-801",
+      "label": "ERP:新立式铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "新立式铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京第一机床",
+        "model_no": "XA5032",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_ROB-101",
+      "label": "ERP:新装配机器人",
+      "type": "Robot",
+      "color": "#9B59B6",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "新装配机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "KUKA",
+        "model_no": "KR 10 R1100",
+        "purchase_date": "2026-07-08",
+        "installation_date": "2026-07-08",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_task",
+            "label": "启动任务",
+            "description": "启动机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_task",
+            "label": "停止任务",
+            "description": "停止机器人作业任务",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "teach_mode",
+            "label": "示教模式",
+            "description": "进入示教编程模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, maintenance"
+          },
+          {
+            "name": "calibrate_joints",
+            "label": "关节校准",
+            "description": "执行关节精度校准",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ERP_MLG-101",
+      "label": "ERP:新龙门铣床",
+      "type": "MillingMachine",
+      "color": "#2ECC71",
+      "size": 15,
+      "is_erp": true,
+      "properties": {
+        "equipment_name": "新龙门铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "XK2420",
+        "purchase_date": "2026-07-08",
+        "installation_date": "2026-07-08",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP",
+        "actions": [
+          {
+            "name": "start_production",
+            "label": "启动生产",
+            "description": "启动铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal"
+          },
+          {
+            "name": "stop_production",
+            "label": "停止生产",
+            "description": "停止铣削程序",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning"
+          },
+          {
+            "name": "start_maintenance",
+            "label": "开始维护",
+            "description": "进入维护模式",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: normal, warning, error"
+          },
+          {
+            "name": "reset_error",
+            "label": "重置错误",
+            "description": "清除故障状态",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: error"
+          },
+          {
+            "name": "change_spindle",
+            "label": "更换主轴",
+            "description": "更换铣削主轴",
+            "available": false,
+            "reason": "当前状态 '运行中' 不允许此操作，需要状态: maintenance"
+          }
+        ]
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "LINE-A",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-A",
+      "target": "CNC-001",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-A",
+      "target": "CNC-002",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-A",
+      "target": "CNV-001",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-A",
+      "target": "CNC-101",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-A",
+      "target": "CNC-201",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-A",
+      "target": "CNC-801",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-B",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-B",
+      "target": "ROB-001",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-B",
+      "target": "ROB-005",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-B",
+      "target": "ROB-006",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-B",
+      "target": "ROB-009",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-B",
+      "target": "ROB-101",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-C",
+      "target": "C车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-C",
+      "target": "LTH-001",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-C",
+      "target": "MLG-001",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-C",
+      "target": "MLG-101",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-D",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-D",
+      "target": "CNC-999",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-D",
+      "target": "INV-001",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-D",
+      "target": "MLG-201",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-D",
+      "target": "MLG-301",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "LINE-D",
+      "target": "MLG-801",
+      "relation": "hasPart",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-001",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-001",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-002",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-002",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-001",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-001",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "LTH-001",
+      "target": "LINE-C",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "LTH-001",
+      "target": "C车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-001",
+      "target": "LINE-C",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-001",
+      "target": "C车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "CNV-001",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "CNV-001",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-999",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-999",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "INV-001",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "INV-001",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-101",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-101",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-005",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-005",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-201",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-201",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-201",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-201",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-006",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-006",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-301",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-301",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-801",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "CNC-801",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-009",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-009",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-801",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-801",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-101",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ROB-101",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-101",
+      "target": "LINE-C",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "MLG-101",
+      "target": "C车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-001",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-001",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-002",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-002",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-001",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-001",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_LTH-001",
+      "target": "LINE-C",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_LTH-001",
+      "target": "C车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-001",
+      "target": "LINE-C",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-001",
+      "target": "C车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-003",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-003",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_UNKNOWN-001",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_UNKNOWN-001",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-101",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-101",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-005",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-005",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-201",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-201",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-201",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-201",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-006",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-006",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-301",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-301",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-801",
+      "target": "LINE-A",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_CNC-801",
+      "target": "A车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-009",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-009",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-801",
+      "target": "LINE-D",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-801",
+      "target": "D车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-101",
+      "target": "LINE-B",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_ROB-101",
+      "target": "B车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-101",
+      "target": "LINE-C",
+      "relation": "belongsTo",
+      "is_inferred": false
+    },
+    {
+      "source": "ERP_MLG-101",
+      "target": "C车间",
+      "relation": "locatedIn",
+      "is_inferred": false
+    }
+  ],
+  "inferred_relations": [],
+  "inference_paths": [],
+  "cross_system_inconsistencies": [
+    {
+      "equipment_id": "CNC-001",
+      "conflicts": [
+        {
+          "property": "equipment_name",
+          "mes_value": "FANUC M-20iA",
+          "erp_value": "FANUC M-20iA 数控加工中心"
+        },
+        {
+          "property": "equipment_type",
+          "mes_value": "CNCMachine",
+          "erp_value": "数控机床"
+        },
+        {
+          "property": "status",
+          "mes_value": "maintenance",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "FANUC M-20iA",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1号工位",
+        "status": "maintenance",
+        "manufacturer": "FANUC",
+        "model": "M-20iA",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "control_system": "FANUC 31i-B"
+      },
+      "erp_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "FANUC M-20iA 数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "FANUC",
+        "model_no": "M-20iA",
+        "purchase_date": "2020-05-15",
+        "installation_date": "2020-06-01",
+        "asset_value": 580000,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "CNC-002",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "CNCMachine",
+          "erp_value": "数控机床"
+        },
+        {
+          "property": "status",
+          "mes_value": "warning",
+          "erp_value": "维修中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "SIEMENS 840D",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-2号工位",
+        "status": "warning",
+        "manufacturer": "SIEMENS",
+        "model": "840D",
+        "spindle_speed": 10000,
+        "axis_count": 5,
+        "control_system": "SIEMENS 840D"
+      },
+      "erp_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "SIEMENS 840D",
+        "equipment_type": "数控机床",
+        "status": "维修中",
+        "brand": "SIEMENS",
+        "model_no": "840D",
+        "purchase_date": "2019-11-20",
+        "installation_date": "2019-12-10",
+        "asset_value": 620000,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "ROB-001",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "Robot",
+          "erp_value": "工业机器人"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "Robot",
+        "equipment_name": "ABB IRB 1200",
+        "equipment_type": "Robot",
+        "location": "B车间-3号工位",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB 1200",
+        "axis_count": 6,
+        "payload": 7,
+        "reach": 900
+      },
+      "erp_instance": {
+        "__class__": "Robot",
+        "equipment_name": "ABB IRB 1200",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB 1200",
+        "purchase_date": "2021-03-10",
+        "installation_date": "2021-03-25",
+        "asset_value": 180000,
+        "maintenance_cycle": 60,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "LTH-001",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "Lathe",
+          "erp_value": "车床"
+        },
+        {
+          "property": "status",
+          "mes_value": "error",
+          "erp_value": "故障"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "Lathe",
+        "equipment_name": "CAK6140",
+        "equipment_type": "Lathe",
+        "location": "C车间-1号工位",
+        "status": "error",
+        "manufacturer": "沈阳机床",
+        "model": "CAK6140",
+        "max_diameter": 400,
+        "max_length": 1000,
+        "chuck_type": "三爪卡盘"
+      },
+      "erp_instance": {
+        "__class__": "Lathe",
+        "equipment_name": "CAK6140",
+        "equipment_type": "车床",
+        "status": "故障",
+        "brand": "沈阳机床",
+        "model_no": "CAK6140",
+        "purchase_date": "2018-08-05",
+        "installation_date": "2018-08-20",
+        "asset_value": 120000,
+        "maintenance_cycle": 45,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "MLG-001",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "MillingMachine",
+          "erp_value": "铣床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "XK7140",
+        "equipment_type": "MillingMachine",
+        "location": "C车间-2号工位",
+        "status": "normal",
+        "manufacturer": "北京机床",
+        "model": "XK7140",
+        "spindle_taper": "BT40",
+        "table_size": "800x400"
+      },
+      "erp_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "XK7140",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京机床",
+        "model_no": "XK7140",
+        "purchase_date": "2019-02-15",
+        "installation_date": "2019-03-01",
+        "asset_value": 150000,
+        "maintenance_cycle": 45,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "CNC-101",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "CNCMachine",
+          "erp_value": "数控机床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "VMC-850",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "max_diameter": 300,
+        "max_length": 800,
+        "spindle_taper": "BT40",
+        "table_size": "800x500"
+      },
+      "erp_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "VMC-850",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "ROB-005",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "Robot",
+          "erp_value": "工业机器人"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "Robot",
+        "equipment_name": "焊接机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-2区",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB-6700",
+        "axis_count": 6,
+        "payload": 200,
+        "reach": 3.0
+      },
+      "erp_instance": {
+        "__class__": "Robot",
+        "equipment_name": "焊接机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB-6700",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "MLG-201",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "MillingMachine",
+          "erp_value": "铣床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "立式铣床",
+        "equipment_type": "MillingMachine",
+        "location": "D车间-1区",
+        "status": "normal",
+        "manufacturer": "北京第一机床",
+        "model": "XA5032",
+        "spindle_speed": 3000,
+        "axis_count": 3,
+        "spindle_taper": "BT30",
+        "table_size": "320x1250"
+      },
+      "erp_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "立式铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京第一机床",
+        "model_no": "XA5032",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "CNC-201",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "CNCMachine",
+          "erp_value": "数控机床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "VMC-850",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "max_diameter": 300,
+        "max_length": 800,
+        "spindle_taper": "BT40",
+        "table_size": "800x500"
+      },
+      "erp_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "五轴数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "VMC-850",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "ROB-006",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "Robot",
+          "erp_value": "工业机器人"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "Robot",
+        "equipment_name": "焊接机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-2区",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB-6700",
+        "axis_count": 6,
+        "payload": 200,
+        "reach": 3.0
+      },
+      "erp_instance": {
+        "__class__": "Robot",
+        "equipment_name": "焊接机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB-6700",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "MLG-301",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "MillingMachine",
+          "erp_value": "铣床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "立式铣床",
+        "equipment_type": "MillingMachine",
+        "location": "D车间-1区",
+        "status": "normal",
+        "manufacturer": "北京第一机床",
+        "model": "XA5032",
+        "spindle_speed": 3000,
+        "axis_count": 3,
+        "spindle_taper": "BT30",
+        "table_size": "320x1250"
+      },
+      "erp_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "立式铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京第一机床",
+        "model_no": "XA5032",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "CNC-801",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "CNCMachine",
+          "erp_value": "数控机床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "新五轴数控加工中心",
+        "equipment_type": "CNCMachine",
+        "location": "A车间-1区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "VMC-850",
+        "spindle_speed": 8000,
+        "tool_count": 24,
+        "axis_count": 5,
+        "max_diameter": 300,
+        "max_length": 800,
+        "spindle_taper": "BT40",
+        "table_size": "800x500"
+      },
+      "erp_instance": {
+        "__class__": "CNCMachine",
+        "equipment_name": "新五轴数控加工中心",
+        "equipment_type": "数控机床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "VMC-850",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "ROB-009",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "Robot",
+          "erp_value": "工业机器人"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "Robot",
+        "equipment_name": "新焊接机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-2区",
+        "status": "normal",
+        "manufacturer": "ABB",
+        "model": "IRB-6700",
+        "axis_count": 6,
+        "payload": 200,
+        "reach": 3.0
+      },
+      "erp_instance": {
+        "__class__": "Robot",
+        "equipment_name": "新焊接机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "ABB",
+        "model_no": "IRB-6700",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "MLG-801",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "MillingMachine",
+          "erp_value": "铣床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "新立式铣床",
+        "equipment_type": "MillingMachine",
+        "location": "D车间-1区",
+        "status": "normal",
+        "manufacturer": "北京第一机床",
+        "model": "XA5032",
+        "spindle_speed": 3000,
+        "axis_count": 3,
+        "spindle_taper": "BT30",
+        "table_size": "320x1250"
+      },
+      "erp_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "新立式铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "北京第一机床",
+        "model_no": "XA5032",
+        "purchase_date": "2026-07-06",
+        "installation_date": "2026-07-06",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "ROB-101",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "Robot",
+          "erp_value": "工业机器人"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "Robot",
+        "equipment_name": "新装配机器人",
+        "equipment_type": "Robot",
+        "location": "B车间-1区",
+        "status": "normal",
+        "manufacturer": "KUKA",
+        "model": "KR 10 R1100",
+        "axis_count": 6,
+        "payload": 10,
+        "reach": 1.1
+      },
+      "erp_instance": {
+        "__class__": "Robot",
+        "equipment_name": "新装配机器人",
+        "equipment_type": "工业机器人",
+        "status": "运行中",
+        "brand": "KUKA",
+        "model_no": "KR 10 R1100",
+        "purchase_date": "2026-07-08",
+        "installation_date": "2026-07-08",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    },
+    {
+      "equipment_id": "MLG-101",
+      "conflicts": [
+        {
+          "property": "equipment_type",
+          "mes_value": "MillingMachine",
+          "erp_value": "铣床"
+        },
+        {
+          "property": "status",
+          "mes_value": "normal",
+          "erp_value": "运行中"
+        }
+      ],
+      "mes_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "新龙门铣床",
+        "equipment_type": "MillingMachine",
+        "location": "C车间-2区",
+        "status": "normal",
+        "manufacturer": "沈阳机床",
+        "model": "XK2420",
+        "spindle_speed": 2000,
+        "axis_count": 4,
+        "spindle_taper": "BT50",
+        "table_size": "2000x1000"
+      },
+      "erp_instance": {
+        "__class__": "MillingMachine",
+        "equipment_name": "新龙门铣床",
+        "equipment_type": "铣床",
+        "status": "运行中",
+        "brand": "沈阳机床",
+        "model_no": "XK2420",
+        "purchase_date": "2026-07-08",
+        "installation_date": "2026-07-08",
+        "asset_value": 0,
+        "maintenance_cycle": 30,
+        "_source": "ERP"
+      }
+    }
+  ],
+  "color_map": {
+    "CNCMachine": "#3498DB",
+    "Lathe": "#E74C3C",
+    "MillingMachine": "#2ECC71",
+    "Robot": "#9B59B6",
+    "Conveyor": "#F39C12",
+    "Equipment": "#95A5A6",
+    "ProductionLine": "#1ABC9C",
+    "Workshop": "#34495E",
+    "MaintenanceTask": "#E91E63"
+  },
+  "type_labels": {
+    "CNCMachine": "数控机床",
+    "Lathe": "车床",
+    "MillingMachine": "铣床",
+    "Robot": "工业机器人",
+    "Conveyor": "传送带",
+    "Equipment": "设备",
+    "ProductionLine": "产线",
+    "Workshop": "车间",
+    "MaintenanceTask": "维护任务"
+  },
+  "graph_summary": {
+    "total_instances": 45,
+    "total_relations": 97,
+    "inferred_count": 0,
+    "conflict_count": 16
+  }
+}

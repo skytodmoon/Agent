@@ -70,19 +70,6 @@
     "assigned_line": "LINE-C"
   },
   {
-    "equipment_code": "CNC-001",
-    "equipment_name": "FANUC M-20iA",
-    "equipment_type": "数控机床",
-    "department": "A车间",
-    "status": "运行中",
-    "brand": "FANUC",
-    "model_no": "M-20iA",
-    "purchase_date": "2020-05-15",
-    "asset_value": 580000,
-    "maintenance_cycle": 30,
-    "assigned_line": "LINE-A"
-  },
-  {
     "equipment_code": "CNC-003",
     "equipment_name": "MAZAK INTEGREX",
     "equipment_type": "数控机床",
@@ -153,7 +140,49 @@
     "assigned_line": "LINE-D"
   },
   {
-    "equipment_code": "CNC-401",
+    "equipment_code": "CNC-201",
+    "equipment_name": "五轴数控加工中心",
+    "equipment_type": "数控机床",
+    "department": "A车间",
+    "status": "运行中",
+    "brand": "沈阳机床",
+    "model_no": "VMC-850",
+    "purchase_date": "2026-07-06",
+    "installation_date": "2026-07-06",
+    "asset_value": 0,
+    "maintenance_cycle": 30,
+    "assigned_line": "LINE-A"
+  },
+  {
+    "equipment_code": "ROB-006",
+    "equipment_name": "焊接机器人",
+    "equipment_type": "工业机器人",
+    "department": "B车间",
+    "status": "运行中",
+    "brand": "ABB",
+    "model_no": "IRB-6700",
+    "purchase_date": "2026-07-06",
+    "installation_date": "2026-07-06",
+    "asset_value": 0,
+    "maintenance_cycle": 30,
+    "assigned_line": "LINE-B"
+  },
+  {
+    "equipment_code": "MLG-301",
+    "equipment_name": "立式铣床",
+    "equipment_type": "铣床",
+    "department": "D车间",
+    "status": "运行中",
+    "brand": "北京第一机床",
+    "model_no": "XA5032",
+    "purchase_date": "2026-07-06",
+    "installation_date": "2026-07-06",
+    "asset_value": 0,
+    "maintenance_cycle": 30,
+    "assigned_line": "LINE-D"
+  },
+  {
+    "equipment_code": "CNC-801",
     "equipment_name": "新五轴数控加工中心",
     "equipment_type": "数控机床",
     "department": "A车间",
@@ -167,7 +196,7 @@
     "assigned_line": "LINE-A"
   },
   {
-    "equipment_code": "ROB-007",
+    "equipment_code": "ROB-009",
     "equipment_name": "新焊接机器人",
     "equipment_type": "工业机器人",
     "department": "B车间",
@@ -181,7 +210,7 @@
     "assigned_line": "LINE-B"
   },
   {
-    "equipment_code": "MLG-401",
+    "equipment_code": "MLG-801",
     "equipment_name": "新立式铣床",
     "equipment_type": "铣床",
     "department": "D车间",
@@ -195,17 +224,31 @@
     "assigned_line": "LINE-D"
   },
   {
-    "equipment_code": "CNC-501",
-    "equipment_name": "新FANUC加工中心",
-    "equipment_type": "数控机床",
-    "department": "A车间",
+    "equipment_code": "ROB-101",
+    "equipment_name": "新装配机器人",
+    "equipment_type": "工业机器人",
+    "department": "B车间",
     "status": "运行中",
-    "brand": "FANUC",
-    "model_no": "M-20iA",
-    "purchase_date": "2026-07-06",
-    "installation_date": "2026-07-06",
+    "brand": "KUKA",
+    "model_no": "KR 10 R1100",
+    "purchase_date": "2026-07-08",
+    "installation_date": "2026-07-08",
     "asset_value": 0,
     "maintenance_cycle": 30,
-    "assigned_line": "LINE-A"
+    "assigned_line": "LINE-B"
+  },
+  {
+    "equipment_code": "MLG-101",
+    "equipment_name": "新龙门铣床",
+    "equipment_type": "铣床",
+    "department": "C车间",
+    "status": "运行中",
+    "brand": "沈阳机床",
+    "model_no": "XK2420",
+    "purchase_date": "2026-07-08",
+    "installation_date": "2026-07-08",
+    "asset_value": 0,
+    "maintenance_cycle": 30,
+    "assigned_line": "LINE-C"
   }
 ]

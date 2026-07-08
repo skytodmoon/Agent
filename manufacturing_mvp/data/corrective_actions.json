@@ -34,5 +34,53 @@
     "responsible_department": "电工班",
     "assignee": "",
     "status": "pending"
+  },
+  {
+    "id": "CA-DGXVLNUT",
+    "inspection_id": "IN-9BHIQGUY",
+    "hazard_type": "电气隐患",
+    "location": "",
+    "description": "电气设备存在高风险问题，需立即整改",
+    "level": "高",
+    "deadline": "1天",
+    "responsible_department": "电工班",
+    "assignee": "",
+    "status": "pending"
+  },
+  {
+    "id": "CA-K4JV2ABA",
+    "inspection_id": "IN-DDBQ66L8",
+    "hazard_type": "电气隐患",
+    "location": "",
+    "description": "电气设备存在高风险隐患，需立即处理",
+    "level": "高",
+    "deadline": "1天",
+    "responsible_department": "电工班",
+    "assignee": "",
+    "status": "pending"
+  },
+  {
+    "id": "CA-8XGCV5VS",
+    "inspection_id": "IN-CFUFYUKC",
+    "hazard_type": "电气隐患",
+    "location": "",
+    "description": "请立即处理电气隐患，确保电路安全，避免发生安全事故。",
+    "level": "高",
+    "deadline": "1天",
+    "responsible_department": "电工班",
+    "assignee": "电工班班长",
+    "status": "pending"
+  },
+  {
+    "id": "CA-VBEUWR3J",
+    "inspection_id": "IN-NNBRGFWC",
+    "hazard_type": "电气隐患",
+    "location": "",
+    "description": "请立即处理电气隐患，确保用电安全。",
+    "level": "高",
+    "deadline": "1天",
+    "responsible_department": "电工班",
+    "assignee": "电工班负责人",
+    "status": "pending"
   }
 ]

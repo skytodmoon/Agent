@@ -26,5 +26,26 @@
     "order_changes": "",
     "status": "synced",
     "timestamp": "2026-07-06"
+  },
+  {
+    "plan_id": "SP-98GR5TX3",
+    "line_id": "L-001",
+    "order_changes": "紧急订单优先排程，非紧急订单延迟",
+    "status": "synced",
+    "timestamp": "2026-07-06"
+  },
+  {
+    "plan_id": "SP-HWQHK6ME",
+    "line_id": "L123456789",
+    "order_changes": "紧急订单优先生产，非紧急订单交期延迟",
+    "status": "synced",
+    "timestamp": "2026-07-06"
+  },
+  {
+    "plan_id": "SP-JPSCNM2H",
+    "line_id": "L123456",
+    "order_changes": "紧急订单优先生产，部分非紧急订单交期延迟",
+    "status": "synced",
+    "timestamp": "2026-07-06"
   }
 ]

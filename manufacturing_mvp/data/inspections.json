@@ -61,5 +61,41 @@
     "reporter": "王安全",
     "severity": "中",
     "status": "pending"
+  },
+  {
+    "id": "IN-9BHIQGUY",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "配电箱未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-DDBQ66L8",
+    "type": "电气隐患",
+    "location": "A车间-1号工位配电箱",
+    "description": "配电箱未上锁，存在安全风险",
+    "reporter": "张三",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-CFUFYUKC",
+    "type": "电气隐患",
+    "location": "A车间配电箱",
+    "description": "未上锁，存在安全风险",
+    "reporter": "王安全",
+    "severity": "中",
+    "status": "pending"
+  },
+  {
+    "id": "IN-NNBRGFWC",
+    "type": "电气隐患",
+    "location": "A车间-1号工位配电箱",
+    "description": "未上锁，存在安全风险",
+    "reporter": "张三",
+    "severity": "中",
+    "status": "pending"
   }
 ]

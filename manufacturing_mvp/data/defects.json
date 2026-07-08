@@ -106,5 +106,23 @@
     "severity": "高",
     "operator": "默认操作员",
     "status": "pending"
+  },
+  {
+    "id": "DF-EXVACNTF",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "A车间-1号工位",
+    "severity": "高",
+    "operator": "未提供",
+    "status": "pending"
+  },
+  {
+    "id": "DF-BSGOWNER",
+    "defect_type": "外观划痕",
+    "batch_no": "B2026070601",
+    "location": "A车间-1号工位",
+    "severity": "高",
+    "operator": "默认操作员",
+    "status": "pending"
   }
 ]

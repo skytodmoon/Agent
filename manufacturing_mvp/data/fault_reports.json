@@ -148,5 +148,75 @@
     "priority": "P2中",
     "reported_by": "张三",
     "status": "pending"
+  },
+  {
+    "id": "FR-NA885O6M",
+    "equipment_id": "CNC-001",
+    "equipment_name": "FANUC M-20iA",
+    "location": "A车间-1号工位",
+    "description": "主轴异响",
+    "priority": "P2",
+    "reported_by": "张三",
+    "status": "pending"
+  },
+  {
+    "id": "FR-PHBMBCWA",
+    "equipment_id": "CNC-001",
+    "equipment_name": "FANUC M-20iA",
+    "location": "A车间-1号工位",
+    "description": "设备主轴异响",
+    "priority": "P2中",
+    "reported_by": "张三",
+    "status": "pending"
+  },
+  {
+    "id": "FR-HSXC7FF3",
+    "equipment_id": "CNC-001",
+    "equipment_name": "FANUC M-20iA",
+    "location": "A车间-1号工位",
+    "description": "主轴异响",
+    "priority": "P1",
+    "reported_by": "张三",
+    "status": "pending"
+  },
+  {
+    "id": "FR-4AGUZSVW",
+    "equipment_id": "CNC-001",
+    "equipment_name": "FANUC M-20iA",
+    "location": "A车间-1号工位",
+    "description": "主轴异响",
+    "priority": "P2中",
+    "reported_by": "张三",
+    "status": "pending"
+  },
+  {
+    "id": "FR-5ELI8MYU",
+    "equipment_id": "CNC-001",
+    "equipment_name": "FANUC M-20iA",
+    "location": "A车间-1号工位",
+    "description": "主轴异响",
+    "priority": "P2",
+    "reported_by": "张三",
+    "status": "pending"
+  },
+  {
+    "id": "FR-BHVCFAGK",
+    "equipment_id": "CNC-001",
+    "equipment_name": "FANUC M-20iA",
+    "location": "A车间-1号工位",
+    "description": "主轴异响",
+    "priority": "P2中",
+    "reported_by": "张三",
+    "status": "pending"
+  },
+  {
+    "id": "FR-JLRXCRWD",
+    "equipment_id": "CNC-001",
+    "equipment_name": "FANUC M-20iA",
+    "location": "A车间-1号工位",
+    "description": "主轴异响",
+    "priority": "P2中",
+    "reported_by": "张三",
+    "status": "pending"
   }
 ]

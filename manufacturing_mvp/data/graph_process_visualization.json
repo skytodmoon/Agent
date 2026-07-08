@@ -1,0 +1,791 @@
+{
+  "nodes": [
+    {
+      "id": "化工车间",
+      "label": "化工车间",
+      "type": "Workshop",
+      "color": "#5F27CD",
+      "size": 18,
+      "properties": {
+        "workshop_name": "化工车间",
+        "location": "三号厂房",
+        "area": 8000,
+        "employee_count": 120
+      }
+    },
+    {
+      "id": "公用工程车间",
+      "label": "公用工程车间",
+      "type": "Workshop",
+      "color": "#5F27CD",
+      "size": 18,
+      "properties": {
+        "workshop_name": "公用工程车间",
+        "location": "四号厂房",
+        "area": 6000,
+        "employee_count": 60
+      }
+    },
+    {
+      "id": "RCT-001",
+      "label": "主反应釜A",
+      "type": "Reactor",
+      "color": "#FF6B6B",
+      "size": 15,
+      "properties": {
+        "equipment_name": "主反应釜A",
+        "equipment_type": "Reactor",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "江阴化工机械",
+        "model": "FBR-5000",
+        "volume": 5000,
+        "operating_temperature": 180,
+        "operating_pressure": 2.5,
+        "agitator_speed": 60,
+        "material": "不锈钢316L",
+        "reaction_type": "聚合反应",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "RCT-002",
+      "label": "主反应釜B",
+      "type": "Reactor",
+      "color": "#FF6B6B",
+      "size": 15,
+      "properties": {
+        "equipment_name": "主反应釜B",
+        "equipment_type": "Reactor",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "江阴化工机械",
+        "model": "FBR-5000",
+        "volume": 5000,
+        "operating_temperature": 185,
+        "operating_pressure": 2.6,
+        "agitator_speed": 58,
+        "material": "不锈钢316L",
+        "reaction_type": "聚合反应",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "TNK-001",
+      "label": "原料储罐-丙烯",
+      "type": "Tank",
+      "color": "#4ECDC4",
+      "size": 15,
+      "properties": {
+        "equipment_name": "原料储罐-丙烯",
+        "equipment_type": "Tank",
+        "location": "化工车间-原料区",
+        "status": "running",
+        "manufacturer": "中油储罐",
+        "model": "VERT-10000",
+        "volume": 10000,
+        "level": 78,
+        "material_type": "液态丙烯",
+        "pressure": 1.2,
+        "temperature": -5,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "TNK-002",
+      "label": "原料储罐-乙烯",
+      "type": "Tank",
+      "color": "#4ECDC4",
+      "size": 15,
+      "properties": {
+        "equipment_name": "原料储罐-乙烯",
+        "equipment_type": "Tank",
+        "location": "化工车间-原料区",
+        "status": "running",
+        "manufacturer": "中油储罐",
+        "model": "VERT-10000",
+        "volume": 10000,
+        "level": 65,
+        "material_type": "液态乙烯",
+        "pressure": 1.1,
+        "temperature": -10,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "TNK-003",
+      "label": "成品储罐-PP颗粒",
+      "type": "Tank",
+      "color": "#4ECDC4",
+      "size": 15,
+      "properties": {
+        "equipment_name": "成品储罐-PP颗粒",
+        "equipment_type": "Tank",
+        "location": "化工车间-成品区",
+        "status": "running",
+        "manufacturer": "中油储罐",
+        "model": "HORZ-20000",
+        "volume": 20000,
+        "level": 45,
+        "material_type": "PP颗粒",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "PMP-001",
+      "label": "进料泵-丙烯",
+      "type": "Pump",
+      "color": "#FFEAA7",
+      "size": 15,
+      "properties": {
+        "equipment_name": "进料泵-丙烯",
+        "equipment_type": "Pump",
+        "location": "化工车间-1号区",
+        "status": "error",
+        "manufacturer": "格兰富",
+        "model": "CRN-50",
+        "flow_rate": 80,
+        "head": 50,
+        "power": 37,
+        "pump_type": "离心泵",
+        "suction_pressure": 1.2,
+        "discharge_pressure": 3.5,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "PMP-002",
+      "label": "进料泵-乙烯",
+      "type": "Pump",
+      "color": "#FFEAA7",
+      "size": 15,
+      "properties": {
+        "equipment_name": "进料泵-乙烯",
+        "equipment_type": "Pump",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "格兰富",
+        "model": "CRN-50",
+        "flow_rate": 60,
+        "head": 55,
+        "power": 30,
+        "pump_type": "离心泵",
+        "suction_pressure": 1.1,
+        "discharge_pressure": 3.3,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "PMP-003",
+      "label": "循环泵-反应釜A",
+      "type": "Pump",
+      "color": "#FFEAA7",
+      "size": 15,
+      "properties": {
+        "equipment_name": "循环泵-反应釜A",
+        "equipment_type": "Pump",
+        "location": "化工车间-1号区",
+        "status": "warning",
+        "manufacturer": "荏原",
+        "model": "EBARA-65",
+        "flow_rate": 120,
+        "head": 30,
+        "power": 45,
+        "pump_type": "离心泵",
+        "suction_pressure": 2.5,
+        "discharge_pressure": 2.8,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "VAL-001",
+      "label": "进料阀-丙烯",
+      "type": "Valve",
+      "color": "#96CEB4",
+      "size": 15,
+      "properties": {
+        "equipment_name": "进料阀-丙烯",
+        "equipment_type": "Valve",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "Fisher",
+        "model": "EZR",
+        "size": 150,
+        "position": 65,
+        "valve_type": "调节阀",
+        "actuator": "气动",
+        "pressure_class": "Class 150",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "VAL-002",
+      "label": "进料阀-乙烯",
+      "type": "Valve",
+      "color": "#96CEB4",
+      "size": 15,
+      "properties": {
+        "equipment_name": "进料阀-乙烯",
+        "equipment_type": "Valve",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "Fisher",
+        "model": "EZR",
+        "size": 125,
+        "position": 55,
+        "valve_type": "调节阀",
+        "actuator": "气动",
+        "pressure_class": "Class 150",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "VAL-003",
+      "label": "出料阀-反应釜A",
+      "type": "Valve",
+      "color": "#96CEB4",
+      "size": 15,
+      "properties": {
+        "equipment_name": "出料阀-反应釜A",
+        "equipment_type": "Valve",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "Fisher",
+        "model": "EZR",
+        "size": 200,
+        "position": 40,
+        "valve_type": "球阀",
+        "actuator": "电动",
+        "pressure_class": "Class 300",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "HEX-001",
+      "label": "预热器-原料",
+      "type": "HeatExchanger",
+      "color": "#45B7D1",
+      "size": 15,
+      "properties": {
+        "equipment_name": "预热器-原料",
+        "equipment_type": "HeatExchanger",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "兰州换热",
+        "model": "U-tube-500",
+        "area": 500,
+        "duty": 8000,
+        "hot_inlet_temp": 200,
+        "cold_inlet_temp": 25,
+        "exchanger_type": "U型管换热器",
+        "hot_outlet_temp": 120,
+        "cold_outlet_temp": 160,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "HEX-002",
+      "label": "冷凝器-反应釜A",
+      "type": "HeatExchanger",
+      "color": "#45B7D1",
+      "size": 15,
+      "properties": {
+        "equipment_name": "冷凝器-反应釜A",
+        "equipment_type": "HeatExchanger",
+        "location": "化工车间-1号区",
+        "status": "running",
+        "manufacturer": "兰州换热",
+        "model": "ShellTube-800",
+        "area": 800,
+        "duty": 12000,
+        "hot_inlet_temp": 180,
+        "cold_inlet_temp": 30,
+        "exchanger_type": "壳管式换热器",
+        "hot_outlet_temp": 45,
+        "cold_outlet_temp": 85,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "DST-001",
+      "label": "精馏塔-粗产品",
+      "type": "DistillationColumn",
+      "color": "#DDA0DD",
+      "size": 15,
+      "properties": {
+        "equipment_name": "精馏塔-粗产品",
+        "equipment_type": "DistillationColumn",
+        "location": "化工车间-分离区",
+        "status": "running",
+        "manufacturer": "天大北洋",
+        "model": "Tray-30",
+        "height": 35,
+        "diameter": 2.5,
+        "tray_count": 30,
+        "reflux_ratio": 2.5,
+        "feed_location": 15,
+        "top_temperature": 78,
+        "bottom_temperature": 150,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "CMP-001",
+      "label": "压缩机-丙烯气",
+      "type": "Compressor",
+      "color": "#BB8FCE",
+      "size": 15,
+      "properties": {
+        "equipment_name": "压缩机-丙烯气",
+        "equipment_type": "Compressor",
+        "location": "化工车间-压缩区",
+        "status": "running",
+        "manufacturer": "沈鼓集团",
+        "model": "D-100",
+        "capacity": 100,
+        "pressure_ratio": 3.0,
+        "power": 200,
+        "compressor_type": "离心式压缩机",
+        "inlet_temperature": 25,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "FLT-001",
+      "label": "过滤器-原料",
+      "type": "Filter",
+      "color": "#FF9FF3",
+      "size": 15,
+      "properties": {
+        "equipment_name": "过滤器-原料",
+        "equipment_type": "Filter",
+        "location": "化工车间-原料区",
+        "status": "running",
+        "manufacturer": "杭州过滤",
+        "model": "Cartridge-200",
+        "filter_area": 200,
+        "pressure_drop": 0.15,
+        "flow_rate": 80,
+        "filter_type": "滤芯式过滤器",
+        "medium": "PP滤芯",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "FLT-002",
+      "label": "过滤器-成品",
+      "type": "Filter",
+      "color": "#FF9FF3",
+      "size": 15,
+      "properties": {
+        "equipment_name": "过滤器-成品",
+        "equipment_type": "Filter",
+        "location": "化工车间-成品区",
+        "status": "running",
+        "manufacturer": "杭州过滤",
+        "model": "Bag-500",
+        "filter_area": 500,
+        "pressure_drop": 0.12,
+        "flow_rate": 150,
+        "filter_type": "袋式过滤器",
+        "medium": "无纺布滤袋",
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "RCT-003",
+      "label": "聚合反应釜C",
+      "type": "Reactor",
+      "color": "#FF6B6B",
+      "size": 15,
+      "properties": {
+        "equipment_name": "聚合反应釜C",
+        "equipment_type": "Reactor",
+        "location": "化工车间-2号区",
+        "status": "stopped",
+        "manufacturer": "江阴化工机械",
+        "model": "FBR-3000",
+        "volume": 3000,
+        "operating_temperature": 175,
+        "operating_pressure": 2.4,
+        "agitator_speed": 55,
+        "material": "不锈钢316L",
+        "production_unit": "PU-002"
+      }
+    },
+    {
+      "id": "TNK-004",
+      "label": "中间储罐-催化剂",
+      "type": "Tank",
+      "color": "#4ECDC4",
+      "size": 15,
+      "properties": {
+        "equipment_name": "中间储罐-催化剂",
+        "equipment_type": "Tank",
+        "location": "化工车间-辅助区",
+        "status": "warning",
+        "manufacturer": "中油储罐",
+        "model": "VERT-2000",
+        "volume": 2000,
+        "level": 88,
+        "material_type": "Ziegler-Natta催化剂",
+        "temperature": 25,
+        "production_unit": "PU-001"
+      }
+    },
+    {
+      "id": "PMP-004",
+      "label": "输送泵-成品",
+      "type": "Pump",
+      "color": "#FFEAA7",
+      "size": 15,
+      "properties": {
+        "equipment_name": "输送泵-成品",
+        "equipment_type": "Pump",
+        "location": "化工车间-成品区",
+        "status": "running",
+        "manufacturer": "格兰富",
+        "model": "CRN-80",
+        "flow_rate": 150,
+        "head": 40,
+        "power": 55,
+        "pump_type": "离心泵",
+        "suction_pressure": 0.5,
+        "discharge_pressure": 2.0,
+        "production_unit": "PU-001"
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "RCT-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "RCT-001",
+      "target": "HEX-002",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "RCT-002",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "RCT-002",
+      "target": "HEX-002",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-001",
+      "target": "FLT-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-002",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-002",
+      "target": "FLT-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-003",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "PMP-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "PMP-001",
+      "target": "HEX-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "PMP-002",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "PMP-002",
+      "target": "HEX-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "PMP-003",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "VAL-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "VAL-002",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "VAL-003",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "HEX-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "HEX-001",
+      "target": "RCT-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "HEX-001",
+      "target": "RCT-002",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "HEX-002",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "HEX-002",
+      "target": "DST-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "DST-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "DST-001",
+      "target": "FLT-002",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "CMP-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "CMP-001",
+      "target": "RCT-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "CMP-001",
+      "target": "RCT-002",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "FLT-001",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "FLT-001",
+      "target": "PMP-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "FLT-001",
+      "target": "PMP-002",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "FLT-002",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "FLT-002",
+      "target": "PMP-004",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "RCT-003",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-004",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-004",
+      "target": "RCT-001",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "TNK-004",
+      "target": "RCT-002",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    },
+    {
+      "source": "PMP-004",
+      "target": "化工车间",
+      "relation": "locatedIn",
+      "relation_label": "位于",
+      "is_inferred": false
+    },
+    {
+      "source": "PMP-004",
+      "target": "TNK-003",
+      "relation": "feedsInto",
+      "relation_label": "进料至",
+      "is_inferred": false
+    }
+  ],
+  "inference_paths": [
+    {
+      "path": [
+        "TNK-001",
+        "FLT-001",
+        "PMP-001",
+        "HEX-001",
+        "RCT-001"
+      ],
+      "description": "原料储罐→过滤器→进料泵→预热器→反应釜A"
+    },
+    {
+      "path": [
+        "TNK-002",
+        "FLT-001",
+        "PMP-002",
+        "HEX-001",
+        "RCT-002"
+      ],
+      "description": "原料储罐→过滤器→进料泵→预热器→反应釜B"
+    },
+    {
+      "path": [
+        "RCT-001",
+        "HEX-002",
+        "DST-001",
+        "FLT-002",
+        "PMP-004",
+        "TNK-003"
+      ],
+      "description": "反应釜→冷凝器→精馏塔→过滤器→输送泵→成品储罐"
+    }
+  ],
+  "cross_system_inconsistencies": [],
+  "color_map": {
+    "Reactor": "#FF6B6B",
+    "Tank": "#4ECDC4",
+    "Pump": "#FFEAA7",
+    "Valve": "#96CEB4",
+    "HeatExchanger": "#45B7D1",
+    "DistillationColumn": "#DDA0DD",
+    "Compressor": "#BB8FCE",
+    "Filter": "#FF9FF3",
+    "ProductionUnit": "#54A0FF",
+    "Workshop": "#5F27CD"
+  },
+  "type_labels": {
+    "Reactor": "反应器",
+    "Tank": "储罐",
+    "Pump": "泵",
+    "Valve": "阀门",
+    "HeatExchanger": "换热器",
+    "DistillationColumn": "蒸馏塔",
+    "Compressor": "压缩机",
+    "Filter": "过滤器",
+    "ProductionUnit": "生产单元",
+    "Workshop": "车间"
+  },
+  "graph_summary": {
+    "total_instances": 22,
+    "total_relations": 38,
+    "inferred_count": 0,
+    "conflict_count": 0
+  }
+}

@@ -99,12 +99,12 @@
     "equipment_id": "INV-001",
     "equipment_name": "Inventory Scanner",
     "equipment_type": "Equipment",
-    "location": "仓库",
+    "location": "D车间-仓库区",
     "status": "normal",
     "manufacturer": "Zebra",
     "model": "DS9900",
-    "production_line": "LINE-X",
-    "workshop": "仓库"
+    "production_line": "LINE-D",
+    "workshop": "D车间"
   },
   {
     "equipment_id": "CNC-101",
@@ -201,7 +201,7 @@
     "table_size": "320x1250"
   },
   {
-    "equipment_id": "CNC-401",
+    "equipment_id": "CNC-801",
     "equipment_name": "新五轴数控加工中心",
     "equipment_type": "CNCMachine",
     "location": "A车间-1区",
@@ -219,7 +219,7 @@
     "table_size": "800x500"
   },
   {
-    "equipment_id": "ROB-007",
+    "equipment_id": "ROB-009",
     "equipment_name": "新焊接机器人",
     "equipment_type": "Robot",
     "location": "B车间-2区",
@@ -233,7 +233,7 @@
     "reach": 3.0
   },
   {
-    "equipment_id": "MLG-401",
+    "equipment_id": "MLG-801",
     "equipment_name": "新立式铣床",
     "equipment_type": "MillingMachine",
     "location": "D车间-1区",
@@ -248,17 +248,32 @@
     "table_size": "320x1250"
   },
   {
-    "equipment_id": "CNC-501",
-    "equipment_name": "新FANUC加工中心",
-    "equipment_type": "CNCMachine",
-    "location": "A车间-1号工位",
+    "equipment_id": "ROB-101",
+    "equipment_name": "新装配机器人",
+    "equipment_type": "Robot",
+    "location": "B车间-1区",
     "status": "normal",
-    "manufacturer": "FANUC",
-    "model": "M-20iA",
-    "production_line": "LINE-A",
-    "workshop": "A车间",
-    "spindle_speed": 8000,
-    "tool_count": 24,
-    "axis_count": 5
+    "manufacturer": "KUKA",
+    "model": "KR 10 R1100",
+    "production_line": "LINE-B",
+    "workshop": "B车间",
+    "axis_count": 6,
+    "payload": 10,
+    "reach": 1.1
+  },
+  {
+    "equipment_id": "MLG-101",
+    "equipment_name": "新龙门铣床",
+    "equipment_type": "MillingMachine",
+    "location": "C车间-2区",
+    "status": "normal",
+    "manufacturer": "沈阳机床",
+    "model": "XK2420",
+    "production_line": "LINE-C",
+    "workshop": "C车间",
+    "spindle_speed": 2000,
+    "axis_count": 4,
+    "spindle_taper": "BT50",
+    "table_size": "2000x1000"
   }
 ]
