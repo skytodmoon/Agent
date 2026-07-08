@@ -3,63 +3,36 @@ from agentscope.agent import ReActConfig
 from agentscope.tool import Toolkit
 from .tools import (
     QueryRegistrationRequestsTool,
-    BuildKnowledgeGraphTool,
+    GraphQueryTool,
     ValidateRegistrationRequestTool,
     ApproveRegistrationTool,
     RejectRegistrationTool,
     DetectInconsistenciesTool,
-    GenerateApprovalReportTool
+    GenerateGraphVisualizationTool,
+    GenerateApprovalReportTool,
+    ExecuteDeviceActionTool
 )
-
-def create_graph_building_agent(model):
-    sys_prompt = """你是知识图谱构建Agent。你的职责是：
-1. 从MES、ERP和产线数据构建跨系统知识图谱
-2. 执行传递性推理发现隐含关系（设备→产线→车间）
-3. 检测跨系统数据不一致问题
-4. 发现缺失的关系（如设备未关联维护任务）
-
-可用工具：
-- build_knowledge_graph: 构建跨系统知识图谱并执行推理
-
-处理逻辑：
-- 调用build_knowledge_graph工具构建图谱
-- 输出图谱摘要信息，包括实例数量、关系数量
-- 输出传递性推理发现的隐含关系
-- 输出检测到的跨系统不一致问题
-- 输出发现的缺失关系
-- 不要询问用户，直接执行构建
-"""
-    
-    toolkit = Toolkit(tools=[BuildKnowledgeGraphTool()])
-    
-    return Agent(
-        name="知识图谱构建Agent",
-        system_prompt=sys_prompt,
-        model=model,
-        toolkit=toolkit,
-        react_config=ReActConfig(max_iters=5)
-    )
 
 def create_registration_monitor_agent(model):
     sys_prompt = """你是设备注册监控Agent。你的职责是：
-1. 监控待审核的设备注册请求
-2. 查询待处理的注册请求列表
-3. 识别需要处理的请求并提交审核流程
+1. 查询待审核的设备注册请求列表
+2. 获取知识图谱中的产线和设备信息
+3. 提供注册请求概览和状态统计
 
 可用工具：
-- query_registration_requests: 查询设备注册请求列表
+- query_registration_requests: 查询待审核的设备注册请求
+- graph_query: 查询知识图谱中的节点和关系
 
 处理逻辑：
-- 调用query_registration_requests工具查询待审核(pending)的设备注册请求
-- 输出待审核请求的概览信息，包括数量、设备类型分布
-- 列出每个请求的关键信息：request_id、equipment_id、equipment_name、equipment_type、production_line、workshop、request_status
-- 不要询问用户，直接执行查询
-"""
+- 调用query_registration_requests查询待审核请求
+- 调用graph_query查询相关产线和设备信息
+- 输出请求列表和统计信息
+- 不要询问用户，直接执行查询"""
     
-    toolkit = Toolkit(tools=[QueryRegistrationRequestsTool()])
+    toolkit = Toolkit(tools=[QueryRegistrationRequestsTool(), GraphQueryTool()])
     
     return Agent(
-        name="设备注册监控Agent",
+        name="注册监控Agent",
         system_prompt=sys_prompt,
         model=model,
         toolkit=toolkit,
@@ -68,32 +41,24 @@ def create_registration_monitor_agent(model):
 
 def create_rule_validation_agent(model):
     sys_prompt = """你是规则校验Agent。你的职责是：
-1. 根据本体知识图谱校验设备注册请求
-2. 触发规则引擎进行推理判定，包括：
-   - 传递性推理冲突检测（设备位置与产线位置矛盾）
-   - 跨系统一致性校验（MES/ERP数据冲突）
-   - 产线容量约束校验
-   - 设备编码重复检测
-3. 返回校验结果和触发的规则详情
+1. 基于预构建的知识图谱校验设备注册请求
+2. 执行本体规则引擎进行语义推理判定
+3. 查询产线容量约束和设备类型兼容性
+4. 检测跨系统数据一致性问题
 
 可用工具：
-- validate_registration_request: 根据本体知识图谱校验设备注册请求
+- validate_registration_request: 校验设备注册请求，执行规则引擎
+- graph_query: 查询知识图谱，获取产线容量和兼容性信息
+- detect_inconsistencies: 检测跨系统数据不一致
 
 处理逻辑：
-- 调用validate_registration_request工具对指定request_id进行校验
-- 必须从输入中提取request_id参数
-- 输出校验结果，包括：
-  - 总体状态：approved（批准）或rejected（拒绝）
-  - 触发的规则名称和描述
-  - 规则严重级别
-  - 具体原因和建议
-  - 如果是推理规则触发，输出推理详情（如传递性推理发现的矛盾）
-- 如果校验通过(approved)，建议执行批准操作
-- 如果校验失败(rejected)，说明拒绝原因和修改建议
-- 不要询问用户，直接调用工具执行校验
-"""
+- 调用validate_registration_request进行规则引擎校验
+- 调用graph_query查询产线容量和设备类型兼容性
+- 如果有跨系统数据，调用detect_inconsistencies检测不一致
+- 输出详细的校验结果和推理过程
+- 不要询问用户，直接执行校验"""
     
-    toolkit = Toolkit(tools=[ValidateRegistrationRequestTool()])
+    toolkit = Toolkit(tools=[ValidateRegistrationRequestTool(), GraphQueryTool(), DetectInconsistenciesTool()])
     
     return Agent(
         name="规则校验Agent",
@@ -106,22 +71,26 @@ def create_rule_validation_agent(model):
 def create_approval_decision_agent(model):
     sys_prompt = """你是审批决策Agent。你的职责是：
 1. 根据规则校验结果做出审批决策
-2. 批准符合规则的设备注册请求（基于知识图谱推理自动补全信息）
-3. 拒绝不符合规则的请求并记录原因
+2. 批准符合条件的设备注册请求
+3. 拒绝不符合条件的请求并说明原因
+4. 更新知识图谱添加新设备节点
+5. 执行设备动作（如启动生产、开始维护等）
 
 可用工具：
-- approve_registration: 批准设备注册请求，基于知识图谱推理自动补全信息
-- reject_registration: 拒绝设备注册请求
+- approve_registration: 批准设备注册请求，更新图谱并同步MES/ERP
+- reject_registration: 拒绝设备注册请求，记录原因
+- graph_query: 查询知识图谱确认设备状态
+- execute_device_action: 执行设备动作，如启动生产、停止生产、开始维护、重置错误等
 
 处理逻辑：
-- 从输入中提取request_id和validation_result
-- 如果validation_result的overall_status为approved，调用approve_registration工具批准，审批意见要说明知识图谱增强内容
-- 如果validation_result的overall_status为rejected，调用reject_registration工具拒绝，拒绝原因来自校验结果
-- 审批意见和建议要清晰明确
-- 不要询问用户，直接执行审批动作
-"""
+- 如果校验通过，调用approve_registration批准
+- 如果校验失败，调用reject_registration拒绝并说明原因
+- 批准后自动更新知识图谱，添加新设备节点和关系
+- 可根据设备状态执行相应的设备动作
+- 输出审批结果和知识图谱更新信息
+- 不要询问用户，直接执行决策"""
     
-    toolkit = Toolkit(tools=[ApproveRegistrationTool(), RejectRegistrationTool()])
+    toolkit = Toolkit(tools=[ApproveRegistrationTool(), RejectRegistrationTool(), GraphQueryTool(), ExecuteDeviceActionTool()])
     
     return Agent(
         name="审批决策Agent",
@@ -131,72 +100,38 @@ def create_approval_decision_agent(model):
         react_config=ReActConfig(max_iters=5)
     )
 
-def create_inconsistency_detection_agent(model):
-    sys_prompt = """你是跨系统一致性检测Agent。你的职责是：
-1. 检测MES和ERP系统中同一设备的数据冲突
-2. 发现数据不一致问题并输出详细报告
-3. 提供数据治理建议
-
-可用工具：
-- detect_inconsistencies: 检测跨系统数据不一致
-
-处理逻辑：
-- 调用detect_inconsistencies工具检测跨系统不一致
-- 输出检测结果，包括：
-  - 冲突数量
-  - 每个冲突的详细信息（设备ID、冲突属性、MES值、ERP值）
-  - 传递性推理发现的隐含关系
-  - 缺失的维护任务关联
-- 提供数据治理建议
-- 不要询问用户，直接执行检测
-"""
-    
-    toolkit = Toolkit(tools=[DetectInconsistenciesTool()])
-    
-    return Agent(
-        name="跨系统一致性检测Agent",
-        system_prompt=sys_prompt,
-        model=model,
-        toolkit=toolkit,
-        react_config=ReActConfig(max_iters=5)
-    )
-
 def create_registration_process_agent(model):
     sys_prompt = """你是设备注册审批流程Agent。你的职责是：
-1. 自动执行完整的设备注册审批流程
-2. 流程步骤：
-   - 构建跨系统知识图谱（包含传递性推理）
-   - 查询待审核请求
-   - 对每个请求基于知识图谱进行规则校验
-   - 根据校验结果执行批准/拒绝动作（批准时自动补全信息）
-   - 生成审批报告
-3. 输出完整的审批流程摘要
+1. 执行完整的设备注册审批流程
+2. 查询待审核请求
+3. 基于知识图谱进行规则校验和语义推理
+4. 做出审批决策并更新图谱
+5. 生成审批报告
 
 可用工具：
-- build_knowledge_graph: 构建跨系统知识图谱
-- query_registration_requests: 查询设备注册请求列表
-- validate_registration_request: 根据本体知识图谱校验设备注册请求
-- approve_registration: 批准设备注册请求
-- reject_registration: 拒绝设备注册请求
-- generate_approval_report: 生成设备注册审批报告
+- query_registration_requests: 查询待审核的设备注册请求
+- validate_registration_request: 校验设备注册请求
+- graph_query: 查询知识图谱信息
+- approve_registration: 批准设备注册
+- reject_registration: 拒绝设备注册
+- detect_inconsistencies: 检测跨系统数据不一致
+- generate_approval_report: 生成审批报告
 
-处理流程：
-1. 首先调用build_knowledge_graph构建知识图谱并执行传递性推理
-2. 调用query_registration_requests查询待审核(pending)的请求
-3. 对每个待审核请求调用validate_registration_request进行基于图谱的规则校验
-4. 根据校验结果调用approve_registration或reject_registration
-5. 最后调用generate_approval_report生成审批报告
-6. 输出完整的审批流程摘要，突出知识图谱推理的作用
-
-注意：这是一个主动式流程，不要询问用户，直接按流程执行
-"""
+处理逻辑：
+- 调用query_registration_requests获取所有待审核请求
+- 对每个请求调用validate_registration_request进行规则校验
+- 根据校验结果调用approve_registration或reject_registration
+- 批准后自动更新知识图谱
+- 最后调用generate_approval_report生成报告
+- 不要询问用户，直接执行完整流程"""
     
     toolkit = Toolkit(tools=[
-        BuildKnowledgeGraphTool(),
         QueryRegistrationRequestsTool(),
         ValidateRegistrationRequestTool(),
+        GraphQueryTool(),
         ApproveRegistrationTool(),
         RejectRegistrationTool(),
+        DetectInconsistenciesTool(),
         GenerateApprovalReportTool()
     ])
     
@@ -205,5 +140,5 @@ def create_registration_process_agent(model):
         system_prompt=sys_prompt,
         model=model,
         toolkit=toolkit,
-        react_config=ReActConfig(max_iters=50)
+        react_config=ReActConfig(max_iters=10)
     )

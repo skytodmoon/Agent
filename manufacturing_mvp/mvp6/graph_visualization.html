@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识图谱可视化 - 设备注册审批流程</title>
+    <script>
+        (function() {
+            var d3Loaded = false;
+            
+            var localScript = document.createElement('script');
+            localScript.src = '../lib/d3.v7.min.js';
+            localScript.onload = function() {
+                d3Loaded = true;
+            };
+            localScript.onerror = function() {
+                var cdnScript = document.createElement('script');
+                cdnScript.src = 'https://d3js.org/d3.v7.min.js';
+                cdnScript.onload = function() {
+                    d3Loaded = true;
+                };
+                cdnScript.onerror = function() {
+                    document.write('<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-family:sans-serif;">');
+                    document.write('<div style="text-align:center;padding:20px;">');
+                    document.write('<h2 style="color:#FF6B6B;margin-bottom:10px;">❌ D3.js 加载失败</h2>');
+                    document.write('<p style="color:#aaa;margin-bottom:20px;">无法加载D3.js库（本地和CDN都失败）</p>');
+                    document.write('<p style="font-size:14px;color:#4ECDC4;">请检查网络连接，或确保lib/d3.v7.min.js文件存在</p>');
+                    document.write('</div></div>');
+                };
+                document.head.appendChild(cdnScript);
+            };
+            document.head.appendChild(localScript);
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; color: #fff; }
+        
+        .header { background: rgba(0,0,0,0.3); padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: flex-start; }
+        .header h1 { font-size: 20px; font-weight: 600; }
+        .header .subtitle { font-size: 12px; color: #aaa; margin-top: 5px; }
+        .header .nav-links { margin-top: 5px; }
+        .header .nav-links a { color: #4ECDC4; text-decoration: none; font-size: 12px; margin-left: 15px; }
+        .header .nav-links a:hover { text-decoration: underline; }
+        
+        .container { display: flex; height: calc(100vh - 65px); }
+        
+        .sidebar { width: 320px; background: rgba(0,0,0,0.2); border-right: 1px solid rgba(255,255,255,0.1); padding: 15px; overflow-y: auto; }
+        
+        .panel { margin-bottom: 20px; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px; }
+        .panel h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #ffd700; display: flex; align-items: center; gap: 5px; }
+        .panel h3::before { content: '▸'; color: #ffd700; }
+        
+        .stats-grid { display: grid; grid-template-columns: 2fr 2fr; gap: 10px; }
+        .stat-item { background: rgba(255,255,255,0.05); border-radius: 6px; padding: 10px; text-align: center; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #4ECDC4; }
+        .stat-label { font-size: 11px; color: #aaa; margin-top: 3px; }
+        
+        .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 4px; }
+        
+        .inference-list, .conflict-list { list-style: none; }
+        .inference-item, .conflict-item { background: rgba(255,255,255,0.05); border-radius: 6px; padding: 8px; margin-bottom: 6px; font-size: 11px; border-left: 3px solid #4ECDC4; }
+        .conflict-item { border-left-color: #FF6B6B; }
+        .conflict-item .equipment-id { font-weight: bold; color: #FF6B6B; }
+        .conflict-item .props { margin-top: 4px; color: #ccc; }
+        
+        .controls { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, #4ECDC4, #45B7D1); color: #fff; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+        
+        .graph-container { flex: 1; position: relative; }
+        #graph-svg { width: 100%; height: 100%; }
+        
+        .node { cursor: pointer; transition: all 0.3s; }
+        .node:hover circle { filter: brightness(1.2); }
+        .node circle { stroke-width: 2; }
+        .node.erp circle { stroke-dasharray: 5,5; }
+        .node.inferred circle { animation: pulse 2s infinite; }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .link { stroke: rgba(255,255,255,0.3); stroke-width: 2; transition: all 0.3s; }
+        .link.inferred { stroke: #4ECDC4; stroke-dasharray: 5,5; }
+        .link.conflict { stroke: #FF6B6B; stroke-width: 3; }
+        .link:hover { stroke: #fff; stroke-width: 3; }
+        
+        .link-label { font-size: 10px; fill: rgba(255,255,255,0.6); }
+        
+        .tooltip { position: absolute; background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 12px; pointer-events: none; z-index: 1000; max-width: 300px; }
+        .tooltip h4 { font-size: 13px; margin-bottom: 8px; color: #4ECDC4; }
+        .tooltip .prop-row { display: flex; justify-content: space-between; margin: 4px 0; font-size: 11px; }
+        .tooltip .prop-label { color: #aaa; }
+        .tooltip .prop-value { color: #fff; text-align: right; }
+        .tooltip .erp-badge { background: #DDA0DD; color: #000; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-top: 8px; display: inline-block; }
+        
+        .animation-controls { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); border-radius: 10px; padding: 15px; }
+        .animation-controls h4 { font-size: 12px; margin-bottom: 10px; color: #ffd700; }
+        .progress-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4ECDC4, #ffd700); width: 0%; transition: width 0.5s; }
+        .step-info { font-size: 11px; color: #ccc; margin-bottom: 10px; min-height: 40px; }
+        
+        .relation-panel { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); border-radius: 10px; padding: 15px; width: 250px; }
+        .relation-panel h4 { font-size: 12px; margin-bottom: 10px; color: #ffd700; }
+        .relation-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 11px; }
+        .relation-line { width: 30px; height: 2px; background: rgba(255,255,255,0.3); }
+        .relation-line.inferred { background: #4ECDC4; }
+        
+        .highlight-path { animation: pathGlow 1.5s ease-in-out infinite; }
+        
+        @keyframes pathGlow {
+            0%, 100% { filter: drop-shadow(0 0 2px rgba(78, 205, 196, 0.5)); }
+            50% { filter: drop-shadow(0 0 10px rgba(78, 205, 196, 0.8)); }
+        }
+        
+        .loading-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        .loading-spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #4ECDC4; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { margin-left: 15px; font-size: 14px; color: #4ECDC4; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🔍 MVP6 - 设备注册审批知识图谱</h1>
+            <div class="subtitle">基于本体的跨系统数据一致性治理与智能推理审核</div>
+        </div>
+        <div class="nav-links">
+            <a href="graph_visualization_process.html">🏭 流程工业场景</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="panel">
+                <h3>图谱概览</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-instances">0</div>
+                        <div class="stat-label">实例数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-relations">0</div>
+                        <div class="stat-label">关系数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-inferred">0</div>
+                        <div class="stat-label">推理关系</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-conflicts">0</div>
+                        <div class="stat-label">数据冲突</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>类型图例</h3>
+                <div id="legend-container"></div>
+            </div>
+            
+            <div class="panel">
+                <h3>推理路径</h3>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="startInferenceAnimation()">▶ 播放推理动画</button>
+                </div>
+                <ul class="inference-list" id="inference-list"></ul>
+            </div>
+            
+            <div class="panel">
+                <h3>跨系统冲突</h3>
+                <ul class="conflict-list" id="conflict-list"></ul>
+            </div>
+            
+            <div class="panel">
+                <h3>🎯 场景关联</h3>
+                <div class="scene-context" id="scene-context">
+                    <div style="font-size: 11px; color: #aaa; margin-bottom: 10px;">当前场景: 设备注册审批流程</div>
+                    <div style="font-size: 11px; line-height: 1.6;">
+                        <div style="margin-bottom: 8px;"><strong>📋 流程步骤:</strong></div>
+                        <div style="padding-left: 15px;">1. 构建跨系统知识图谱</div>
+                        <div style="padding-left: 15px;">2. 执行传递性推理</div>
+                        <div style="padding-left: 15px;">3. 检测跨系统不一致</div>
+                        <div style="padding-left: 15px;">4. 规则校验注册请求</div>
+                        <div style="padding-left: 15px;">5. 自动批准/拒绝决策</div>
+                        <div style="padding-left: 15px;">6. 生成上线工单</div>
+                    </div>
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <div style="font-size: 11px; color: #4ECDC4;"><strong>🔮 推理作用:</strong></div>
+                        <div style="font-size: 10px; color: #ccc; margin-top: 4px;">
+                            通过设备→产线→车间的传递性推理，自动发现位置矛盾。例如设备声称在B车间，但所属产线LINE-A位于A车间。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>📊 审批决策</h3>
+                <div id="approval-decisions" style="font-size: 11px;">
+                    <div style="color: #aaa;">点击推理动画查看决策过程...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="graph-container">
+            <div class="loading-overlay" id="loading">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">正在加载知识图谱...</div>
+            </div>
+            <svg id="graph-svg"></svg>
+            
+            <div class="animation-controls">
+                <h4>📊 推理传导过程</h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="step-info" id="step-info">点击播放按钮开始演示推理过程</div>
+                <div class="inference-detail" id="inference-detail" style="display: none; margin-top: 10px; padding: 8px; background: rgba(78, 205, 196, 0.1); border-radius: 6px; font-size: 10px; border-left: 3px solid #4ECDC4;"></div>
+                <button class="btn btn-secondary" onclick="resetAnimation()" style="display: none;" id="btn-reset">🔄 重置</button>
+            </div>
+            
+            <div class="relation-panel">
+                <h4>关系类型</h4>
+                <div class="relation-item">
+                    <div class="relation-line"></div>
+                    <span>belongsTo (属于)</span>
+                </div>
+                <div class="relation-item">
+                    <div class="relation-line"></div>
+                    <span>hasPart (包含)</span>
+                </div>
+                <div class="relation-item">
+                    <div class="relation-line"></div>
+                    <span>locatedIn (位于)</span>
+                </div>
+                <div class="relation-item">
+                    <div class="relation-line inferred"></div>
+                    <span>推理关系 (虚线)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip" style="display: none;"></div>
+    
+    <script>
+        let graphData = null;
+        let svg = null;
+        let simulation = null;
+        let nodes = [];
+        let links = [];
+        let nodeElements = null;
+        let linkElements = null;
+        let animationStep = 0;
+        let animationTimer = null;
+        
+        function waitForD3() {
+            return new Promise((resolve) => {
+                if (typeof d3 !== 'undefined') {
+                    resolve();
+                } else {
+                    const interval = setInterval(() => {
+                        if (typeof d3 !== 'undefined') {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, 100);
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        resolve();
+                    }, 5000);
+                }
+            });
+        }
+
+        async function loadGraphData() {
+            try {
+                await waitForD3();
+                
+                if (typeof d3 === 'undefined') {
+                    throw new Error('D3.js 未加载成功');
+                }
+                
+                const response = await fetch('../data/graph_visualization.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                graphData = await response.json();
+                renderSidebar();
+                renderGraph();
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('加载图谱数据失败:', error);
+                document.getElementById('loading').innerHTML = '<div class="loading-text">❌ 加载失败: ' + error.message + '</div>';
+            }
+        }
+        
+        function renderSidebar() {
+            const summary = graphData.graph_summary;
+            document.getElementById('stat-instances').textContent = summary.total_instances;
+            document.getElementById('stat-relations').textContent = summary.total_relations;
+            document.getElementById('stat-inferred').textContent = summary.inferred_count;
+            document.getElementById('stat-conflicts').textContent = summary.conflict_count;
+            
+            const legendContainer = document.getElementById('legend-container');
+            legendContainer.innerHTML = '';
+            for (const [type, color] of Object.entries(graphData.color_map)) {
+                const label = graphData.type_labels[type] || type;
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                item.innerHTML = `<div class="legend-color" style="background:${color}"></div><span>${label}</span>`;
+                legendContainer.appendChild(item);
+            }
+            
+            const inferenceList = document.getElementById('inference-list');
+            inferenceList.innerHTML = '';
+            if (graphData.inference_paths.length === 0) {
+                inferenceList.innerHTML = '<li class="inference-item">暂无推理路径</li>';
+            } else {
+                graphData.inference_paths.forEach((path, index) => {
+                    const item = document.createElement('li');
+                    item.className = 'inference-item';
+                    item.innerHTML = `<strong>推理 #${index + 1}:</strong> ${path.description}`;
+                    inferenceList.appendChild(item);
+                });
+            }
+            
+            const conflictList = document.getElementById('conflict-list');
+            conflictList.innerHTML = '';
+            if (graphData.cross_system_inconsistencies.length === 0) {
+                conflictList.innerHTML = '<li class="conflict-item">暂无数据冲突</li>';
+            } else {
+                graphData.cross_system_inconsistencies.slice(0, 5).forEach((conflict, index) => {
+                    const item = document.createElement('li');
+                    item.className = 'conflict-item';
+                    const propsHtml = conflict.conflicts.map(c => 
+                        `<div><strong>${c.property}:</strong> MES="${c.mes_value}" vs ERP="${c.erp_value}"</div>`
+                    ).join('');
+                    item.innerHTML = `<div class="equipment-id">${conflict.equipment_id}</div><div class="props">${propsHtml}</div>`;
+                    conflictList.appendChild(item);
+                });
+            }
+        }
+        
+        function renderGraph() {
+            const container = document.getElementById('graph-svg');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            svg = d3.select('#graph-svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            nodes = graphData.nodes.map(d => ({...d}));
+            links = graphData.links.map(d => ({...d}));
+            
+            const typeCenters = {
+                'Workshop': { x: width / 2, y: height * 0.2 },
+                'ProductionLine': { x: width / 2, y: height * 0.35 },
+                'CNCMachine': { x: width * 0.3, y: height * 0.6 },
+                'Robot': { x: width * 0.7, y: height * 0.6 },
+                'Lathe': { x: width * 0.25, y: height * 0.8 },
+                'MillingMachine': { x: width * 0.5, y: height * 0.8 },
+                'Conveyor': { x: width * 0.75, y: height * 0.8 },
+                'Equipment': { x: width * 0.85, y: height * 0.6 }
+            };
+            
+            nodes.forEach(node => {
+                const center = typeCenters[node.type] || { x: width / 2, y: height / 2 };
+                node.x = center.x + (Math.random() - 0.5) * 80;
+                node.y = center.y + (Math.random() - 0.5) * 80;
+            });
+            
+            simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(50).strength(0.95))
+                .force('charge', d3.forceManyBody().strength(-60))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => d.size + 6).strength(1.0))
+                .force('x', d3.forceX(d => (typeCenters[d.type] || {}).x || width / 2).strength(0.08))
+                .force('y', d3.forceY(d => (typeCenters[d.type] || {}).y || height / 2).strength(0.08))
+                .alphaDecay(0.03)
+                .velocityDecay(0.95);
+            
+            linkElements = svg.append('g').selectAll('line')
+                .data(links)
+                .enter().append('line')
+                .attr('class', d => `link ${d.is_inferred ? 'inferred' : ''}`)
+                .attr('stroke-width', d => d.is_inferred ? 2 : 2);
+            
+            const linkLabels = svg.append('g').selectAll('text')
+                .data(links)
+                .enter().append('text')
+                .attr('class', 'link-label')
+                .text(d => d.relation_label);
+            
+            nodeElements = svg.append('g').selectAll('g')
+                .data(nodes)
+                .enter().append('g')
+                .attr('class', d => `node ${d.is_erp ? 'erp' : ''}`)
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+            
+            nodeElements.append('circle')
+                .attr('r', d => d.size)
+                .attr('fill', d => d.color)
+                .attr('stroke', d => d.is_erp ? '#DDA0DD' : 'rgba(255,255,255,0.3)')
+                .attr('stroke-width', 2);
+            
+            nodeElements.append('text')
+                .attr('dy', d => d.size + 15)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '11px')
+                .style('fill', '#fff')
+                .text(d => d.label.length > 8 ? d.label.substring(0, 8) + '...' : d.label);
+            
+            nodeElements.on('mouseover', showTooltip)
+                .on('mouseout', hideTooltip);
+            
+            simulation.on('tick', () => {
+                linkElements
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+                
+                linkLabels
+                    .attr('x', d => (d.source.x + d.target.x) / 2)
+                    .attr('y', d => (d.source.y + d.target.y) / 2);
+                
+                nodeElements
+                    .attr('transform', d => `translate(${d.x}, ${d.y})`);
+            });
+            
+            svg.on('click', () => hideTooltip());
+        }
+        
+        function showTooltip(event, d) {
+            const tooltip = document.getElementById('tooltip');
+            let html = `<h4>${d.label}</h4>`;
+            html += `<div class="prop-row"><span class="prop-label">ID:</span><span class="prop-value">${d.id}</span></div>`;
+            html += `<div class="prop-row"><span class="prop-label">类型:</span><span class="prop-value">${graphData.type_labels[d.type] || d.type}</span></div>`;
+            if (d.is_erp) {
+                html += `<div class="erp-badge">ERP系统</div>`;
+            }
+            for (const [key, value] of Object.entries(d.properties)) {
+                if (key !== '_source') {
+                    html += `<div class="prop-row"><span class="prop-label">${key}:</span><span class="prop-value">${value}</span></div>`;
+                }
+            }
+            tooltip.innerHTML = html;
+            tooltip.style.display = 'block';
+            
+            const rect = tooltip.getBoundingClientRect();
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY - rect.height / 2) + 'px';
+        }
+        
+        function hideTooltip() {
+            document.getElementById('tooltip').style.display = 'none';
+        }
+        
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        
+        function startInferenceAnimation() {
+            if (animationTimer) clearInterval(animationTimer);
+            
+            animationStep = 0;
+            document.getElementById('btn-reset').style.display = 'block';
+            
+            const totalSteps = 6;
+            
+            animationTimer = setInterval(() => {
+                animationStep++;
+                
+                if (animationStep > totalSteps) {
+                    clearInterval(animationTimer);
+                    document.getElementById('step-info').textContent = '✅ 推理过程演示完成！';
+                    document.getElementById('progress-fill').style.width = '100%';
+                    
+                    document.getElementById('approval-decisions').innerHTML = `
+                        <div style="margin-bottom: 6px; padding: 6px; background: rgba(78, 205, 196, 0.1); border-radius: 4px; border-left: 3px solid #4ECDC4;">
+                            <strong>✅ 批准案例:</strong><br>
+                            <span style="font-size: 10px;">CNC-801 (REQ-001) - 信息完整，通过所有校验</span>
+                        </div>
+                        <div style="margin-bottom: 6px; padding: 6px; background: rgba(78, 205, 196, 0.1); border-radius: 4px; border-left: 3px solid #4ECDC4;">
+                            <strong>✅ 批准案例:</strong><br>
+                            <span style="font-size: 10px;">ROB-009 (REQ-002) - 信息完整，通过所有校验</span>
+                        </div>
+                        <div style="margin-bottom: 6px; padding: 6px; background: rgba(255, 107, 107, 0.1); border-radius: 4px; border-left: 3px solid #FF6B6B;">
+                            <strong>❌ 拒绝案例:</strong><br>
+                            <span style="font-size: 10px;">CNC-901 (REQ-007) - 位置矛盾: 声称在B车间，产线LINE-A在A车间</span>
+                        </div>
+                        <div style="margin-bottom: 6px; padding: 6px; background: rgba(255, 107, 107, 0.1); border-radius: 4px; border-left: 3px solid #FF6B6B;">
+                            <strong>❌ 拒绝案例:</strong><br>
+                            <span style="font-size: 10px;">CNC-001 (REQ-006) - 与ERP系统数据冲突</span>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const progress = (animationStep / totalSteps) * 100;
+                document.getElementById('progress-fill').style.width = progress + '%';
+                
+                switch(animationStep) {
+                    case 1:
+                        highlightWorkshops();
+                        document.getElementById('step-info').textContent = '步骤1: 加载车间节点 (A车间、B车间、C车间、D车间)';
+                        break;
+                    case 2:
+                        highlightProductionLines();
+                        document.getElementById('step-info').textContent = '步骤2: 加载产线节点并建立locatedIn关系 (LINE-A → A车间)';
+                        break;
+                    case 3:
+                        highlightEquipment();
+                        document.getElementById('step-info').textContent = '步骤3: 加载设备节点并建立belongsTo关系 (CNC-001 → LINE-A)';
+                        break;
+                    case 4:
+                        highlightCrossSystem();
+                        document.getElementById('step-info').textContent = '步骤4: 加载ERP系统数据，建立跨系统映射 (ERP_CNC-001)';
+                        break;
+                    case 5:
+                        highlightInference();
+                        document.getElementById('step-info').textContent = '步骤5: 🔮 执行传递性推理 → 设备通过产线推断所属车间';
+                        if (graphData.inference_paths.length > 0) {
+                            const detailHtml = graphData.inference_paths.slice(0, 3).map((p, i) => 
+                                `<div style="margin-bottom: 4px;">${i+1}. ${p.description}</div>`
+                            ).join('');
+                            document.getElementById('inference-detail').innerHTML = detailHtml;
+                            document.getElementById('inference-detail').style.display = 'block';
+                        }
+                        break;
+                    case 6:
+                        highlightConflicts();
+                        document.getElementById('step-info').textContent = '步骤6: 🚨 检测跨系统数据不一致 (设备类型/状态冲突)';
+                        break;
+                }
+            }, 2000);
+        }
+        
+        function resetAnimation() {
+            if (animationTimer) clearInterval(animationTimer);
+            animationStep = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('step-info').textContent = '点击播放按钮开始演示推理过程';
+            document.getElementById('inference-detail').style.display = 'none';
+            document.getElementById('btn-reset').style.display = 'none';
+            
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('filter', 'none')
+                .style('opacity', 1);
+            
+            linkElements
+                .transition().duration(500)
+                .style('opacity', 1);
+        }
+        
+        function highlightWorkshops() {
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('opacity', d => d.type === 'Workshop' ? 1 : 0.3);
+            
+            linkElements
+                .transition().duration(500)
+                .style('opacity', 0.3);
+        }
+        
+        function highlightProductionLines() {
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('opacity', d => d.type === 'Workshop' || d.type === 'ProductionLine' ? 1 : 0.3);
+            
+            linkElements
+                .transition().duration(500)
+                .style('opacity', d => d.relation === 'locatedIn' ? 1 : 0.3);
+        }
+        
+        function highlightEquipment() {
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('opacity', d => !d.is_erp ? 1 : 0.3);
+            
+            linkElements
+                .transition().duration(500)
+                .style('opacity', d => {
+                    const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+                    const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+                    return !sourceId.startsWith('ERP_') && !targetId.startsWith('ERP_') ? 1 : 0.3;
+                });
+        }
+        
+        function highlightCrossSystem() {
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('opacity', 1)
+                .style('filter', d => d.is_erp ? 'drop-shadow(0 0 8px #DDA0DD)' : 'none');
+        }
+        
+        function highlightInference() {
+            const pathColors = ['#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'];
+            
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('filter', d => d.type !== 'Workshop' && d.type !== 'ProductionLine' ? 'drop-shadow(0 0 8px #4ECDC4)' : 'none');
+            
+            linkElements
+                .transition().duration(500)
+                .style('opacity', 0.3);
+            
+            if (graphData.inference_paths.length > 0) {
+                const firstPath = graphData.inference_paths[0];
+                const pathNodes = firstPath.path.filter((_, i) => i % 2 === 0);
+                
+                nodeElements.select('circle')
+                    .transition().duration(800)
+                    .style('filter', d => {
+                        const idx = pathNodes.indexOf(d.id);
+                        if (idx >= 0) {
+                            return `drop-shadow(0 0 12px ${pathColors[idx % pathColors.length]})`;
+                        }
+                        return d.type !== 'Workshop' && d.type !== 'ProductionLine' ? 'drop-shadow(0 0 4px rgba(78, 205, 196, 0.5))' : 'none';
+                    });
+                
+                linkElements
+                    .transition().duration(800)
+                    .style('opacity', d => {
+                        const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+                        const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+                        const idx1 = pathNodes.indexOf(sourceId);
+                        const idx2 = pathNodes.indexOf(targetId);
+                        if (idx1 >= 0 && idx2 >= 0 && Math.abs(idx1 - idx2) === 1) {
+                            return 1;
+                        }
+                        return 0.2;
+                    })
+                    .style('filter', d => {
+                        const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+                        const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+                        const idx1 = pathNodes.indexOf(sourceId);
+                        const idx2 = pathNodes.indexOf(targetId);
+                        if (idx1 >= 0 && idx2 >= 0 && Math.abs(idx1 - idx2) === 1) {
+                            return 'drop-shadow(0 0 6px #4ECDC4)';
+                        }
+                        return 'none';
+                    });
+            }
+        }
+        
+        function highlightConflicts() {
+            const conflictIds = new Set(graphData.cross_system_inconsistencies.map(c => c.equipment_id));
+            
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('filter', d => {
+                    const baseId = d.id.replace('ERP_', '');
+                    if (conflictIds.has(baseId)) {
+                        return 'drop-shadow(0 0 10px #FF6B6B)';
+                    }
+                    return 'none';
+                });
+        }
+        
+        window.addEventListener('resize', () => {
+            if (svg && graphData) {
+                const width = document.getElementById('graph-svg').clientWidth;
+                const height = document.getElementById('graph-svg').clientHeight;
+                svg.attr('width', width).attr('height', height);
+                simulation.force('center', d3.forceCenter(width / 2, height / 2)).alpha(0.3).restart();
+            }
+        });
+        
+        loadGraphData();
+    </script>
+</body>
+</html>

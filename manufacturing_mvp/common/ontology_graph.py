@@ -802,3 +802,190 @@ class OntologyGraph:
     def validate_device_registration(self, request_data: Dict) -> Dict:
         rule_engine = self.create_rule_engine()
         return rule_engine.execute_rules(request_data)
+    
+    def query_nodes(self, class_name: str = None, property_filter: Dict = None) -> List[Dict]:
+        results = []
+        for instance_id, props in self.node_properties.items():
+            if class_name:
+                instance_class = props.get("__class__")
+                if instance_class != class_name and class_name not in self.get_class_ancestors(instance_class):
+                    continue
+            
+            if property_filter:
+                match = True
+                for key, value in property_filter.items():
+                    if props.get(key) != value:
+                        match = False
+                        break
+                if not match:
+                    continue
+            
+            results.append({"id": instance_id, **props})
+        
+        return results
+    
+    def traverse(self, start_node: str, relation_type: str = None, max_depth: int = 3) -> List[Dict]:
+        visited = set()
+        results = []
+        queue = [(start_node, 0)]
+        
+        while queue:
+            node_id, depth = queue.pop(0)
+            if node_id in visited or depth > max_depth:
+                continue
+            
+            visited.add(node_id)
+            props = self.get_instance_properties(node_id)
+            relations = self.get_related_instances(node_id, relation_type)
+            
+            results.append({
+                "id": node_id,
+                "depth": depth,
+                "properties": props,
+                "relations": relations
+            })
+            
+            for _, target in relations:
+                if target not in visited:
+                    queue.append((target, depth + 1))
+        
+        return results
+    
+    def find_paths(self, start_node: str, end_node: str, relation_type: str = None, max_depth: int = 5) -> List[List[str]]:
+        paths = []
+        visited = set()
+        stack = [(start_node, [start_node])]
+        
+        while stack:
+            current, path = stack.pop()
+            visited.add(current)
+            
+            if current == end_node:
+                paths.append(path)
+                continue
+            
+            if len(path) >= max_depth:
+                continue
+            
+            relations = self.get_related_instances(current, relation_type)
+            for _, target in relations:
+                if target not in visited:
+                    stack.append((target, path + [target]))
+        
+        return paths
+    
+    def get_downstream_devices(self, start_node: str, relation_type: str = "feedsInto", max_depth: int = 5) -> List[Dict]:
+        visited = set()
+        results = []
+        queue = [(start_node, 0)]
+        
+        while queue:
+            node_id, depth = queue.pop(0)
+            if node_id in visited or depth > max_depth:
+                continue
+            
+            visited.add(node_id)
+            props = self.get_instance_properties(node_id)
+            
+            results.append({
+                "id": node_id,
+                "depth": depth,
+                "properties": props
+            })
+            
+            relations = self.get_related_instances(node_id, relation_type)
+            for _, target in relations:
+                if target not in visited:
+                    queue.append((target, depth + 1))
+        
+        return results[1:]
+    
+    def update_instance(self, instance_id: str, properties: Dict[str, Any]):
+        if instance_id not in self.node_properties:
+            raise ValueError(f"实例 {instance_id} 不存在")
+        
+        logger.info(f"[图谱更新] 更新实例: {instance_id}")
+        self.node_properties[instance_id].update(properties)
+    
+    def add_new_device(self, request_data: Dict) -> Dict:
+        equipment_id = request_data.get("equipment_id")
+        equipment_type = request_data.get("equipment_type", "Equipment")
+        
+        if equipment_id in self.node_properties:
+            return {"status": "error", "message": f"设备 {equipment_id} 已存在"}
+        
+        props = {k: v for k, v in request_data.items() if k not in ["equipment_id", "production_line", "workshop"]}
+        self.add_instance(equipment_id, equipment_type, props)
+        
+        if "production_line" in request_data:
+            self.add_relation(equipment_id, "belongsTo", request_data["production_line"])
+            self.add_relation(request_data["production_line"], "hasPart", equipment_id)
+        
+        if "workshop" in request_data:
+            self.add_relation(equipment_id, "locatedIn", request_data["workshop"])
+        
+        self.infer_transitive_relations()
+        
+        return {
+            "status": "success",
+            "equipment_id": equipment_id,
+            "message": f"设备 {equipment_id} 已成功添加到知识图谱",
+            "relations_added": len(self.get_related_instances(equipment_id))
+        }
+    
+    def update_device_status(self, equipment_id: str, new_status: str) -> Dict:
+        if equipment_id not in self.node_properties:
+            return {"status": "error", "message": f"设备 {equipment_id} 不存在"}
+        
+        allowed_status = ["normal", "warning", "error", "maintenance", "stopped"]
+        if new_status not in allowed_status:
+            return {"status": "error", "message": f"无效状态值 '{new_status}'，允许的值: {allowed_status}"}
+        
+        self.update_instance(equipment_id, {"status": new_status})
+        logger.info(f"[状态更新] 设备 {equipment_id} 状态更新为: {new_status}")
+        
+        return {
+            "status": "success",
+            "equipment_id": equipment_id,
+            "old_status": self.node_properties[equipment_id].get("status", "unknown"),
+            "new_status": new_status
+        }
+    
+    def get_production_line_capacity(self, production_line: str) -> Dict:
+        line_props = self.get_instance_properties(production_line)
+        capacity = line_props.get("capacity", 10)
+        
+        line_relations = self.get_related_instances(production_line, "hasPart")
+        current_count = len(line_relations)
+        
+        return {
+            "production_line": production_line,
+            "current_count": current_count,
+            "capacity": capacity,
+            "remaining": capacity - current_count,
+            "is_full": current_count >= capacity
+        }
+    
+    def check_type_compatibility(self, equipment_type: str, production_line: str) -> Dict:
+        line_props = self.get_instance_properties(production_line)
+        allowed_types = line_props.get("allowed_types", [])
+        
+        if not allowed_types:
+            return {
+                "status": "allowed",
+                "message": f"产线 {production_line} 未限制设备类型"
+            }
+        
+        if equipment_type in allowed_types:
+            return {
+                "status": "allowed",
+                "message": f"设备类型 {equipment_type} 允许在产线 {production_line} 使用",
+                "allowed_types": allowed_types
+            }
+        
+        return {
+            "status": "rejected",
+            "message": f"设备类型 {equipment_type} 不允许在产线 {production_line} 使用",
+            "allowed_types": allowed_types,
+            "suggestion": f"请选择以下允许的设备类型: {', '.join(allowed_types)}"
+        }

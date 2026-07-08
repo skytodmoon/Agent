@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏭 MVP7 - 流程工业知识图谱 - PP聚合装置</title>
+    <script>
+        (function() {
+            var d3Loaded = false;
+            
+            var localScript = document.createElement('script');
+            localScript.src = '../lib/d3.v7.min.js';
+            localScript.onload = function() {
+                d3Loaded = true;
+            };
+            localScript.onerror = function() {
+                var cdnScript = document.createElement('script');
+                cdnScript.src = 'https://d3js.org/d3.v7.min.js';
+                cdnScript.onload = function() {
+                    d3Loaded = true;
+                };
+                cdnScript.onerror = function() {
+                    document.write('<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-family:sans-serif;">');
+                    document.write('<div style="text-align:center;padding:20px;">');
+                    document.write('<h2 style="color:#FF6B6B;margin-bottom:10px;">❌ D3.js 加载失败</h2>');
+                    document.write('<p style="color:#aaa;margin-bottom:20px;">无法加载D3.js库（本地和CDN都失败）</p>');
+                    document.write('<p style="font-size:14px;color:#4ECDC4;">请检查网络连接，或确保lib/d3.v7.min.js文件存在</p>');
+                    document.write('</div></div>');
+                };
+                document.head.appendChild(cdnScript);
+            };
+            document.head.appendChild(localScript);
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; color: #fff; }
+        
+        .header { background: rgba(0,0,0,0.3); padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: flex-start; }
+        .header h1 { font-size: 20px; font-weight: 600; }
+        .header .subtitle { font-size: 12px; color: #aaa; margin-top: 5px; }
+        .header .nav-links { margin-top: 5px; }
+        .header .nav-links a { color: #4ECDC4; text-decoration: none; font-size: 12px; margin-left: 15px; }
+        .header .nav-links a:hover { text-decoration: underline; }
+        
+        .container { display: flex; height: calc(100vh - 65px); }
+        
+        .sidebar { width: 340px; background: rgba(0,0,0,0.2); border-right: 1px solid rgba(255,255,255,0.1); padding: 15px; overflow-y: auto; }
+        
+        .panel { margin-bottom: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px; }
+        .panel h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #ffd700; display: flex; align-items: center; gap: 5px; }
+        .panel h3::before { content: '▸'; color: #ffd700; }
+        
+        .stats-grid { display: grid; grid-template-columns: 2fr 2fr; gap: 10px; }
+        .stat-item { background: rgba(255,255,255,0.05); border-radius: 6px; padding: 10px; text-align: center; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #4ECDC4; }
+        .stat-label { font-size: 11px; color: #aaa; margin-top: 3px; }
+        
+        .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 4px; }
+        
+        .material-flow-list { list-style: none; max-height: 120px; overflow-y: auto; }
+        .material-flow-item { background: rgba(78, 205, 196, 0.1); border-radius: 6px; padding: 8px; margin-bottom: 6px; font-size: 11px; border-left: 3px solid #4ECDC4; }
+        
+        .controls { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, #4ECDC4, #45B7D1); color: #fff; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+        
+        .graph-container { flex: 1; position: relative; }
+        #graph-svg { width: 100%; height: 100%; }
+        
+        .node { cursor: pointer; transition: all 0.3s; }
+        .node:hover circle { filter: brightness(1.2); }
+        .node circle { stroke-width: 2; }
+        .node.warning circle { animation: pulse-warning 2s infinite; }
+        .node.stopped circle { opacity: 0.5; }
+        
+        @keyframes pulse-warning {
+            0%, 100% { filter: drop-shadow(0 0 5px #FF6B6B); }
+            50% { filter: drop-shadow(0 0 15px #FF6B6B); }
+        }
+        
+        .link { stroke: rgba(255,255,255,0.3); stroke-width: 2; transition: all 0.3s; }
+        .link.feedsInto { stroke: #4ECDC4; stroke-dasharray: 5,5; }
+        .link.belongsTo { stroke: #DDA0DD; }
+        .link.hasPart { stroke: #FFEAA7; }
+        .link.locatedIn { stroke: #96CEB4; }
+        .link:hover { stroke: #fff; stroke-width: 3; }
+        
+        .link-label { font-size: 10px; fill: rgba(255,255,255,0.6); }
+        
+        .tooltip { position: absolute; background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 12px; pointer-events: none; z-index: 1000; max-width: 350px; }
+        .tooltip h4 { font-size: 13px; margin-bottom: 8px; color: #4ECDC4; }
+        .tooltip .prop-row { display: flex; justify-content: space-between; margin: 4px 0; font-size: 11px; }
+        .tooltip .prop-label { color: #aaa; }
+        .tooltip .prop-value { color: #fff; text-align: right; }
+        
+        .animation-controls { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); border-radius: 10px; padding: 15px; }
+        .animation-controls h4 { font-size: 12px; margin-bottom: 10px; color: #ffd700; }
+        .progress-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4ECDC4, #ffd700); width: 0%; transition: width 0.5s; }
+        .step-info { font-size: 11px; color: #ccc; margin-bottom: 10px; min-height: 40px; }
+        
+        .relation-panel { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); border-radius: 10px; padding: 15px; width: 250px; }
+        .relation-panel h4 { font-size: 12px; margin-bottom: 10px; color: #ffd700; }
+        .relation-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 11px; }
+        .relation-line { width: 30px; height: 2px; background: rgba(255,255,255,0.3); }
+        .relation-line.feedsInto { background: #4ECDC4; }
+        .relation-line.belongsTo { background: #DDA0DD; }
+        .relation-line.hasPart { background: #FFEAA7; }
+        .relation-line.locatedIn { background: #96CEB4; }
+        
+        .status-panel { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); border-radius: 10px; padding: 15px; width: 220px; }
+        .status-panel h4 { font-size: 12px; margin-bottom: 10px; color: #ffd700; }
+        .status-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .status-dot.running { background: #27AE60; }
+        .status-dot.stopped { background: #7F8C8D; }
+        .status-dot.warning { background: #E67E22; animation: pulse-status 2s infinite; }
+        .status-dot.error { background: #E74C3C; animation: pulse-status 1s infinite; }
+        
+        @keyframes pulse-status {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .loading-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        .loading-spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #4ECDC4; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { margin-left: 15px; font-size: 14px; color: #4ECDC4; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🏭 MVP7 - 流程工业知识图谱 - PP聚合装置</h1>
+            <div class="subtitle">化工生产流程建模与物料流向推理</div>
+        </div>
+        <div class="nav-links">
+            <a href="/mvp6/graph_visualization.html">🔍 离散制造场景</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="panel">
+                <h3>装置概览</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-instances">0</div>
+                        <div class="stat-label">设备数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-relations">0</div>
+                        <div class="stat-label">关系数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-units">0</div>
+                        <div class="stat-label">生产单元</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-flow">0</div>
+                        <div class="stat-label">物料流向</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>设备类型</h3>
+                <div id="legend-container"></div>
+            </div>
+            
+            <div class="panel">
+                <h3>物料流向</h3>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="startFlowAnimation()">▶ 播放物料流向</button>
+                </div>
+                <ul class="material-flow-list" id="flow-list"></ul>
+            </div>
+            
+            <div class="panel">
+                <h3>🎯 场景说明</h3>
+                <div style="font-size: 11px; line-height: 1.6;">
+                    <div style="margin-bottom: 8px;"><strong>流程描述:</strong></div>
+                    <div style="padding-left: 15px;">1. 原料储罐 → 过滤器 → 泵 → 预热器</div>
+                    <div style="padding-left: 15px;">2. 预热器 → 反应釜（聚合反应）</div>
+                    <div style="padding-left: 15px;">3. 反应釜 → 冷凝器 → 精馏塔</div>
+                    <div style="padding-left: 15px;">4. 精馏塔 → 过滤器 → 成品储罐</div>
+                </div>
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 11px; color: #4ECDC4;"><strong>🔮 推理作用:</strong></div>
+                    <div style="font-size: 10px; color: #ccc; margin-top: 4px;">
+                        通过物料流向传递性推理，自动发现设备间的连接关系和潜在瓶颈。例如：如果泵PMP-001进料至预热器HEX-001，预热器进料至反应釜RCT-001，则可推断泵间接向反应釜供应原料。
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>⚙️ 工艺约束</h3>
+                <div style="font-size: 11px; line-height: 1.6;">
+                    <div style="margin-bottom: 6px;"><strong>温度约束:</strong> 反应釜温度 < 200°C</div>
+                    <div style="margin-bottom: 6px;"><strong>压力约束:</strong> 反应釜压力 < 3.0MPa</div>
+                    <div style="margin-bottom: 6px;"><strong>液位约束:</strong> 储罐液位 10%-90%</div>
+                    <div style="margin-bottom: 6px;"><strong>泵约束:</strong> 出口压力 > 入口压力</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="graph-container">
+            <div class="loading-overlay" id="loading">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">正在加载流程工业知识图谱...</div>
+            </div>
+            <svg id="graph-svg"></svg>
+            
+            <div class="status-panel">
+                <h4>📊 设备状态</h4>
+                <div class="status-item">
+                    <div class="status-dot running"></div>
+                    <span>运行中</span>
+                    <span style="margin-left: auto;" id="count-running">0</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot stopped"></div>
+                    <span>停止</span>
+                    <span style="margin-left: auto;" id="count-stopped">0</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot warning"></div>
+                    <span>告警</span>
+                    <span style="margin-left: auto;" id="count-warning">0</span>
+                </div>
+            </div>
+            
+            <div class="animation-controls">
+                <h4>📊 物料流向演示</h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="step-info" id="step-info">点击播放按钮开始演示物料流向</div>
+                <button class="btn btn-secondary" onclick="resetAnimation()" style="display: none;" id="btn-reset">🔄 重置</button>
+            </div>
+            
+            <div class="relation-panel">
+                <h4>关系类型</h4>
+                <div class="relation-item">
+                    <div class="relation-line feedsInto"></div>
+                    <span>feedsInto (进料至)</span>
+                </div>
+                <div class="relation-item">
+                    <div class="relation-line belongsTo"></div>
+                    <span>belongsTo (属于)</span>
+                </div>
+                <div class="relation-item">
+                    <div class="relation-line hasPart"></div>
+                    <span>hasPart (包含)</span>
+                </div>
+                <div class="relation-item">
+                    <div class="relation-line locatedIn"></div>
+                    <span>locatedIn (位于)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip" style="display: none;"></div>
+    
+    <script>
+        let graphData = null;
+        let svg = null;
+        let simulation = null;
+        let nodes = [];
+        let links = [];
+        let nodeElements = null;
+        let linkElements = null;
+        let animationStep = 0;
+        let animationTimer = null;
+        
+        const colorMap = {
+            "Reactor": "#FF6B6B",
+            "Tank": "#4ECDC4",
+            "Pump": "#FFEAA7",
+            "Valve": "#96CEB4",
+            "HeatExchanger": "#45B7D1",
+            "DistillationColumn": "#DDA0DD",
+            "Compressor": "#BB8FCE",
+            "Filter": "#FF9FF3",
+            "ProductionUnit": "#54A0FF",
+            "Workshop": "#5F27CD"
+        };
+        
+        const typeLabels = {
+            "Reactor": "反应器",
+            "Tank": "储罐",
+            "Pump": "泵",
+            "Valve": "阀门",
+            "HeatExchanger": "换热器",
+            "DistillationColumn": "蒸馏塔",
+            "Compressor": "压缩机",
+            "Filter": "过滤器",
+            "ProductionUnit": "生产单元",
+            "Workshop": "车间"
+        };
+        
+        function waitForD3() {
+            return new Promise((resolve) => {
+                if (typeof d3 !== 'undefined') {
+                    resolve();
+                } else {
+                    const interval = setInterval(() => {
+                        if (typeof d3 !== 'undefined') {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, 100);
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        resolve();
+                    }, 5000);
+                }
+            });
+        }
+
+        async function loadGraphData() {
+            try {
+                await waitForD3();
+                
+                if (typeof d3 === 'undefined') {
+                    throw new Error('D3.js 未加载成功');
+                }
+                
+                const response = await fetch('../data/graph_process_visualization.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                graphData = await response.json();
+                renderSidebar();
+                renderGraph();
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('加载图谱数据失败:', error);
+                document.getElementById('loading').innerHTML = '<div class="loading-text">❌ 加载失败: ' + error.message + '</div>';
+            }
+        }
+        
+        function renderSidebar() {
+            document.getElementById('stat-instances').textContent = graphData.graph_summary.total_instances;
+            document.getElementById('stat-relations').textContent = graphData.graph_summary.total_relations;
+            document.getElementById('stat-units').textContent = graphData.nodes.filter(n => n.type === 'ProductionUnit').length;
+            document.getElementById('stat-flow').textContent = graphData.links.filter(l => l.relation === 'feedsInto').length;
+            
+            const legendContainer = document.getElementById('legend-container');
+            legendContainer.innerHTML = '';
+            for (const [type, color] of Object.entries(colorMap)) {
+                const label = typeLabels[type] || type;
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                item.innerHTML = `<div class="legend-color" style="background:${color}"></div><span>${label}</span>`;
+                legendContainer.appendChild(item);
+            }
+            
+            const flowList = document.getElementById('flow-list');
+            flowList.innerHTML = '';
+            const flowLinks = graphData.links.filter(l => l.relation === 'feedsInto');
+            if (flowLinks.length === 0) {
+                flowList.innerHTML = '<li class="material-flow-item">暂无物料流向数据</li>';
+            } else {
+                flowLinks.slice(0, 8).forEach((link, index) => {
+                    const item = document.createElement('li');
+                    item.className = 'material-flow-item';
+                    const sourceLabel = graphData.nodes.find(n => n.id === link.source)?.label || link.source;
+                    const targetLabel = graphData.nodes.find(n => n.id === link.target)?.label || link.target;
+                    item.innerHTML = `<strong>${index + 1}.</strong> ${sourceLabel} → ${targetLabel}`;
+                    flowList.appendChild(item);
+                });
+            }
+            
+            const running = graphData.nodes.filter(n => n.properties.status === 'running').length;
+            const stopped = graphData.nodes.filter(n => n.properties.status === 'stopped').length;
+            const warning = graphData.nodes.filter(n => n.properties.status === 'warning').length;
+            document.getElementById('count-running').textContent = running;
+            document.getElementById('count-stopped').textContent = stopped;
+            document.getElementById('count-warning').textContent = warning;
+        }
+        
+        function renderGraph() {
+            const container = document.getElementById('graph-svg');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            svg = d3.select('#graph-svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            nodes = graphData.nodes.map(d => ({...d}));
+            links = graphData.links.map(d => ({...d}));
+            
+            const typeCenters = {
+                'Workshop': { x: width / 2, y: height * 0.1 },
+                'ProductionUnit': { x: width / 2, y: height * 0.25 },
+                'Tank': { x: width * 0.15, y: height * 0.45 },
+                'Filter': { x: width * 0.15, y: height * 0.6 },
+                'Pump': { x: width * 0.3, y: height * 0.5 },
+                'Valve': { x: width * 0.3, y: height * 0.7 },
+                'HeatExchanger': { x: width * 0.5, y: height * 0.4 },
+                'Reactor': { x: width * 0.5, y: height * 0.6 },
+                'DistillationColumn': { x: width * 0.7, y: height * 0.5 },
+                'Compressor': { x: width * 0.85, y: height * 0.4 },
+            };
+            
+            nodes.forEach(node => {
+                const center = typeCenters[node.type] || { x: width / 2, y: height / 2 };
+                node.x = center.x + (Math.random() - 0.5) * 60;
+                node.y = center.y + (Math.random() - 0.5) * 60;
+            });
+            
+            simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(70).strength(0.8))
+                .force('charge', d3.forceManyBody().strength(-100))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => d.size + 8).strength(0.9))
+                .force('x', d3.forceX(d => (typeCenters[d.type] || {}).x || width / 2).strength(0.06))
+                .force('y', d3.forceY(d => (typeCenters[d.type] || {}).y || height / 2).strength(0.06));
+            
+            linkElements = svg.append('g').selectAll('line')
+                .data(links)
+                .enter().append('line')
+                .attr('class', d => `link ${d.relation}`)
+                .attr('stroke-width', d => d.relation === 'feedsInto' ? 2.5 : 1.5);
+            
+            nodeElements = svg.append('g').selectAll('g')
+                .data(nodes)
+                .enter().append('g')
+                .attr('class', d => `node ${d.properties.status || ''}`)
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+            
+            nodeElements.append('circle')
+                .attr('r', d => d.size)
+                .attr('fill', d => d.color)
+                .attr('stroke', 'rgba(255,255,255,0.3)')
+                .attr('stroke-width', 2);
+            
+            nodeElements.append('text')
+                .attr('dy', d => d.size + 15)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '11px')
+                .style('fill', '#fff')
+                .text(d => d.label.length > 8 ? d.label.substring(0, 8) + '...' : d.label);
+            
+            nodeElements.on('mouseover', showTooltip)
+                .on('mouseout', hideTooltip);
+            
+            simulation.on('tick', () => {
+                linkElements
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+                
+                nodeElements
+                    .attr('transform', d => `translate(${d.x}, ${d.y})`);
+            });
+            
+            svg.on('click', () => hideTooltip());
+        }
+        
+        function showTooltip(event, d) {
+            const tooltip = document.getElementById('tooltip');
+            let html = `<h4>${d.label}</h4>`;
+            html += `<div class="prop-row"><span class="prop-label">ID:</span><span class="prop-value">${d.id}</span></div>`;
+            html += `<div class="prop-row"><span class="prop-label">类型:</span><span class="prop-value">${typeLabels[d.type] || d.type}</span></div>`;
+            html += `<div class="prop-row"><span class="prop-label">状态:</span><span class="prop-value" style="color:${d.properties.status === 'running' ? '#27AE60' : d.properties.status === 'warning' ? '#E67E22' : '#7F8C8D'}">${d.properties.status === 'running' ? '运行中' : d.properties.status === 'stopped' ? '停止' : d.properties.status === 'warning' ? '告警' : d.properties.status}</span></div>`;
+            for (const [key, value] of Object.entries(d.properties)) {
+                if (key !== '_source' && key !== 'status') {
+                    html += `<div class="prop-row"><span class="prop-label">${key}:</span><span class="prop-value">${value}</span></div>`;
+                }
+            }
+            tooltip.innerHTML = html;
+            tooltip.style.display = 'block';
+            
+            const rect = tooltip.getBoundingClientRect();
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY - rect.height / 2) + 'px';
+        }
+        
+        function hideTooltip() {
+            document.getElementById('tooltip').style.display = 'none';
+        }
+        
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        
+        function startFlowAnimation() {
+            if (animationTimer) clearInterval(animationTimer);
+            
+            animationStep = 0;
+            document.getElementById('btn-reset').style.display = 'block';
+            
+            const flowSteps = [
+                { title: '步骤1: 原料储罐 → 过滤器', nodes: ['TNK-001', 'TNK-002', 'FLT-001'], links: ['TNK-001→FLT-001', 'TNK-002→FLT-001'] },
+                { title: '步骤2: 过滤器 → 进料泵', nodes: ['FLT-001', 'PMP-001', 'PMP-002'], links: ['FLT-001→PMP-001', 'FLT-001→PMP-002'] },
+                { title: '步骤3: 进料泵 → 预热器', nodes: ['PMP-001', 'PMP-002', 'HEX-001'], links: ['PMP-001→HEX-001', 'PMP-002→HEX-001'] },
+                { title: '步骤4: 预热器 → 反应釜', nodes: ['HEX-001', 'RCT-001', 'RCT-002'], links: ['HEX-001→RCT-001', 'HEX-001→RCT-002'] },
+                { title: '步骤5: 反应釜 → 冷凝器', nodes: ['RCT-001', 'RCT-002', 'HEX-002'], links: ['RCT-001→HEX-002', 'RCT-002→HEX-002'] },
+                { title: '步骤6: 冷凝器 → 精馏塔', nodes: ['HEX-002', 'DST-001'], links: ['HEX-002→DST-001'] },
+                { title: '步骤7: 精馏塔 → 成品过滤器', nodes: ['DST-001', 'FLT-002'], links: ['DST-001→FLT-002'] },
+                { title: '步骤8: 成品过滤器 → 成品储罐', nodes: ['FLT-002', 'TNK-003', 'PMP-004'], links: ['FLT-002→PMP-004', 'PMP-004→TNK-003'] }
+            ];
+            
+            animationTimer = setInterval(() => {
+                animationStep++;
+                
+                if (animationStep > flowSteps.length) {
+                    clearInterval(animationTimer);
+                    document.getElementById('step-info').textContent = '✅ 物料流向演示完成！';
+                    document.getElementById('progress-fill').style.width = '100%';
+                    return;
+                }
+                
+                const progress = (animationStep / flowSteps.length) * 100;
+                document.getElementById('progress-fill').style.width = progress + '%';
+                
+                const step = flowSteps[animationStep - 1];
+                document.getElementById('step-info').textContent = step.title;
+                
+                nodeElements.select('circle')
+                    .transition().duration(300)
+                    .style('filter', d => step.nodes.includes(d.id) ? 'drop-shadow(0 0 10px #4ECDC4)' : 'none')
+                    .style('opacity', d => step.nodes.includes(d.id) ? 1 : 0.3);
+                
+                linkElements
+                    .transition().duration(300)
+                    .style('opacity', d => {
+                        const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+                        const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+                        const key = `${sourceId}→${targetId}`;
+                        return step.links.includes(key) ? 1 : 0.2;
+                    })
+                    .style('filter', d => {
+                        const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+                        const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+                        const key = `${sourceId}→${targetId}`;
+                        return step.links.includes(key) ? 'drop-shadow(0 0 6px #4ECDC4)' : 'none';
+                    });
+            }, 1800);
+        }
+        
+        function resetAnimation() {
+            if (animationTimer) clearInterval(animationTimer);
+            animationStep = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('step-info').textContent = '点击播放按钮开始演示物料流向';
+            document.getElementById('btn-reset').style.display = 'none';
+            
+            nodeElements.select('circle')
+                .transition().duration(500)
+                .style('filter', 'none')
+                .style('opacity', 1);
+            
+            linkElements
+                .transition().duration(500)
+                .style('opacity', 1)
+                .style('filter', 'none');
+        }
+        
+        window.addEventListener('resize', () => {
+            if (svg && graphData) {
+                const width = document.getElementById('graph-svg').clientWidth;
+                const height = document.getElementById('graph-svg').clientHeight;
+                svg.attr('width', width).attr('height', height);
+                simulation.force('center', d3.forceCenter(width / 2, height / 2)).alpha(0.3).restart();
+            }
+        });
+        
+        loadGraphData();
+    </script>
+</body>
+</html>

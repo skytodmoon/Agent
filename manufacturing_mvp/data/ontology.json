@@ -4,7 +4,7 @@
       "label": "设备",
       "description": "制造企业中的所有生产设备",
       "required_properties": ["equipment_id", "equipment_name", "equipment_type", "location", "status"],
-      "optional_properties": ["manufacturer", "model", "purchase_date", "installation_date", "capacity", "maintenance_cycle"],
+      "optional_properties": ["manufacturer", "model", "purchase_date", "installation_date", "capacity", "maintenance_cycle", "actions"],
       "subclasses": ["CNCMachine", "Lathe", "MillingMachine", "Robot", "Conveyor"]
     },
     "CNCMachine": {

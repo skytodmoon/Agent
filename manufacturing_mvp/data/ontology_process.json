@@ -1,0 +1,201 @@
+{
+  "classes": {
+    "Equipment": {
+      "label": "设备",
+      "description": "流程工业中的所有生产设备",
+      "required_properties": ["equipment_id", "equipment_name", "equipment_type", "location", "status"],
+      "optional_properties": ["manufacturer", "model", "purchase_date", "installation_date", "capacity", "maintenance_cycle"],
+      "subclasses": ["Reactor", "Tank", "Pump", "Valve", "HeatExchanger", "DistillationColumn", "Compressor", "Filter"]
+    },
+    "Reactor": {
+      "label": "反应器",
+      "description": "化学反应容器",
+      "parent": "Equipment",
+      "required_properties": ["volume", "operating_temperature", "operating_pressure", "agitator_speed"],
+      "optional_properties": ["material", "reaction_type", "catalyst"]
+    },
+    "Tank": {
+      "label": "储罐",
+      "description": "物料储存容器",
+      "parent": "Equipment",
+      "required_properties": ["volume", "level", "material_type"],
+      "optional_properties": ["pressure", "temperature", "agitator"]
+    },
+    "Pump": {
+      "label": "泵",
+      "description": "流体输送设备",
+      "parent": "Equipment",
+      "required_properties": ["flow_rate", "head", "power"],
+      "optional_properties": ["pump_type", "suction_pressure", "discharge_pressure"]
+    },
+    "Valve": {
+      "label": "阀门",
+      "description": "流量控制设备",
+      "parent": "Equipment",
+      "required_properties": ["size", "position", "valve_type"],
+      "optional_properties": ["actuator", "pressure_class"]
+    },
+    "HeatExchanger": {
+      "label": "换热器",
+      "description": "热交换设备",
+      "parent": "Equipment",
+      "required_properties": ["area", "duty", "hot_inlet_temp", "cold_inlet_temp"],
+      "optional_properties": ["exchanger_type", "hot_outlet_temp", "cold_outlet_temp"]
+    },
+    "DistillationColumn": {
+      "label": "蒸馏塔",
+      "description": "精馏分离设备",
+      "parent": "Equipment",
+      "required_properties": ["height", "diameter", "tray_count", "reflux_ratio"],
+      "optional_properties": ["feed_location", "top_temperature", "bottom_temperature"]
+    },
+    "Compressor": {
+      "label": "压缩机",
+      "description": "气体压缩设备",
+      "parent": "Equipment",
+      "required_properties": ["capacity", "pressure_ratio", "power"],
+      "optional_properties": ["compressor_type", "inlet_temperature"]
+    },
+    "Filter": {
+      "label": "过滤器",
+      "description": "固液分离设备",
+      "parent": "Equipment",
+      "required_properties": ["filter_area", "pressure_drop", "flow_rate"],
+      "optional_properties": ["filter_type", "medium"]
+    },
+    "ProductionUnit": {
+      "label": "生产单元",
+      "description": "流程工业中的生产装置",
+      "required_properties": ["unit_id", "unit_name", "status"],
+      "optional_properties": ["capacity", "product_type"]
+    },
+    "Workshop": {
+      "label": "车间",
+      "description": "生产区域",
+      "required_properties": ["workshop_id", "workshop_name", "location"],
+      "optional_properties": ["area", "employee_count"]
+    },
+    "Pipeline": {
+      "label": "管道",
+      "description": "物料输送管道",
+      "required_properties": ["pipe_id", "diameter", "material"],
+      "optional_properties": ["length", "insulation"]
+    },
+    "Sensor": {
+      "label": "传感器",
+      "description": "测量设备",
+      "required_properties": ["sensor_id", "sensor_type", "measurement"],
+      "optional_properties": ["accuracy", "range"]
+    },
+    "ControlSystem": {
+      "label": "控制系统",
+      "description": "自动化控制系统",
+      "required_properties": ["system_id", "system_name"],
+      "optional_properties": ["vendor", "version"]
+    }
+  },
+  "relations": {
+    "belongsTo": {
+      "label": "属于",
+      "domain": "Equipment",
+      "range": ["ProductionUnit", "Workshop"],
+      "description": "设备归属于生产单元或车间"
+    },
+    "hasPart": {
+      "label": "包含",
+      "domain": "ProductionUnit",
+      "range": "Equipment",
+      "description": "生产单元包含设备"
+    },
+    "locatedIn": {
+      "label": "位于",
+      "domain": ["Equipment", "ProductionUnit"],
+      "range": "Workshop",
+      "description": "设备或生产单元位于车间"
+    },
+    "feedsInto": {
+      "label": "进料至",
+      "domain": "Equipment",
+      "range": "Equipment",
+      "description": "设备向另一设备输送物料"
+    },
+    "dischargesFrom": {
+      "label": "出料自",
+      "domain": "Equipment",
+      "range": "Equipment",
+      "description": "设备从另一设备接收物料"
+    },
+    "connectedBy": {
+      "label": "通过管道连接",
+      "domain": "Equipment",
+      "range": "Pipeline",
+      "description": "设备通过管道连接"
+    },
+    "measures": {
+      "label": "测量",
+      "domain": "Sensor",
+      "range": "Equipment",
+      "description": "传感器测量设备参数"
+    },
+    "controls": {
+      "label": "控制",
+      "domain": "ControlSystem",
+      "range": "Equipment",
+      "description": "控制系统控制设备"
+    }
+  },
+  "rules": [
+    {
+      "name": "inheritance",
+      "description": "子类继承父类的所有属性",
+      "condition": "?x rdfs:subClassOf ?y",
+      "consequence": "?x rdfs:subClassOf Equipment"
+    },
+    {
+      "name": "transitive_location",
+      "description": "如果设备属于生产单元，生产单元位于车间，则设备位于车间",
+      "condition": "?x belongsTo ?y && ?y locatedIn ?z",
+      "consequence": "?x locatedIn ?z"
+    },
+    {
+      "name": "material_flow",
+      "description": "物料流向的传递性：如果A进料至B，B进料至C，则A进料至C",
+      "condition": "?x feedsInto ?y && ?y feedsInto ?z",
+      "consequence": "?x feedsInto ?z"
+    },
+    {
+      "name": "pressure_constraint",
+      "description": "泵出口压力必须大于入口压力",
+      "condition": "?x rdf:type Pump",
+      "consequence": "?x discharge_pressure > ?x suction_pressure"
+    },
+    {
+      "name": "tank_level",
+      "description": "储罐液位必须在安全范围内",
+      "condition": "?x rdf:type Tank",
+      "consequence": "?x level > 10 && ?x level < 90"
+    }
+  ],
+  "constraints": {
+    "equipment_id_format": {
+      "description": "设备编码必须以设备类型缩写开头",
+      "pattern": "^(RCT|TNK|PMP|VAL|HEX|DST|CMP|FLT)-\\d{3}$",
+      "message": "设备编码格式错误，应为RCT/TNK/PMP/VAL/HEX/DST/CMP/FLT-XXX格式"
+    },
+    "status_values": {
+      "description": "设备状态只能是running/stopped/warning/error/maintenance",
+      "allowed_values": ["running", "stopped", "warning", "error", "maintenance"],
+      "message": "设备状态值无效"
+    },
+    "pressure_positive": {
+      "description": "压力值必须为正数",
+      "condition": "operating_pressure > 0",
+      "message": "压力值必须大于0"
+    },
+    "temperature_range": {
+      "description": "温度值必须在合理范围内",
+      "condition": "operating_temperature > -200 && operating_temperature < 1000",
+      "message": "温度值超出合理范围"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "unit_id": "PU-001",
+    "unit_name": "PP聚合装置",
+    "status": "running",
+    "capacity": 300000,
+    "product_type": "聚丙烯",
+    "workshop": "化工车间"
+  },
+  {
+    "unit_id": "PU-002",
+    "unit_name": "PE聚合装置",
+    "status": "maintenance",
+    "capacity": 250000,
+    "product_type": "聚乙烯",
+    "workshop": "化工车间"
+  },
+  {
+    "unit_id": "PU-003",
+    "unit_name": "原料预处理装置",
+    "status": "running",
+    "capacity": 500000,
+    "product_type": "原料净化",
+    "workshop": "化工车间"
+  },
+  {
+    "workshop_id": "化工车间",
+    "workshop_name": "化工车间",
+    "location": "三号厂房",
+    "area": 8000,
+    "employee_count": 120
+  },
+  {
+    "workshop_id": "公用工程车间",
+    "workshop_name": "公用工程车间",
+    "location": "四号厂房",
+    "area": 6000,
+    "employee_count": 60
+  }
+]

@@ -2,8 +2,10 @@ import sys
 import os
 import json
 import logging
+import threading
 from datetime import datetime
 from io import StringIO
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -57,7 +59,6 @@ st.set_page_config(
 )
 
 st.sidebar.title("🏭 制造业Agent Demo平台")
-st.sidebar.markdown("基于AgentScope 2.0构建")
 
 mvp_options = {
     "mvp1": "MVP1: 核心设备故障诊断与工单闭环助手",
@@ -66,6 +67,7 @@ mvp_options = {
     "mvp4": "MVP4: 产线异常应急排程调度Agent",
     "mvp5": "MVP5: 车间安全巡检与隐患整改闭环Agent",
     "mvp6": "MVP6: 新设备MES上线准入自动审核",
+    "mvp7": "MVP7: 流程工业知识图谱与物料流向推理",
 }
 
 selected_mvp = st.sidebar.selectbox("选择MVP场景", list(mvp_options.keys()), format_func=lambda x: mvp_options[x])
@@ -112,8 +114,12 @@ input_configs = {
         {"key": "reporter", "label": "报告人", "default": "王安全", "help": "报告人姓名"},
     ],
     "mvp6": [
-        {"key": "request_id", "label": "注册请求ID", "default": "REQ-001", "help": "例如：REQ-001"},
-        {"key": "auto_process", "label": "自动处理所有请求", "default": "yes", "help": "yes/no（选择yes将自动处理所有待审核请求）"},
+        {"key": "demo_mode", "label": "演示模式", "default": "full", "help": "full（完整演示）/ simple（简洁演示）"},
+        {"key": "request_id", "label": "注册请求ID", "default": "REQ-020", "help": "例如：REQ-020"},
+    ],
+    "mvp7": [
+        {"key": "process_unit", "label": "生产单元", "default": "PU-001", "help": "例如：PU-001"},
+        {"key": "analysis_mode", "label": "分析模式", "default": "full", "help": "full/flow/constraint（完整分析/物料流向/工艺约束）"},
     ],
 }
 
@@ -164,12 +170,21 @@ agent_flow_configs = {
     },
     "mvp6": {
         "agents": [
-            {"name": "注册监控Agent", "icon": "👀", "color": "#3B82F6"},
-            {"name": "规则校验Agent", "icon": "✅", "color": "#10B981"},
-            {"name": "审批决策Agent", "icon": "🔍", "color": "#EF4444"},
-            {"name": "执行同步Agent", "icon": "🚀", "color": "#F59E0B"},
+            {"name": "本体知识图谱", "icon": "�", "color": "#3B82F6"},
+            {"name": "规则校验推理", "icon": "🧠", "color": "#10B981"},
+            {"name": "审批决策执行", "icon": "✅", "color": "#EF4444"},
+            {"name": "设备动作控制", "icon": "⚡", "color": "#F59E0B"},
         ],
-        "description": "解决新设备上线流程繁琐、数据标准不统一的痛点。基于本体规则引擎自动校验设备注册信息，触发规则判定后自动审批，批准的设备同步至MES和ERP系统。",
+        "description": "基于本体思想的设备注册审批演示，展示知识图谱的语义+动作能力。包含：📚 本体知识图谱（类、属性、关系、规则）、🔍 规则校验（编码规范、必填属性、跨系统一致性）、🧠 语义推理（传递性推理、容量约束、类型兼容性）、✅ 审批决策（自动批准/拒绝）、⚡ 设备动作（启动生产、停止生产、开始维护、重置错误，基于状态机约束）。",
+    },
+    "mvp7": {
+        "agents": [
+            {"name": "流程监控Agent", "icon": "👀", "color": "#3B82F6"},
+            {"name": "事件处理Agent", "icon": "⚡", "color": "#EF4444"},
+            {"name": "应急响应Agent", "icon": "🚨", "color": "#F59E0B"},
+            {"name": "流程管理Agent", "icon": "🧠", "color": "#8B5CF6"},
+        ],
+        "description": "解决流程工业中物料流向不透明、工艺约束难监控、异常响应慢的痛点。基于预构建的本体知识图谱，通过事件驱动架构实现：设备异常检测→影响分析→约束推理→应急响应→图谱更新的完整闭环流程。",
     },
 }
 
@@ -402,61 +417,272 @@ async def run_mvp5():
 
 async def run_mvp6():
     from mvp6.agents import create_registration_monitor_agent, create_rule_validation_agent, create_approval_decision_agent, create_registration_process_agent
+    from mvp6.tools import GenerateGraphVisualizationTool, ExecuteDeviceActionTool, GraphQueryTool, QueryRegistrationRequestsTool, ValidateRegistrationRequestTool, ApproveRegistrationTool, RejectRegistrationTool
+    from mvp6.graph_manager import get_graph, save_graph_to_json
     
     model = get_model(model_type)
-    monitor_agent = create_registration_monitor_agent(model)
-    validation_agent = create_rule_validation_agent(model)
-    decision_agent = create_approval_decision_agent(model)
-    process_agent = create_registration_process_agent(model)
+    demo_mode = st.session_state.get("demo_mode", "full")
     
-    auto_process = st.session_state.auto_process == "yes"
+    results = []
     
-    if auto_process:
-        user_input = "执行完整的设备注册审批流程"
+    with st.status("📚 本体知识图谱初始化...", expanded=True) as status_container:
+        graph = get_graph()
+        st.success(f"✅ 知识图谱加载完成")
+        st.markdown(f"""
+        **本体知识图谱概览**:
+        - 总实例数: `{len(graph.node_properties)}`
+        - 总关系数: `{sum(len(rels) for rels in graph.graph.values())}`
+        - 设备实例: CNC({len(graph.get_instances_by_class('CNCMachine'))}), Robot({len(graph.get_instances_by_class('Robot'))}), Milling({len(graph.get_instances_by_class('MillingMachine'))})
         
-        with st.status(f"🔄 🚀 设备注册审批流程Agent 正在处理...", expanded=True) as status_container:
-            st.markdown(f"**输入**: {user_input}")
-            msg = Msg(name="user", content=[TextBlock(type="text", text=str(user_input))], role="user")
-            result = await run_agent_stream(process_agent, msg, status_container, "设备注册审批流程Agent", {"icon": "🚀", "color": "#F59E0B"})
-            status_container.update(label=f"✅ 🚀 设备注册审批流程Agent 处理完成", state="complete")
+        **本体核心概念**:
+        - 📦 **类(Class)**: Equipment, CNCMachine, Robot, ProductionLine, Workshop
+        - 🔗 **关系(Relation)**: belongsTo(属于), locatedIn(位于), hasPart(包含)
+        - 📝 **属性(Property)**: equipment_id, equipment_name, status, location
+        - ⚡ **动作(Action)**: start_production, stop_production, start_maintenance, reset_error
+        - 🧠 **规则(Rule)**: 容量约束、类型兼容性、传递性推理
         
-        return [("设备注册审批流程Agent", result)]
-    else:
-        request_id = st.session_state.request_id
+        **演示模式**: {'完整演示' if demo_mode == 'full' else '简洁演示'}
+        """)
+        status_container.update(label="✅ 本体知识图谱初始化完成", state="complete")
+    
+    with st.status("� 阶段1: 查询待审核请求...", expanded=True) as status_container:
+        query_tool = QueryRegistrationRequestsTool()
+        query_result = await query_tool._call(status="pending")
+        query_data = query_result.content[0].text
         
-        agents = [
-            ("注册监控Agent", monitor_agent, agent_flow_configs["mvp6"]["agents"][0]),
-            ("规则校验Agent", validation_agent, agent_flow_configs["mvp6"]["agents"][1]),
-            ("审批决策Agent", decision_agent, agent_flow_configs["mvp6"]["agents"][2]),
+        try:
+            data = json.loads(query_data)
+            count = data.get("total_count", 0)
+            st.success(f"✅ 发现 {count} 个待审核请求")
+            
+            if data.get("requests"):
+                for req in data["requests"]:
+                    st.markdown(f"""
+                    **📝 {req['request_id']}** - {req['equipment_name']} ({req['equipment_type']})
+                    - 设备ID: {req['equipment_id']}
+                    - 位置: {req['location']}
+                    - 产线: {req['production_line']}
+                    """)
+        except:
+            st.code(query_data)
+        
+        results.append(("查询待审核请求", query_data))
+        status_container.update(label="✅ 阶段1完成 - 查询待审核请求", state="complete")
+    
+    with st.status("� 阶段2: 基于本体的规则校验与语义推理...", expanded=True) as status_container:
+        query_tool = QueryRegistrationRequestsTool()
+        query_result = await query_tool._call(status="pending")
+        query_data = json.loads(query_result.content[0].text)
+        
+        for req in query_data["requests"][:2]:
+            st.markdown(f"---\n**校验请求: {req['request_id']}**")
+            
+            validate_tool = ValidateRegistrationRequestTool()
+            validate_result = await validate_tool._call(request_id=req["request_id"])
+            validate_data = json.loads(validate_result.content[0].text)
+            
+            st.markdown(f"**校验结果**: {'✅ 通过' if validate_data.get('valid') else '❌ 不通过'}")
+            
+            if "validation_results" in validate_data:
+                for rule_name, result in validate_data["validation_results"].items():
+                    status = "✅" if result.get("passed") else "❌"
+                    st.markdown(f"- {status} **{rule_name}**: {result.get('message')}")
+            
+            if "reasons" in validate_data:
+                st.markdown("**⚠️ 校验失败原因**:")
+                for reason in validate_data["reasons"]:
+                    st.markdown(f"- {reason}")
+        
+        st.markdown("---\n**🧠 语义推理演示**:")
+        
+        graph_query = GraphQueryTool()
+        
+        traverse_result = await graph_query._call(query_type="traverse", start_node="LINE-A")
+        traverse_data = json.loads(traverse_result.content[0].text)
+        st.markdown(f"**🔗 产线 LINE-A 关联节点**: {traverse_data['count']} 个")
+        
+        capacity_result = await graph_query._call(query_type="line_capacity", production_line="LINE-A")
+        capacity_data = json.loads(capacity_result.content[0].text)
+        st.markdown(f"""
+        **📊 产线 LINE-A 容量约束**:
+        - 当前设备数: {capacity_data.get('current_count', 0)}
+        - 最大容量: {capacity_data.get('max_capacity', 0)}
+        - 剩余容量: {capacity_data.get('remaining_capacity', 0)}
+        - 容量充足: {'✅' if capacity_data.get('capacity_ok') else '❌'}
+        """)
+        
+        compatibility_result = await graph_query._call(query_type="type_compatibility", equipment_type="CNCMachine", production_line="LINE-A")
+        compatibility_data = json.loads(compatibility_result.content[0].text)
+        st.markdown(f"""
+        **🔧 类型兼容性**:
+        - 兼容: {'✅' if compatibility_data.get('compatible') else '❌'}
+        - 支持的类型: {', '.join(compatibility_data.get('supported_types', []))}
+        """)
+        
+        results.append(("规则校验与语义推理", "完成"))
+        status_container.update(label="✅ 阶段2完成 - 规则校验与语义推理", state="complete")
+    
+    with st.status("✅ 阶段3: 审批决策与图谱更新...", expanded=True) as status_container:
+        query_tool = QueryRegistrationRequestsTool()
+        query_result = await query_tool._call(status="pending")
+        query_data = json.loads(query_result.content[0].text)
+        
+        for req in query_data["requests"][:2]:
+            st.markdown(f"---\n**处理请求: {req['request_id']}**")
+            
+            validate_tool = ValidateRegistrationRequestTool()
+            validate_result = await validate_tool._call(request_id=req["request_id"])
+            validate_data = json.loads(validate_result.content[0].text)
+            
+            if validate_data.get("valid"):
+                approve_result = await ApproveRegistrationTool()._call(request_id=req["request_id"])
+                approve_data = json.loads(approve_result.content[0].text)
+                
+                st.success(f"✅ {approve_data.get('message')}")
+                
+                if "graph_update" in approve_data:
+                    update_info = approve_data["graph_update"]
+                    st.markdown(f"""
+                    **📊 知识图谱更新**:
+                    - 新增节点: {update_info.get('nodes_added', 0)}
+                    - 新增关系: {update_info.get('relations_added', 0)}
+                    """)
+            else:
+                reject_reason = "; ".join(validate_data.get("reasons", []))
+                reject_result = await RejectRegistrationTool()._call(request_id=req["request_id"], reject_reason=reject_reason)
+                reject_data = json.loads(reject_result.content[0].text)
+                
+                st.error(f"❌ {reject_data.get('message')}")
+        
+        save_graph_to_json()
+        st.success("✅ 知识图谱已更新并保存")
+        
+        results.append(("审批决策与图谱更新", "完成"))
+        status_container.update(label="✅ 阶段3完成 - 审批决策与图谱更新", state="complete")
+    
+    with st.status("⚡ 阶段4: 设备动作演示...", expanded=True) as status_container:
+        st.markdown("""
+        **设备动作(Action)体现本体思想的"语义+动作"能力**:
+        - 每个设备根据类型和状态拥有不同的可执行动作
+        - 动作可用性由状态机约束决定
+        - 执行动作会改变设备状态，进而更新知识图谱
+        """)
+        
+        execute_tool = ExecuteDeviceActionTool()
+        
+        actions_demo = [
+            ("CNC-001", "start_production", "启动生产"),
+            ("CNC-001", "start_maintenance", "开始维护"),
+            ("ROB-001", "start_task", "启动任务"),
+            ("CNC-001", "reset_error", "重置错误"),
         ]
         
-        results = []
+        for equipment_id, action_name, action_label in actions_demo:
+            st.markdown(f"---\n**执行动作: {action_label} ({equipment_id})**")
+            try:
+                action_result = await execute_tool._call(equipment_id, action_name)
+                action_data = json.loads(action_result.content[0].text)
+                
+                if action_data.get("status") == "success":
+                    st.success(f"✅ {action_data.get('message')}")
+                    st.markdown(f"""
+                    - 设备: {action_data.get('equipment_name')}
+                    - 类型: {action_data.get('equipment_type')}
+                    - 状态变化: {action_data.get('previous_status')} → {action_data.get('new_status')}
+                    """)
+                elif action_data.get("status") == "rejected":
+                    st.warning(f"⚠️ {action_data.get('message')}")
+                    st.markdown(f"""
+                    - 当前状态: {action_data.get('equipment_status')}
+                    - 需要状态: {', '.join(action_data.get('requires_status', []))}
+                    """)
+                else:
+                    st.error(f"❌ {action_data.get('message')}")
+            except Exception as e:
+                st.error(f"⚠️ 执行失败: {e}")
         
-        monitor_input = "查询所有待审核的设备注册请求"
-        with st.status(f"🔄 {agent_flow_configs['mvp6']['agents'][0]['icon']} 注册监控Agent 正在处理...", expanded=True) as status_container:
-            st.markdown(f"**输入**: {monitor_input}")
-            msg = Msg(name="user", content=[TextBlock(type="text", text=str(monitor_input))], role="user")
-            result = await run_agent_stream(monitor_agent, msg, status_container, "注册监控Agent", agent_flow_configs["mvp6"]["agents"][0])
-            results.append(("注册监控Agent", result))
-            status_container.update(label=f"✅ {agent_flow_configs['mvp6']['agents'][0]['icon']} 注册监控Agent 处理完成", state="complete")
+        save_graph_to_json()
+        st.success("✅ 设备动作执行完成，知识图谱已更新")
         
-        validation_input = f"校验设备注册请求 {request_id}"
-        with st.status(f"🔄 {agent_flow_configs['mvp6']['agents'][1]['icon']} 规则校验Agent 正在处理...", expanded=True) as status_container:
-            st.markdown(f"**输入**: {validation_input}")
-            msg = Msg(name="user", content=[TextBlock(type="text", text=str(validation_input))], role="user")
-            result = await run_agent_stream(validation_agent, msg, status_container, "规则校验Agent", agent_flow_configs["mvp6"]["agents"][1])
-            results.append(("规则校验Agent", result))
-            status_container.update(label=f"✅ {agent_flow_configs['mvp6']['agents'][1]['icon']} 规则校验Agent 处理完成", state="complete")
+        results.append(("设备动作演示", "完成"))
+        status_container.update(label="✅ 阶段4完成 - 设备动作演示", state="complete")
+    
+    with st.status("🎨 阶段5: 生成知识图谱可视化...", expanded=True) as status_container:
+        visualization_tool = GenerateGraphVisualizationTool()
+        vis_result = await visualization_tool._call()
+        vis_data = json.loads(vis_result.content[0].text)
         
-        decision_input = f"request_id={request_id}, validation_result={results[-1][1]}"
-        with st.status(f"🔄 {agent_flow_configs['mvp6']['agents'][2]['icon']} 审批决策Agent 正在处理...", expanded=True) as status_container:
-            st.markdown(f"**输入**: {decision_input}")
-            msg = Msg(name="user", content=[TextBlock(type="text", text=str(decision_input))], role="user")
-            result = await run_agent_stream(decision_agent, msg, status_container, "审批决策Agent", agent_flow_configs["mvp6"]["agents"][2])
-            results.append(("审批决策Agent", result))
-            status_container.update(label=f"✅ {agent_flow_configs['mvp6']['agents'][2]['icon']} 审批决策Agent 处理完成", state="complete")
+        st.success(f"✅ 可视化数据生成成功")
+        st.markdown(f"""
+        - 实例数: {vis_data.get('total_instances')}
+        - 关系数: {vis_data.get('total_relations')}
+        """)
         
-        return results
+        results.append(("生成知识图谱可视化", "完成"))
+        status_container.update(label="✅ 阶段5完成 - 生成知识图谱可视化", state="complete")
+    
+    return results
+
+async def run_mvp7():
+    from mvp7.agents import (
+        create_process_monitor_agent,
+        create_event_handling_agent,
+        create_emergency_response_agent,
+        create_process_management_agent
+    )
+    from mvp7.tools import GenerateProcessGraphVisualizationTool
+    
+    model = get_model(model_type)
+    monitor_agent = create_process_monitor_agent(model)
+    event_agent = create_event_handling_agent(model)
+    response_agent = create_emergency_response_agent(model)
+    management_agent = create_process_management_agent(model)
+    
+    process_unit = st.session_state.process_unit
+    analysis_mode = st.session_state.analysis_mode
+    
+    results = []
+    
+    monitor_input = "查询所有设备状态，检查工艺约束，提供监控概览"
+    with st.status(f"🔄 {agent_flow_configs['mvp7']['agents'][0]['icon']} 流程监控Agent 正在处理...", expanded=True) as status_container:
+        st.markdown(f"**输入**: {monitor_input}")
+        msg = Msg(name="user", content=[TextBlock(type="text", text=str(monitor_input))], role="user")
+        result = await run_agent_stream(monitor_agent, msg, status_container, "流程监控Agent", agent_flow_configs["mvp7"]["agents"][0])
+        results.append(("流程监控Agent", result))
+        status_container.update(label=f"✅ {agent_flow_configs['mvp7']['agents'][0]['icon']} 流程监控Agent 处理完成", state="complete")
+    
+    event_input = "处理设备故障事件：PMP-001进料泵故障，分析对下游设备的影响"
+    with st.status(f"🔄 {agent_flow_configs['mvp7']['agents'][1]['icon']} 事件处理Agent 正在处理...", expanded=True) as status_container:
+        st.markdown(f"**输入**: {event_input}")
+        msg = Msg(name="user", content=[TextBlock(type="text", text=str(event_input))], role="user")
+        result = await run_agent_stream(event_agent, msg, status_container, "事件处理Agent", agent_flow_configs["mvp7"]["agents"][1])
+        results.append(("事件处理Agent", result))
+        status_container.update(label=f"✅ {agent_flow_configs['mvp7']['agents'][1]['icon']} 事件处理Agent 处理完成", state="complete")
+    
+    response_input = "针对PMP-001进料泵故障，生成应急预案和操作建议"
+    with st.status(f"🔄 {agent_flow_configs['mvp7']['agents'][2]['icon']} 应急响应Agent 正在处理...", expanded=True) as status_container:
+        st.markdown(f"**输入**: {response_input}")
+        msg = Msg(name="user", content=[TextBlock(type="text", text=str(response_input))], role="user")
+        result = await run_agent_stream(response_agent, msg, status_container, "应急响应Agent", agent_flow_configs["mvp7"]["agents"][2])
+        results.append(("应急响应Agent", result))
+        status_container.update(label=f"✅ {agent_flow_configs['mvp7']['agents'][2]['icon']} 应急响应Agent 处理完成", state="complete")
+    
+    management_input = "执行完整流程：监控→检测→分析→响应→更新图谱"
+    with st.status(f"🔄 {agent_flow_configs['mvp7']['agents'][3]['icon']} 流程管理Agent 正在处理...", expanded=True) as status_container:
+        st.markdown(f"**输入**: {management_input}")
+        msg = Msg(name="user", content=[TextBlock(type="text", text=str(management_input))], role="user")
+        result = await run_agent_stream(management_agent, msg, status_container, "流程管理Agent", agent_flow_configs["mvp7"]["agents"][3])
+        results.append(("流程管理Agent", result))
+        status_container.update(label=f"✅ {agent_flow_configs['mvp7']['agents'][3]['icon']} 流程管理Agent 处理完成", state="complete")
+    
+    with st.status("🔄 生成可视化数据...", expanded=True) as status_container:
+        visualization_tool = GenerateProcessGraphVisualizationTool()
+        await visualization_tool._call()
+        st.success("✅ 知识图谱可视化数据生成完成")
+        st.info("🌐 可视化页面：http://localhost:8080/mvp7/graph_visualization.html")
+        status_container.update(label="✅ 可视化数据生成完成", state="complete")
+    
+    return results
 
 col1, col2, col3 = st.columns([1, 2, 1])
 
@@ -470,6 +696,49 @@ with col1:
             key=config["key"],
             help=config["help"],
         )
+    
+    if selected_mvp == "mvp6":
+        try:
+            requests_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "device_registration_requests.json")
+            with open(requests_file, 'r', encoding='utf-8') as f:
+                requests = json.load(f)
+            
+            pending_requests = [r for r in requests if r.get("request_status") == "pending"]
+            
+            if pending_requests:
+                st.markdown("---")
+                st.markdown("### 📋 待审核请求列表")
+                for req in pending_requests:
+                    status_color = "#10B981"
+                    radio_key = f"select_req_{req['request_id']}"
+                    if st.radio(
+                        f"**{req['request_id']}** - {req['equipment_name']} ({req['equipment_type']})",
+                        ["选择此请求"],
+                        key=radio_key,
+                        label_visibility="collapsed"
+                    ):
+                        st.session_state.request_id = req["request_id"]
+                        st.session_state.auto_process = "no"
+                    
+                    st.markdown(f"""
+                    <div style="padding: 8px 12px; background-color: #F3F4F6; border-radius: 8px; margin-bottom: 8px;">
+                        <div style="font-size: 14px; color: #374151;">
+                            <strong>设备ID:</strong> {req['equipment_id']}
+                        </div>
+                        <div style="font-size: 14px; color: #374151;">
+                            <strong>位置:</strong> {req.get('location', '-')}
+                        </div>
+                        <div style="font-size: 14px; color: #374151;">
+                            <strong>提交时间:</strong> {req.get('submit_time', '-')}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+            else:
+                st.markdown("---")
+                st.info("✅ 当前没有待审核的设备注册请求")
+                st.markdown("所有请求已处理完毕，可在右侧查看场景说明")
+        except Exception as e:
+            st.warning(f"加载待审核请求列表失败: {e}")
     
     start_button = st.button("🚀 开始执行", type="primary", use_container_width=True)
 
@@ -497,15 +766,49 @@ with col2:
                     final_results = asyncio.run(run_mvp5())
                 elif selected_mvp == "mvp6":
                     final_results = asyncio.run(run_mvp6())
+                elif selected_mvp == "mvp7":
+                    final_results = asyncio.run(run_mvp7())
                 
                 st.divider()
                 st.subheader("📋 执行结果汇总")
                 
+                icon_map = {
+                    "查询待审核请求": "📋",
+                    "规则校验与语义推理": "🔍",
+                    "审批决策与图谱更新": "✅",
+                    "设备动作演示": "⚡",
+                    "生成知识图谱可视化": "🎨",
+                    "注册监控Agent": "👀",
+                    "规则校验Agent": "✅",
+                    "审批决策Agent": "🔍",
+                    "设备注册审批流程Agent": "🚀",
+                }
+                
                 for i, (agent_name, result) in enumerate(final_results):
-                    with st.expander(f"{agent_flow_configs[selected_mvp]['agents'][i]['icon']} {agent_name}", expanded=True):
+                    icon = icon_map.get(agent_name, "📌")
+                    with st.expander(f"{icon} {agent_name}", expanded=True):
                         st.markdown(result)
                 
                 st.success("🎉 流程执行完成！")
+                
+                if selected_mvp == "mvp6":
+                    st.markdown("""
+                    ---
+                    📊 **知识图谱可视化**
+                    
+                    点击下方链接查看本体知识图谱可视化页面：
+                    
+                    [🌐 MVP6 - 设备注册知识图谱](http://localhost:8080/mvp6/graph_visualization.html)
+                    """)
+                elif selected_mvp == "mvp7":
+                    st.markdown("""
+                    ---
+                    📊 **流程工业知识图谱可视化**
+                    
+                    点击下方链接查看流程工业知识图谱可视化页面：
+                    
+                    [🌐 MVP7 - 流程工业知识图谱](http://localhost:8080/mvp7/graph_visualization.html)
+                    """)
             except ValueError as e:
                 st.error(f"❌ 错误: {e}")
                 st.info("请在环境变量中设置 OPENAI_API_KEY 或 DASHSCOPE_API_KEY")
@@ -579,3 +882,24 @@ with col3:
         if total_steps > 0:
             progress = successful_steps / total_steps
             st.progress(progress)
+
+def start_visualization_server(port=8080):
+    class CustomHandler(SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=os.path.dirname(os.path.abspath(__file__)), **kwargs)
+        
+        def log_message(self, format, *args):
+            pass
+    
+    server = HTTPServer(("localhost", port), CustomHandler)
+    logging.info(f"🌐 知识图谱可视化服务已启动: http://localhost:{port}")
+    server.serve_forever()
+
+if "visualization_server_started" not in st.session_state:
+    try:
+        server_thread = threading.Thread(target=start_visualization_server, args=(8080,), daemon=True)
+        server_thread.start()
+        st.session_state.visualization_server_started = True
+        logging.info("✅ 可视化服务器线程已启动")
+    except Exception as e:
+        logging.warning(f"⚠️ 可视化服务器启动失败（可能端口已占用）: {e}")
